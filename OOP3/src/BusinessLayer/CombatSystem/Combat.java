@@ -8,4 +8,10 @@ public class Combat {
     public Combat(Unit attacker,Unit defender){
 
     }
+    public void Attack(){
+
+    }
+    public void Defence(){
+
+    }
 }
