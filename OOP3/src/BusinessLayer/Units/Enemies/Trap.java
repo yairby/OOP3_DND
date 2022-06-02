@@ -29,6 +29,6 @@ public class Trap extends Enemy {
         Invisible=invisible;
     }
     public String toString(){
-        return "name:"+getName()+"    health:"+getHealth()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints();
+        return "name:"+getName()+"    health:"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints();
     }
 }

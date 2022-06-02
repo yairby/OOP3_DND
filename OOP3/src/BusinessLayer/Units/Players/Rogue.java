@@ -46,7 +46,7 @@ public class Rogue extends Player{
     }
 
     public String toString(){
-        return "name:"+getName()+"    health:"+getHealth()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"    ability energy cost:"+getAbilityEnergyCost()+"    ability energy:"+getEnergy();
+        return "name:"+getName()+"    health:"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"    ability energy cost:"+getAbilityEnergyCost()+"    ability energy:"+getEnergy();
 
     }
 }
