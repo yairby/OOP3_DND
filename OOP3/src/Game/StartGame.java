@@ -12,7 +12,7 @@ public class StartGame {
         System.out.println("Select player");
         TileFactory tileFactory=new TileFactory();
         for (Player t: tileFactory.listPlayers()) {
-            System.out.println("1"+t.toString()+"     ");
+            System.out.println("1."+t.toString()+"     ");
         }
 
 
