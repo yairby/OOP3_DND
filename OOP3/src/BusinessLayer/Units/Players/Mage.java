@@ -34,10 +34,62 @@ public class Mage extends Player{
         manaAmount=Math.min(manaAmount+(1*getLevel()),manaPool);
     }
 
+    public Integer getSpellPower() {
+        return spellPower;
+    }
+
+    public void setSpellPower(Integer spellPower) {
+        this.spellPower = spellPower;
+    }
+
+    public Integer getManaPool() {
+        return manaPool;
+    }
+
+    public void setManaPool(Integer manaPool) {
+        this.manaPool = manaPool;
+    }
+
+    public Integer getManaAmount() {
+        return manaAmount;
+    }
+
+    public void setManaAmount(Integer manaAmount) {
+        this.manaAmount = manaAmount;
+    }
+
+    public Integer getHitsCount() {
+        return hitsCount;
+    }
+
+    public void setHitsCount(Integer hitsCount) {
+        this.hitsCount = hitsCount;
+    }
+
     public void levelUp(){
         manaPool+=25*getLevel();
         manaAmount=Math.min(manaAmount+(manaPool/4),manaPool);
         spellPower+=10*getLevel();
         super.levelUp();
+    }
+
+    public Integer getAbilityRange() {
+        return abilityRange;
+    }
+
+    public void setAbilityRange(Integer abilityRange) {
+        this.abilityRange = abilityRange;
+    }
+
+    public Integer getAbilityManaCost() {
+        return abilityManaCost;
+    }
+
+    public void setAbilityManaCost(Integer abilityManaCost) {
+        this.abilityManaCost = abilityManaCost;
+    }
+
+    public String toString(){
+        return "name:"+getName()+"    health:"+getHealth()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"    ability mana cost:"+getAbilityManaCost()+"    ability range:"+getAbilityRange()+"    mana amount:"+getManaAmount()+"    spell power"+getSpellPower();
     }
 }

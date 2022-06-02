@@ -20,4 +20,9 @@ public class Enemy extends Unit {
     public void setExperience(int experience) {
         Experience = experience;
     }
+
+    public String toString(){
+        return "name:"+getName()+"    health:"+getHealth()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"    experience"+getExperience();
+
+    }
 }

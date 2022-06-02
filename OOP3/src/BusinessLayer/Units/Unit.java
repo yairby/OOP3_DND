@@ -64,4 +64,16 @@ public class Unit  {
     public void setDefensePoints(Integer defensePoints) {
         this.defensePoints = defensePoints;
     }
+
+    @Override
+    public String toString() {
+        return "Unit{" +
+                "Tile=" + Tile +
+                ", C=" + C +
+                ", name='" + name + '\'' +
+                ", health=" + health +
+                ", attackPoints=" + attackPoints +
+                ", defensePoints=" + defensePoints +
+                '}';
+    }
 }

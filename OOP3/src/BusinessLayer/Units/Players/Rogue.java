@@ -28,4 +28,25 @@ public class Rogue extends Player{
         energy=100;
         setAttackPoints(getAttackPoints()+(3*getLevel()));
     }
+
+    public Integer getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(Integer energy) {
+        this.energy = energy;
+    }
+
+    public Integer getAbilityEnergyCost() {
+        return abilityEnergyCost;
+    }
+
+    public void setAbilityEnergyCost(Integer abilityEnergyCost) {
+        this.abilityEnergyCost = abilityEnergyCost;
+    }
+
+    public String toString(){
+        return "name:"+getName()+"    health:"+getHealth()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"    ability energy cost:"+getAbilityEnergyCost()+"    ability energy:"+getEnergy();
+
+    }
 }
