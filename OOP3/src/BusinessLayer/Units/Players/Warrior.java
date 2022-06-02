@@ -1,5 +1,6 @@
 package BusinessLayer.Units.Players;
 
+import Board.Tile;
 import BusinessLayer.Units.Health;
 
 public class Warrior extends Player {
@@ -7,8 +8,8 @@ public class Warrior extends Player {
     private Integer abilityCoolDown;
     private Integer remainingCoolDown;
 
-    public Warrior(String name, Health health, Integer attackPoints, Integer defensePoints, Integer abilityCoolDown) {
-        super(name, health, attackPoints, defensePoints);
+    public Warrior(Board.Tile tile, String name, int health, Integer attackPoints, Integer defensePoints, Integer abilityCoolDown) {
+        super(name, health, attackPoints, defensePoints,tile);
         this.abilityCoolDown=abilityCoolDown;
     }
 

@@ -23,11 +23,4 @@ public class GameTiles {
 
         this.BoardController=new Tile[num][num];
     }
-
-
-
-
-    public double range(Tile t1,Tile t2){
-        return Math.sqrt(Math.pow(t1.getX()- t2.getX(),2)+Math.pow(t1.getY()- t2.getY(),2));
-    }
 }

@@ -1,5 +1,6 @@
 package BusinessLayer.Units.Players;
 
+import Board.Tile;
 import BusinessLayer.Units.Health;
 
 public class Rogue extends Player{
@@ -7,8 +8,8 @@ public class Rogue extends Player{
     private Integer energy;
     private Integer abilityEnergyCost;
 
-    public Rogue(String name, Health health, Integer attackPoints, Integer defensePoints,Integer abilityEnergyCost) {
-        super(name, health, attackPoints, defensePoints);
+    public Rogue(Board.Tile tile,String name, int health, Integer attackPoints, Integer defensePoints, Integer abilityEnergyCost) {
+        super(name, health, attackPoints, defensePoints,tile);
         energy=100;
         this.abilityEnergyCost=abilityEnergyCost;
     }

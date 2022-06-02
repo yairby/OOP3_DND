@@ -1,15 +1,19 @@
 package BusinessLayer.Units;
 
-public class Unit {
+import Board.Tile;
 
+public class Unit  {
+    private Tile Tile;
     private String name;
     private Health health;
     private Integer attackPoints;
     private Integer defensePoints;
 
-    public Unit(String name, Health health, Integer attackPoints,Integer defensePoints){
+
+    public Unit(String name, int health, Integer attackPoints,Integer defensePoints,Tile tile){
+        Tile=tile;
         this.name=name;
-        this.health=health;
+        this.health=new Health(health,health);
         this.attackPoints=attackPoints;
         this.defensePoints=defensePoints;
     }

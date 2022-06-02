@@ -35,4 +35,10 @@ public class Tile {
         this.x=x;
         this.y=y;
     }
+    public double range(Tile tile){
+        return Math.sqrt(Math.pow(tile.getX()- getX(),2)+Math.pow(tile.getY()-getY(),2));
+    }
+    public boolean checkrange(Tile tile,int r){
+        return range(tile)<r;
+    }
 }
