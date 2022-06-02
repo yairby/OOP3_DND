@@ -7,8 +7,8 @@ public class Enemy extends Unit {
 
     private int Experience;
 
-    public Enemy(int experience,String name, int health, Integer attackPoints, Integer defensePoints, Board.Tile tile) {
-        super(name, health, attackPoints, defensePoints, tile);
+    public Enemy(char c,int experience,String name, int health, Integer attackPoints, Integer defensePoints, Board.Tile tile) {
+        super(c,health, name, attackPoints, defensePoints, tile);
         Experience=experience;
     }
 

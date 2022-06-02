@@ -29,7 +29,11 @@ public class Tile {
     public void setType(String type) {
         this.type = type;
     }
-
+ public Tile(){
+        type="";
+        x=0;
+        y=0;
+ }
     public Tile(String type, int x, int y) {
         this.type = type;
         this.x=x;

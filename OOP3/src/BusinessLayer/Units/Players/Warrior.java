@@ -8,10 +8,13 @@ public class Warrior extends Player {
     private Integer abilityCoolDown;
     private Integer remainingCoolDown;
 
-    public Warrior(Board.Tile tile, String name, int health, Integer attackPoints, Integer defensePoints, Integer abilityCoolDown) {
-        super(name, health, attackPoints, defensePoints,tile);
+    public Warrior(char c,Board.Tile tile,  int health,String name, Integer attackPoints, Integer defensePoints, Integer abilityCoolDown) {
+        super(c, health,name, attackPoints, defensePoints,tile);
         this.abilityCoolDown=abilityCoolDown;
     }
+
+
+
 
     @Override
     public String UseSpecialAbility() {

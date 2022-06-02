@@ -4,14 +4,26 @@ import Board.Tile;
 
 public class Unit  {
     private Tile Tile;
+    private char C;
     private String name;
     private Health health;
     private Integer attackPoints;
     private Integer defensePoints;
 
 
-    public Unit(String name, int health, Integer attackPoints,Integer defensePoints,Tile tile){
+    public Unit(char c, int health,String name, Integer attackPoints,Integer defensePoints,Tile tile){
+        C=c;
         Tile=tile;
+
+        this.name=name;
+        this.health=new Health(health,health);
+        this.attackPoints=attackPoints;
+        this.defensePoints=defensePoints;
+    }
+    public Unit( int health,String name, Integer attackPoints,Integer defensePoints,Tile tile){
+
+        Tile=tile;
+
         this.name=name;
         this.health=new Health(health,health);
         this.attackPoints=attackPoints;
@@ -40,6 +52,9 @@ public class Unit  {
 
     public void setHealth(Health health) {
         this.health = health;
+    }
+    public void setAmountHealth(int amountHealth){
+        this.health.setAmount(amountHealth);
     }
 
     public void setAttackPoints(Integer attackPoints) {

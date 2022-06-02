@@ -23,4 +23,5 @@ public class GameTiles {
 
         this.BoardController=new Tile[num][num];
     }
+
 }

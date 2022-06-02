@@ -5,13 +5,26 @@ import BusinessLayer.Units.Unit;
 public class Combat {
     private Unit Attacker;
     private Unit Defender;
-    public Combat(Unit attacker,Unit defender){
 
+    public Unit getDefender() {
+        return Defender;
     }
-    public void Attack(){
 
+    public void setDefender(Unit defender) {
+        Defender = defender;
     }
-    public void Defence(){
 
+    public Unit getAttacker() {
+        return Attacker;
     }
+
+    public void setAttacker(Unit attacker) {
+        Attacker = attacker;
+    }
+
+    public Combat(Unit attacker, Unit defender){
+        Attacker=attacker;
+        Defender=defender;
+    }
+
 }

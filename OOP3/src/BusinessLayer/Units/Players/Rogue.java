@@ -8,8 +8,8 @@ public class Rogue extends Player{
     private Integer energy;
     private Integer abilityEnergyCost;
 
-    public Rogue(Board.Tile tile,String name, int health, Integer attackPoints, Integer defensePoints, Integer abilityEnergyCost) {
-        super(name, health, attackPoints, defensePoints,tile);
+    public Rogue(char c,Board.Tile tile,String name, int health, Integer attackPoints, Integer defensePoints, Integer abilityEnergyCost) {
+        super(c, health,name, attackPoints, defensePoints,tile);
         energy=100;
         this.abilityEnergyCost=abilityEnergyCost;
     }

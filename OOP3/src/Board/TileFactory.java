@@ -16,17 +16,17 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-/*public class TileFactory {
+public class TileFactory {
     private List<Supplier<Player>> playersList;
     private Map<Tile, Supplier<Enemy>> enemiesMap;
     private Player selected;
 
     public TileFactory(){
         playersList = initPlayers();
-        enemiesMap = initEnemies();
+      //  enemiesMap = initEnemies();
     }
 
-    private Map<Tile, Supplier<Enemy>> initEnemies() {
+    /*private Map<Tile, Supplier<Enemy>> initEnemies() {
         List<Supplier<Enemy>> enemies = Arrays.asList(
                 () -> new Monster('s', "Lannister Solider", 80, 8, 3,25, 3),
                 () -> new Monster('k', "Lannister Knight", 200, 14, 8, 50,   4),
@@ -44,16 +44,16 @@ import java.util.stream.Collectors;
         );
 
         return enemies.stream().collect(Collectors.toMap(s -> s.get().getTile(), Function.identity()));
-    }
+    }*/
 
     private List<Supplier<Player>> initPlayers() {
         return Arrays.asList(
-                () -> new Warrior("Jon Snow", 300, 30, 4, 3),
-                () -> new Warrior("The Hound", 400, 20, 6, 5),
-                () -> new Mage("Melisandre", 100, 5, 1, 300, 30, 15, 5, 6),
-                () -> new Mage("Thoros of Myr", 250, 25, 4, 150, 20, 20, 3, 4),
-                () -> new Rogue("Arya Stark", 150, 40, 2, 20),
-                () -> new Rogue("Bronn", 250, 35, 3, 50)
+                () -> new Warrior('w',new Tile(), 300, "jhon", 4, 3,3)//,
+              //  () -> new Warrior("The Hound", 400, 20, 6, 5),
+              //  () -> new Mage("Melisandre", 100, 5, 1, 300, 30, 15, 5, 6),
+              //  () -> new Mage("Thoros of Myr", 250, 25, 4, 150, 20, 20, 3, 4),
+               // () -> new Rogue("Arya Stark", 150, 40, 2, 20),
+              //  () -> new Rogue("Bronn", 250, 35, 3, 50)
               // () -> new Hunter("Ygritte", 220, 30, 2, 6)
         );
     }
@@ -64,4 +64,4 @@ import java.util.stream.Collectors;
 
 
 }
-*/
+
