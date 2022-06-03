@@ -23,11 +23,29 @@ public class GameTiles {
 
         this.BoardController=new Tile[num][num];
     }
+    public GameTiles(String s){
+        String[] arr=s.split("\\n");
+        this.BoardController=new Tile[arr.length][arr[0].length()];
+        initBoard(arr);
+    }
+    public void initBoard(String[] arr){
 
 
+        for(int i=0;i<arr.length;i++){
+            for(int j=0;j< arr[0].length();j++){
+                BoardController[i][j]=new Tile(arr[i].charAt(j),j,i);
+            }
+        }
+    }
+    public String printBoard(){
+        String s="";
+        for(int i=0;i< getBoardController().length;i++){
+            for (int j=0;j< getBoardController()[i].length;j++){
+                s=s+String.valueOf(BoardController[i][j].getType());
 
-
-    public double range(Tile t1,Tile t2){
-        return Math.sqrt(Math.pow(t1.getX()- t2.getX(),2)+Math.pow(t1.getY()- t2.getY(),2));
+            }
+            s=s+"\n";
+        }
+        return s;
     }
 }

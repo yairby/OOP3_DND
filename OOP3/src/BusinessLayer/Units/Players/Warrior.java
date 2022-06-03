@@ -1,5 +1,6 @@
 package BusinessLayer.Units.Players;
 
+import Board.Tile;
 import BusinessLayer.Units.Health;
 
 public class Warrior extends Player {
@@ -7,10 +8,13 @@ public class Warrior extends Player {
     private Integer abilityCoolDown;
     private Integer remainingCoolDown;
 
-    public Warrior(String name, Health health, Integer attackPoints, Integer defensePoints, Integer abilityCoolDown) {
-        super(name, health, attackPoints, defensePoints);
+    public Warrior(char c,Board.Tile tile,  int health,String name, Integer attackPoints, Integer defensePoints, Integer abilityCoolDown) {
+        super(c, health,name, attackPoints, defensePoints,tile);
         this.abilityCoolDown=abilityCoolDown;
     }
+
+
+
 
     @Override
     public String UseSpecialAbility() {
@@ -37,5 +41,26 @@ public class Warrior extends Player {
         setAttackPoints(getAttackPoints()+(2*getLevel()));
         setDefensePoints(getDefensePoints()+(getLevel()));
         super.levelUp();
+    }
+
+    public Integer getRemainingCoolDown() {
+        return remainingCoolDown;
+    }
+
+    public void setRemainingCoolDown(Integer remainingCoolDown) {
+        this.remainingCoolDown = remainingCoolDown;
+    }
+
+    public Integer getAbilityCoolDown() {
+        return abilityCoolDown;
+    }
+
+    public void setAbilityCoolDown(Integer abilityCoolDown) {
+        this.abilityCoolDown = abilityCoolDown;
+    }
+
+    public String toString(){
+        return "name:"+getName()+"    health:"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"    ability cool down:"+getAbilityCoolDown();
+
     }
 }

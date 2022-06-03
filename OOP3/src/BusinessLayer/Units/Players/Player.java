@@ -1,5 +1,6 @@
 package BusinessLayer.Units.Players;
 
+import Board.Tile;
 import BusinessLayer.Units.Health;
 import BusinessLayer.Units.Unit;
 
@@ -8,8 +9,8 @@ public abstract class Player extends Unit {
     private Integer experience;
     private Integer level;
 
-    public Player(String name, Health health, Integer attackPoints, Integer defensePoints) {
-        super(name, health, attackPoints, defensePoints);
+    public Player(char c, int health,String name, Integer attackPoints, Integer defensePoints, Board.Tile tile) {
+        super(c, health,name, attackPoints, defensePoints,tile);
         this.experience=0;
         this.level=1;
     }
@@ -64,4 +65,6 @@ public abstract class Player extends Unit {
     public void setLevel(Integer level) {
         this.level = level;
     }
+
+
 }
