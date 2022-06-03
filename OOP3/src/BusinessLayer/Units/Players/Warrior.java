@@ -8,12 +8,12 @@ public class Warrior extends Player {
     private Integer abilityCoolDown;
     private Integer remainingCoolDown;
 
-    public Warrior(char c,Board.Tile tile,  int health,String name, Integer attackPoints, Integer defensePoints, Integer abilityCoolDown) {
-        super(c, health,name, attackPoints, defensePoints,tile);
+
+    public Warrior(String name, int health, int attackPoints, int defensePoints, int abilityCoolDown) {
+        super(health,name,attackPoints,defensePoints);
         this.abilityCoolDown=abilityCoolDown;
+        this.remainingCoolDown=abilityCoolDown;
     }
-
-
 
 
     @Override
@@ -60,7 +60,7 @@ public class Warrior extends Player {
     }
 
     public String toString(){
-        return "name:"+getName()+"    health:"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"    ability cool down:"+getAbilityCoolDown();
+        return "name:"+getName()+"    health:"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"     level:"+getLevel()+"     Experience"+getExperience()+"    ability cool down:"+getAbilityCoolDown();
 
     }
 }
