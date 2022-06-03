@@ -9,8 +9,8 @@ public abstract class Player extends Unit {
     private Integer experience;
     private Integer level;
 
-    public Player(char c, int health,String name, Integer attackPoints, Integer defensePoints, Board.Tile tile) {
-        super(c, health,name, attackPoints, defensePoints,tile);
+    public Player( int health,String name, Integer attackPoints, Integer defensePoints) {
+        super( health,name, attackPoints, defensePoints);
         this.experience=0;
         this.level=1;
     }

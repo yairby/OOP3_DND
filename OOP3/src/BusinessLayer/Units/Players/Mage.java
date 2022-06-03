@@ -12,11 +12,14 @@ public class Mage extends Player{
     private Integer abilityRange;
 
 
-    public Mage(char c,String name, int health, Integer attackPoints, Integer defensePoints, Integer manaPool, Integer spellPower, int i, int i1, int i2, Board.Tile tile) {
-        super(c, health,name, attackPoints, defensePoints,tile);
+    public Mage(String name, int health, Integer attackPoints, Integer defensePoints, Integer manaPool, Integer abilityManaCost,int spellPower,int hitsCount,int abilityRange) {
+        super( health,name, attackPoints, defensePoints);
         this.manaPool=manaPool;
         this.manaAmount=manaPool/4;
         this.spellPower=spellPower;
+        this.abilityManaCost=abilityManaCost;
+        this.hitsCount=hitsCount;
+        this.abilityRange=abilityRange;
     }
 
     @Override
