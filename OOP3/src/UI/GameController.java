@@ -11,8 +11,12 @@ public class GameController {
        // startGame.StartGame();
         GameTiles gameTiles=new GameTiles(2);
         String s="##\n##";
-//        gameTiles.initBoard(s);
-    //    gameTiles.printBoard();
-        System.out.println(s.substring(2,3).equals("\n"));
+        String[] strings=s.split("\\n");
+        for (int i=0;i<strings.length;i++){
+            System.out.println(strings[i]);
+        }
+       gameTiles.initBoard(s);
+       gameTiles.printBoard();
+
     }
 }

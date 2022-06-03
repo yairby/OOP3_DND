@@ -1,7 +1,7 @@
 package Board;
 
 public class Tile {
-    private String type;
+    private char type;
 
     public int getY() {
         return y;
@@ -22,19 +22,19 @@ public class Tile {
     private int x;
     private int y;
 
-    public String getType() {
+    public char getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(char type) {
         this.type = type;
     }
  public Tile(){
-        type="";
+        type=' ';
         x=0;
         y=0;
  }
-    public Tile(String type, int x, int y) {
+    public Tile(char type, int x, int y) {
         this.type = type;
         this.x=x;
         this.y=y;
