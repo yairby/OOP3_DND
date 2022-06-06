@@ -13,7 +13,7 @@ public class Move {
     public void move(GameTiles gameTiles, Unit unit,String move){
 
         if(move.equals("w")){
-            if(!Objects.equals(gameTiles.getBoardController()[unit.getY() - 1][unit.getX()], new Wall('#', unit.getX(), unit.getY() - 1))) {
+            if(!(gameTiles.getBoardController()[unit.getY() - 1][unit.getX()].getType()=='#')) {
                 gameTiles.getBoardController()[unit.getY()][unit.getX()] = new Tile('.', unit.getX(), unit.getY());
                 gameTiles.getBoardController()[unit.getY() - 1][unit.getX()] = unit;
                 unit.setY(unit.getY() - 1);
@@ -21,7 +21,7 @@ public class Move {
 
         }
         else if(move.equals("s")){
-            if(!Objects.equals(gameTiles.getBoardController()[unit.getY() + 1][unit.getX()], new Wall('#', unit.getX(), unit.getY() + 1))) {
+            if(!(gameTiles.getBoardController()[unit.getY() + 1][unit.getX()].getType()=='#')) {
 
                 gameTiles.getBoardController()[unit.getY()][unit.getX()] = new Tile('.', unit.getX(), unit.getY());
                 gameTiles.getBoardController()[unit.getY() + 1][unit.getX()] = unit;
@@ -37,7 +37,7 @@ public class Move {
                 }
         }
         else if(move.equals("d")){
-            if(!Objects.equals(gameTiles.getBoardController()[unit.getY() ][unit.getX()+1], new Wall('#', unit.getX()+1, unit.getY() ))) {
+            if(!(gameTiles.getBoardController()[unit.getY() ][unit.getX()+1].getType()=='#')) {
 
                 gameTiles.getBoardController()[unit.getY()][unit.getX()] = new Tile('.', unit.getX(), unit.getY());
                 gameTiles.getBoardController()[unit.getY()][unit.getX() + 1] = unit;
