@@ -6,9 +6,10 @@ import BusinessLayer.Units.Unit;
 public class Enemy extends Unit {
 
     private int Experience;
-
-    public Enemy(int experience,String name, int health, Integer attackPoints, Integer defensePoints, Board.Tile tile) {
+    private char c;
+    public Enemy(int experience,String name, int health, Integer attackPoints, Integer defensePoints) {
         super(health, name, attackPoints, defensePoints);
+        this.c=c;
         Experience=experience;
     }
 

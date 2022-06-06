@@ -23,8 +23,8 @@ public class Trap extends Enemy {
         Invisible = invisible;
     }
 
-    public Trap(char c, int experience, String name, int health, Integer attackPoints, Integer defensePoints, Board.Tile tile, int visible, int invisible) {
-        super(c,experience, name, health, attackPoints, defensePoints, tile);
+    public Trap( int experience, String name, int health, Integer attackPoints, Integer defensePoints, Board.Tile tile, int visible, int invisible) {
+        super(experience, name, health, attackPoints, defensePoints);
         Visible=visible;
         Invisible=invisible;
     }

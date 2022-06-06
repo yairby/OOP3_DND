@@ -43,6 +43,11 @@ public class Warrior extends Player {
         super.levelUp();
     }
 
+    @Override
+    public String Type() {
+        return "Warrior";
+    }
+
     public Integer getRemainingCoolDown() {
         return remainingCoolDown;
     }

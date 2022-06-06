@@ -76,6 +76,11 @@ public class Mage extends Player{
         super.levelUp();
     }
 
+    @Override
+    public String Type() {
+        return "Mage";
+    }
+
     public Integer getAbilityRange() {
         return abilityRange;
     }

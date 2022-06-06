@@ -3,13 +3,17 @@ package Game;
 import Board.GameTiles;
 import Board.Tile;
 import Board.TileFactory;
+import BusinessLayer.Units.Enemies.Monster;
 import BusinessLayer.Units.Players.Player;
+import BusinessLayer.Units.Unit;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class StartGame {
-    public void StartGame(){
+public class GameController {
+    private Scanner scanner=new Scanner(System.in);
+    public void play(){
         Scanner scanner=new Scanner(System.in);
         System.out.println("Select player");
         TileFactory tileFactory=new TileFactory();
@@ -38,7 +42,7 @@ public class StartGame {
         Player player= players.get(i-1);
         System.out.println("you have selected");
         System.out.println(player.getName());
-      String level1="#################################################\n" +
+        String level1="#################################################\n" +
                 "#....s...###..........................#.........#\n" +
                 "#........#B#....##..........##........#.........#\n" +
                 "#........#......##..........##........#.........#\n" +
@@ -57,9 +61,32 @@ public class StartGame {
                 "#........#B#....##..........##........#.........#\n" +
                 "#....s...###..........................#.........#\n" +
                 "#################################################";
-        GameTiles gameTiles=new GameTiles(level1);
+        GameTiles gameTiles=new GameTiles(level1,player);
         System.out.println(gameTiles.printBoard());
         System.out.println(player.toString());
+        int level=1;
+        boolean win=false,passLevel=false,death=false;
+        while (!win&&!death){
+            while (!passLevel&&!death){
+                String s=scanner.nextLine();
+                Move m=new Move();
+                m.move(gameTiles,player,s);
+                System.out.println(gameTiles.printBoard());
+                death=true;
+            }
+            if(level==5){
+                win=true;
+            }
+        }
+        if(death){
+            gameTiles.getBoardController()[player.getY()][player.getX()]=new Tile('X',player.getX(),player.getY());
+            System.out.println(gameTiles.printBoard());
+            System.out.println("game over");
+        }
+        else{
+            System.out.println("Win");
+        }
 
     }
+
 }

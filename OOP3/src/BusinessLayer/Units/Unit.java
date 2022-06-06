@@ -2,13 +2,16 @@ package BusinessLayer.Units;
 
 import Board.Tile;
 
-public class Unit  {
+public class Unit extends Tile {
 
 
     private String name;
     private Health health;
     private Integer attackPoints;
     private Integer defensePoints;
+
+
+
 
 
 
