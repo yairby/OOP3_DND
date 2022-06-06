@@ -3,13 +3,13 @@ package Game;
 import Board.GameTiles;
 import Board.Tile;
 import Board.TileFactory;
+import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Enemies.Monster;
 import BusinessLayer.Units.Players.Player;
 import BusinessLayer.Units.Unit;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.function.Supplier;
 
 public class GameController {
     private Scanner scanner=new Scanner(System.in);
@@ -72,7 +72,7 @@ public class GameController {
                 Move m=new Move();
                 m.move(gameTiles,player,s);
                 System.out.println(gameTiles.printBoard());
-                death=true;
+
             }
             if(level==5){
                 win=true;

@@ -17,8 +17,6 @@ public class Unit extends Tile {
 
     public Unit( int health,String name, Integer attackPoints,Integer defensePoints){
 
-
-
         this.name=name;
         this.health=new Health(health,health);
         this.attackPoints=attackPoints;

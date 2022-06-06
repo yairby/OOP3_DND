@@ -3,11 +3,13 @@ package Game;
 import Board.GameTiles;
 import Board.Tile;
 import BusinessLayer.Units.Enemies.Monster;
+import BusinessLayer.Units.Players.Player;
 import BusinessLayer.Units.Unit;
 import BusinessLayer.Units.Wall;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 
 public class Move {
     public void move(GameTiles gameTiles, Unit unit,String move){
@@ -64,7 +66,28 @@ public class Move {
                 }
             }
         }
+    }
+    public void moveMonster(Monster m, Player player){
+        double range=m.range(player);
+        if(range<m.getVisionRange()){
 
+        }
+        else{
+            Random r=new Random();
+            int i=r.nextInt(4);
+            if(i==0){
+
+            }
+            if(i==1){
+
+            }
+            if(i==2){
+
+            }
+            if(i==3){
+
+            }
+        }
 
     }
 

@@ -23,10 +23,11 @@ public class Trap extends Enemy {
         Invisible = invisible;
     }
 
-    public Trap( int experience, String name, int health, Integer attackPoints, Integer defensePoints, Board.Tile tile, int visible, int invisible) {
+    public Trap( char c, String name,int experience, int health, Integer attackPoints, Integer defensePoints,  int visible, int invisible) {
         super(experience, name, health, attackPoints, defensePoints);
         Visible=visible;
         Invisible=invisible;
+        this.setType(c);
     }
     public String toString(){
         return "name:"+getName()+"    health:"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints();

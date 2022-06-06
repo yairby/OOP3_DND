@@ -1,16 +1,26 @@
 package Board;
 
+import BusinessLayer.Units.Enemies.Enemy;
+import BusinessLayer.Units.Enemies.Monster;
 import BusinessLayer.Units.Players.Player;
 import BusinessLayer.Units.Players.Warrior;
 import BusinessLayer.Units.Unit;
+import BusinessLayer.Units.Wall;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 public class GameTiles {
 
    private Tile[][] BoardController;
 
+
     public GameTiles(Tile[][] boardController) {
 
         this.BoardController=boardController;
+
     }
 
     public Tile[][] getBoardController() {
@@ -26,25 +36,37 @@ public class GameTiles {
     public GameTiles(int num) {
 
         this.BoardController=new Tile[num][num];
+
     }
     public GameTiles(String s,Player heroType){
         String[] arr=s.split("\\n");
         this.BoardController=new Tile[arr.length][arr[0].length()];
         initBoard(arr,heroType);
+
     }
     public void initBoard(String[] arr, Player player){
 
 
         for(int i=0;i<arr.length;i++){
             for(int j=0;j< arr[i].length();j++){
-                if(arr[i].charAt(j)=='s'||arr[i].charAt(j)=='k'||arr[i].charAt(j)=='q'||arr[i].charAt(j)=='z'||arr[i].charAt(j)=='b'||arr[i].charAt(j)=='g'||arr[i].charAt(j)=='w'||arr[i].charAt(j)=='M'||arr[i].charAt(j)=='C'||arr[i].charAt(j)=='K'){
-                    BoardController[i][j] = new Tile(arr[i].charAt(j), j, i);
+                if(arr[i].charAt(j)=='s'||arr[i].charAt(j)=='k'||arr[i].charAt(j)=='q'||arr[i].charAt(j)=='z'||arr[i].charAt(j)=='b'||arr[i].charAt(j)=='g'||arr[i].charAt(j)=='w'||arr[i].charAt(j)=='M'||arr[i].charAt(j)=='C'||arr[i].charAt(j)=='K'||arr[i].charAt(j)=='B'||arr[i].charAt(j)=='Q'||arr[i].charAt(j)=='D'){
+                    TileFactory tileFactory=new TileFactory();
+                    Map<Character, Supplier<Enemy>> map= tileFactory.listEnemies();
+                    Supplier<Enemy> e= map.get(arr[i].charAt(j));
+                    BoardController[i][j]=e.get();
                 }
                 else if(arr[i].charAt(j)=='@'){
                     BoardController[i][j]=player;
-                    System.out.println(i+" "+j);
                     player.setY(i);
                     player.setX(j);
+                }
+                else if(arr[i].charAt(j)=='#'){
+
+                    Wall wall=new Wall();
+
+                    wall.setY(i);
+                    wall.setX(j);
+                    BoardController[i][j]=wall;
                 }
                 else {
                     BoardController[i][j] = new Tile(arr[i].charAt(j), j, i);
@@ -52,6 +74,7 @@ public class GameTiles {
             }
         }
     }
+
     public String printBoard(){
         String s="";
         for(int i=0;i< getBoardController().length;i++){
