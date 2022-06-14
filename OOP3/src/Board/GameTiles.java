@@ -16,10 +16,22 @@ public class GameTiles {
 
    private Tile[][] BoardController;
 
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public void setEnemies(ArrayList<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
+    private ArrayList<Enemy> enemies;
+
 
     public GameTiles(Tile[][] boardController) {
 
         this.BoardController=boardController;
+
+
 
     }
 
@@ -42,7 +54,21 @@ public class GameTiles {
         String[] arr=s.split("\\n");
         this.BoardController=new Tile[arr.length][arr[0].length()];
         initBoard(arr,heroType);
+        enemies=initEnemies(BoardController);
 
+    }
+    public ArrayList<Enemy> initEnemies(Tile[][] boardController){
+        ArrayList<Enemy> enemies=new ArrayList<Enemy>();
+        for(int i=0;i<boardController.length;i++){
+            for(int j=0;j<boardController[i].length;j++){
+                if(boardController[i][j] instanceof Enemy){
+                    Enemy e=(Enemy) boardController[i][j];
+                    enemies.add(e);
+                }
+            }
+
+        }
+        return enemies;
     }
     public void initBoard(String[] arr, Player player){
 
@@ -54,6 +80,8 @@ public class GameTiles {
                     Map<Character, Supplier<Enemy>> map= tileFactory.listEnemies();
                     Supplier<Enemy> e= map.get(arr[i].charAt(j));
                     BoardController[i][j]=e.get();
+                    BoardController[i][j].setX(j);
+                    BoardController[i][j].setY(i);
                 }
                 else if(arr[i].charAt(j)=='@'){
                     BoardController[i][j]=player;

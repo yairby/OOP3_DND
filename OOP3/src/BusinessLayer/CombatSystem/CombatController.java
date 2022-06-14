@@ -15,7 +15,8 @@ public class CombatController extends Combat{
         int defence=r.nextInt(getDefender().getDefensePoints()+1);
 
         if(attack>defence){
-            getDefender().setAmountHealth(getDefender().getHealth().getAmount()+defence-attack);
+            //getDefender().setAmountHealth(getDefender().getHealth().getAmount()+defence-attack);
+            getDefender().setAmountHealth(0);
         }
 
     }

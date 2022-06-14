@@ -1,5 +1,6 @@
 package Board;
 
+import BusinessLayer.Units.Enemies.Boss;
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Enemies.Monster;
 import BusinessLayer.Units.Enemies.Trap;

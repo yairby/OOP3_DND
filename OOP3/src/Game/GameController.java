@@ -7,6 +7,7 @@ import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Enemies.Monster;
 import BusinessLayer.Units.Players.Player;
 import BusinessLayer.Units.Unit;
+import DataAccessLayer.DataAccessLayer;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -42,25 +43,12 @@ public class GameController {
         Player player= players.get(i-1);
         System.out.println("you have selected");
         System.out.println(player.getName());
-        String level1="#################################################\n" +
-                "#....s...###..........................#.........#\n" +
-                "#........#B#....##..........##........#.........#\n" +
-                "#........#......##..........##........#.........#\n" +
-                "#........#............................#.........#\n" +
-                "#........#............................#.........#\n" +
-                "#........#......##..........##........#.........#\n" +
-                "#........#......##s........k##........#.........#\n" +
-                "#........#s.................##.......k#.........#\n" +
-                "#@...........................Q.................q#\n" +
-                "#........#s.................##.......k#.........#\n" +
-                "#........#......##s........k##........#.........#\n" +
-                "#........#......##..........##........#.........#\n" +
-                "#........#............................#.........#\n" +
-                "#........#............................#.........#\n" +
-                "#........#......##..........##........#.........#\n" +
-                "#........#B#....##..........##........#.........#\n" +
-                "#....s...###..........................#.........#\n" +
-                "#################################################";
+        DataAccessLayer data=new DataAccessLayer();
+        List<String> file=data.readAllLines("C:\\Users\\yairb\\Downloads\\FinalAIproject\\OOP3_DND\\OOP3\\src\\DataAccessLayer\\level1.txt");
+        String level1="";
+        for(int u=0;u<file.size();u++){
+            level1=level1+file.get(u)+"\n";
+        }
         GameTiles gameTiles=new GameTiles(level1,player);
         System.out.println(gameTiles.printBoard());
         System.out.println(player.toString());
@@ -68,15 +56,43 @@ public class GameController {
         boolean win=false,passLevel=false,death=false;
         while (!win&&!death){
             while (!passLevel&&!death){
+
                 String s=scanner.nextLine();
                 Move m=new Move();
                 m.move(gameTiles,player,s);
+                m.moveMonsters(gameTiles,player);
                 System.out.println(gameTiles.printBoard());
+                System.out.println(player.toString());
+                if(player.getHealth().getAmount()==0){
+                    death=true;
+                }
+                else if(gameTiles.getEnemies().isEmpty()){
+                    passLevel=true;
+                    player.setLevel(player.getLevel()+1);
+
+                }
+                else if(player.getHealth().getAmount()<=0)
+                    death=true;
+
 
             }
-            if(level==5){
-                win=true;
+            if(!death) {
+                player.setLevel(player.getLevel() + 1);
+                if (player.getLevel() == 5) {
+                    win = true;
+                }
+                else{
+                    file=data.readAllLines("C:\\Users\\yairb\\Downloads\\FinalAIproject\\OOP3_DND\\OOP3\\src\\DataAccessLayer\\level"+player.getLevel()+".txt");
+                    level1="";
+                    for(int u=0;u<file.size();u++){
+                        level1=level1+file.get(u)+"\n";
+                    }
+                    gameTiles=new GameTiles(level1,player);
+                    System.out.println(gameTiles.printBoard());
+                    System.out.println(player.toString());
+                }
             }
+
         }
         if(death){
             gameTiles.getBoardController()[player.getY()][player.getX()]=new Tile('X',player.getX(),player.getY());
