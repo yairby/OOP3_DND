@@ -39,6 +39,7 @@ public class GameController {
                 System.out.println("invalid input");
             }
         }
+
         List<Player> players= tileFactory.listPlayers();
         Player player= players.get(i-1);
         System.out.println("you have selected");
