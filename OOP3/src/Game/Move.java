@@ -7,6 +7,7 @@ import BusinessLayer.CombatSystem.Combat;
 import BusinessLayer.CombatSystem.CombatController;
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Enemies.Monster;
+import BusinessLayer.Units.Enemies.Trap;
 import BusinessLayer.Units.Players.Player;
 import BusinessLayer.Units.Unit;
 
@@ -25,6 +26,20 @@ public class Move {
                 unit.setY(unit.getY() - 1);
 
             }
+            else if(gameTiles.getBoardController()[unit.getY() - 1][unit.getX()] instanceof Monster){
+                if(unit instanceof Player){
+                    Monster m=(Monster) gameTiles.getBoardController()[unit.getY() - 1][unit.getX()];
+                    CombatController combatController=new CombatController(unit,m);
+                    combatController.Attack();
+                    if(m.getHealth().getAmount()<=0){
+                        gameTiles.getEnemies().remove(m);
+                        gameTiles.getBoardController()[unit.getY() - 1][unit.getX()]=unit;
+                        gameTiles.getBoardController()[unit.getY()][unit.getX()]=new Tile('.', unit.getX(), unit.getY());
+                        System.out.println("win battle");
+                        unit.setY(unit.getY()-1);
+                    }
+                }
+            }
 return unit;
 
         }
@@ -36,6 +51,20 @@ return unit;
                 unit.setY(unit.getY() + 1);
                 return unit;
             }
+            else if(gameTiles.getBoardController()[unit.getY() + 1][unit.getX()] instanceof Monster){
+                if(unit instanceof Player){
+                    Monster m=(Monster) gameTiles.getBoardController()[unit.getY() + 1][unit.getX()];
+                    CombatController combatController=new CombatController(unit,m);
+                    combatController.Attack();
+                    if(m.getHealth().getAmount()<=0){
+                        gameTiles.getEnemies().remove(m);
+                        gameTiles.getBoardController()[unit.getY() + 1][unit.getX()]=unit;
+                        gameTiles.getBoardController()[unit.getY()][unit.getX()]=new Tile('.', unit.getX(), unit.getY());
+                        System.out.println("win battle");
+                        unit.setY(unit.getY()+1);
+                    }
+                }
+            }
             return unit;
         }
         else if(move.equals("a")){
@@ -46,6 +75,20 @@ return unit;
                     unit.setX(unit.getX() - 1);
                     return unit;
                 }
+            else if(gameTiles.getBoardController()[unit.getY() ][unit.getX()-1] instanceof Monster){
+                if(unit instanceof Player){
+                    Monster m=(Monster) gameTiles.getBoardController()[unit.getY() ][unit.getX()-1];
+                    CombatController combatController=new CombatController(unit,m);
+                    combatController.Attack();
+                    if(m.getHealth().getAmount()<=0){
+                        gameTiles.getEnemies().remove(m);
+                        gameTiles.getBoardController()[unit.getY() ][unit.getX()-1]=unit;
+                        gameTiles.getBoardController()[unit.getY()][unit.getX()]=new Tile('.', unit.getX(), unit.getY());
+                        System.out.println("win battle");
+                        unit.setX(unit.getX()-1);
+                    }
+                }
+            }
             return unit;
         }
         else if(move.equals("d")){
@@ -55,6 +98,20 @@ return unit;
                 gameTiles.getBoardController()[unit.getY()][unit.getX() + 1] = unit;
                 unit.setX(unit.getX() + 1);
                 return unit;
+            }
+            else if(gameTiles.getBoardController()[unit.getY() ][unit.getX()+1] instanceof Monster){
+                if(unit instanceof Player){
+                    Monster m=(Monster) gameTiles.getBoardController()[unit.getY()][unit.getX()+1];
+                    CombatController combatController=new CombatController(unit,m);
+                    combatController.Attack();
+                    if(m.getHealth().getAmount()<=0){
+                        gameTiles.getEnemies().remove(m);
+                        gameTiles.getBoardController()[unit.getY() ][unit.getX()+1]=unit;
+                        gameTiles.getBoardController()[unit.getY()][unit.getX()]=new Tile('.', unit.getX(), unit.getY());
+                        System.out.println("win battle");
+                        unit.setX(unit.getX()+1);
+                    }
+                }
             }
             return unit;
         }
@@ -76,43 +133,21 @@ return unit;
            if(enemies.get(i) instanceof Monster){
               moveMonster(gameTiles,(Monster) enemies.get(i),player);
            }
-
+           else if(enemies.get(i) instanceof Trap){
+                Trap(gameTiles,player, (Trap) enemies.get(i));
+           }
         }
-      /*  ArrayList<Tile> tiles=new ArrayList<Tile>();
-       for(int i=0;i<gameTiles.getBoardController().length;i++){
-            for(int j=0;j<gameTiles.getBoardController()[i].length;j++){
-
-                boolean hasMove=false;
-                for(int h=0;h<tiles.size()&&!hasMove;h++){
-                    if(tiles.get(h).getX()==j&&tiles.get(h).getY()==i)
-                        hasMove=true;
-                }
-                if(!hasMove) {
-                    Tile tile = gameTiles.getBoardController()[i][j];
-                    if (tile.getType() == 's' || tile.getType() == 'k' || tile.getType() == 'q' || tile.getType() == 'z' || tile.getType() == 'b' || tile.getType() == 'g' || tile.getType() == 'w' || tile.getType() == 'M' || tile.getType() == 'C' || tile.getType() == 'K') {
-                        TileFactory tileFactory = new TileFactory();
-                        Map<Character, Supplier<Enemy>> map = tileFactory.listEnemies();
-                        Enemy enemy = map.get(tile.getType()).get();
-                        enemy.setY(tile.getY());
-                        enemy.setX(tile.getX());
-                        Unit unit=moveMonster(gameTiles, (Monster) enemy, player);
-                        tiles.add(unit);
-                    }
-                }
-            }
-
-
+    }
+    public void Trap(GameTiles gameTiles,Player player,Trap t){
+        System.out.println(t.range(player));
+        if(t.range(player)<2){
+            CombatController combatController=new CombatController(t,player);
+            combatController.Attack();
+            System.out.println(t.toString());
+            System.out.println(player.getHealth().getAmount());
+            gameTiles.getEnemies().remove(t);
+            gameTiles.getBoardController()[t.getY()][t.getY()]=new Tile('.',t.getX(),t.getY());
         }
-
-      */
-
-
-
-
-
-
-
-
     }
     public Unit moveMonster(GameTiles gameTiles,Monster m, Player player){
         double range=m.range(player);
