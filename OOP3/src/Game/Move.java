@@ -35,7 +35,8 @@ public class Move {
                         gameTiles.getEnemies().remove(m);
                         gameTiles.getBoardController()[unit.getY() - 1][unit.getX()]=unit;
                         gameTiles.getBoardController()[unit.getY()][unit.getX()]=new Tile('.', unit.getX(), unit.getY());
-                        System.out.println("win battle");
+                        System.out.println(m.getName()+" died."+  unit.getName()+"gained "+m.getExperience()+" experience");
+                        ((Player) unit).setExperience(m.getExperience());
                         unit.setY(unit.getY()-1);
                     }
                 }
@@ -60,7 +61,8 @@ return unit;
                         gameTiles.getEnemies().remove(m);
                         gameTiles.getBoardController()[unit.getY() + 1][unit.getX()]=unit;
                         gameTiles.getBoardController()[unit.getY()][unit.getX()]=new Tile('.', unit.getX(), unit.getY());
-                        System.out.println("win battle");
+                        System.out.println(m.getName()+" died."+  unit.getName()+"gained "+m.getExperience()+" experience");
+                        ((Player) unit).setExperience(m.getExperience());
                         unit.setY(unit.getY()+1);
                     }
                 }
@@ -84,7 +86,8 @@ return unit;
                         gameTiles.getEnemies().remove(m);
                         gameTiles.getBoardController()[unit.getY() ][unit.getX()-1]=unit;
                         gameTiles.getBoardController()[unit.getY()][unit.getX()]=new Tile('.', unit.getX(), unit.getY());
-                        System.out.println("win battle");
+                        System.out.println(m.getName()+" died."+  unit.getName()+"gained "+m.getExperience()+" experience");
+                        ((Player) unit).setExperience(m.getExperience());
                         unit.setX(unit.getX()-1);
                     }
                 }
@@ -108,7 +111,8 @@ return unit;
                         gameTiles.getEnemies().remove(m);
                         gameTiles.getBoardController()[unit.getY() ][unit.getX()+1]=unit;
                         gameTiles.getBoardController()[unit.getY()][unit.getX()]=new Tile('.', unit.getX(), unit.getY());
-                        System.out.println("win battle");
+                        System.out.println(m.getName()+" died."+  unit.getName()+"gained "+m.getExperience()+" experience");
+                        ((Player) unit).setExperience(m.getExperience());
                         unit.setX(unit.getX()+1);
                     }
                 }
@@ -139,7 +143,7 @@ return unit;
         }
     }
     public void Trap(GameTiles gameTiles,Player player,Trap t){
-        System.out.println(t.range(player));
+
         if(t.range(player)<2){
             CombatController combatController=new CombatController(t,player);
             combatController.Attack();
