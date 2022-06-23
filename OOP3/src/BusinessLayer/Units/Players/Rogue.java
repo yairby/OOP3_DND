@@ -29,6 +29,11 @@ public class Rogue extends Player{
         setAttackPoints(getAttackPoints()+(3*getLevel()));
     }
 
+    @Override
+    public String Type() {
+        return "Rogue";
+    }
+
     public Integer getEnergy() {
         return energy;
     }

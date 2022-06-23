@@ -29,6 +29,11 @@ public class Tile {
     public void setType(char type) {
         this.type = type;
     }
+    public Tile(char c){
+        x=-1;
+        y=-1;
+        type=c;
+    }
  public Tile(){
         type=' ';
         x=0;

@@ -2,7 +2,7 @@ package BusinessLayer.Units;
 
 import Board.Tile;
 
-public class Unit  {
+public class Unit extends Tile {
 
 
     private String name;
@@ -12,9 +12,10 @@ public class Unit  {
 
 
 
+
+
+
     public Unit( int health,String name, Integer attackPoints,Integer defensePoints){
-
-
 
         this.name=name;
         this.health=new Health(health,health);

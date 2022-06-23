@@ -7,8 +7,9 @@ public class Enemy extends Unit {
 
     private int Experience;
 
-    public Enemy(int experience,String name, int health, Integer attackPoints, Integer defensePoints, Board.Tile tile) {
+    public Enemy(int experience,String name, int health, Integer attackPoints, Integer defensePoints) {
         super(health, name, attackPoints, defensePoints);
+
         Experience=experience;
     }
 
@@ -24,5 +25,9 @@ public class Enemy extends Unit {
     public String toString(){
         return "name:"+getName()+"    health:"+getHealth()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"    experience"+getExperience();
 
+    }
+
+    public Tile getTile() {
+       return this;
     }
 }

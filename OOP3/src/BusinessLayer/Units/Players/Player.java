@@ -13,6 +13,7 @@ public abstract class Player extends Unit {
         super( health,name, attackPoints, defensePoints);
         this.experience=0;
         this.level=1;
+        this.setType('@');
     }
 
     public void checkForLevelUp(){
@@ -46,7 +47,7 @@ public abstract class Player extends Unit {
         setDefensePoints(getDefensePoints()+(1*level));
         level++;
     }
-
+    abstract public String Type();
     abstract public String UseSpecialAbility();
     abstract public void OnGameTick();
 
