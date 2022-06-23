@@ -9,7 +9,7 @@ public class Rogue extends Player{
     private Integer abilityEnergyCost;
 
     public Rogue(String name, int health, Integer attackPoints, Integer defensePoints, Integer abilityEnergyCost) {
-        super( health,name, attackPoints, defensePoints);
+        super(name,health, attackPoints, defensePoints);
         energy=100;
         this.abilityEnergyCost=abilityEnergyCost;
     }
@@ -19,12 +19,17 @@ public class Rogue extends Player{
         return null;
     }
 
-    @Override
-    public void OnGameTick() {
+    public void onGameTick() {
         energy=Math.min(energy+10,100);
     }
 
+    @Override
+    public void onTurn() {
+
+    }
+
     public void levelUp(){
+        super.levelUp();
         energy=100;
         setAttackPoints(getAttackPoints()+(3*getLevel()));
     }

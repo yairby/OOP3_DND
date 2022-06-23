@@ -1,16 +1,15 @@
 package BusinessLayer.Units.Players;
 
-import Board.Tile;
 import BusinessLayer.Units.Health;
-import BusinessLayer.Units.Unit;
+import Board.Unit;
 
 public abstract class Player extends Unit {
 
     private Integer experience;
     private Integer level;
 
-    public Player( int health,String name, Integer attackPoints, Integer defensePoints) {
-        super( health,name, attackPoints, defensePoints);
+    public Player(String name,Integer health, Integer attackPoints, Integer defensePoints) {
+        super(name, health, attackPoints, defensePoints);
         this.experience=0;
         this.level=1;
     }
@@ -39,16 +38,15 @@ public abstract class Player extends Unit {
     public void levelUp(){
         //for now we increase be old level
         experience-=50*level;
+        level++;
         Health h=getHealth();
         h.setPool(h.getPool()+(10*level));
         h.setAmount(h.getPool());
         setAttackPoints(getAttackPoints()+(4*level));
         setDefensePoints(getDefensePoints()+(1*level));
-        level++;
     }
 
     abstract public String UseSpecialAbility();
-    abstract public void OnGameTick();
 
     public Integer getExperience() {
         return experience;
@@ -65,6 +63,5 @@ public abstract class Player extends Unit {
     public void setLevel(Integer level) {
         this.level = level;
     }
-
 
 }

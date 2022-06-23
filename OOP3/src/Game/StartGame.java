@@ -1,8 +1,8 @@
 package Game;
 
-import Board.GameTiles;
-import Board.Tile;
+import Board.GameBoard;
 import Board.TileFactory;
+import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Players.Player;
 
 import java.util.List;
@@ -35,6 +35,7 @@ public class StartGame {
             }
         }
         List<Player> players= tileFactory.listPlayers();
+        List<Enemy> enemies= tileFactory.listEnemies();
         Player player= players.get(i-1);
         System.out.println("you have selected");
         System.out.println(player.getName());
@@ -57,8 +58,8 @@ public class StartGame {
                 "#........#B#....##..........##........#.........#\n" +
                 "#....s...###..........................#.........#\n" +
                 "#################################################";
-        GameTiles gameTiles=new GameTiles(level1);
-        System.out.println(gameTiles.printBoard());
+        GameBoard gameBoard =new GameBoard(level1,player,enemies);
+        System.out.println(gameBoard.printBoard());
         System.out.println(player.toString());
 
     }

@@ -1,17 +1,53 @@
 package BusinessLayer.Units.Enemies;
 
-
-import Board.Tile;
-
 public class Monster extends Enemy {
 
-    public Monster(char c,int experience, String name, int health, Integer attackPoints, Integer defensePoints, Board.Tile tile) {
-        super(c,experience, name, health, attackPoints, defensePoints, tile);
+    private Integer visionRange;
+    private char enemyType;
+    public Monster(char tileChar, String name, Integer health, Integer attackPoints, Integer defensePoints,Integer experience, Integer visionRange ) {
+        super(tileChar, name, health, attackPoints, defensePoints, experience);
+        this.visionRange=visionRange;
+        this.enemyType='M';
     }
+
+    public void findNearBy() {
+
+    }
+
+
+
+//    public void Move(){
+//        if(range(Tile ))
+//        if range(monster, player) < vision range then
+//        dx ← enemyX − playerX
+//        dy ← enemyY − playerY
+//        if |dx| > |dy| then
+//        if dx > 0 then
+//        Move left
+//else
+//        Move right
+//else
+//        if dy > 0 then
+//        Move up
+//else
+//        Move down
+//else
+//        Perform a random movement action: left, right, up, down or stay at the same place.
+
+//    }
     public String toString(){
         return "name:"+getName()+"    health:"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints();
 
     }
 
 
+    @Override
+    public void onTurn() {
+
+    }
+
+    @Override
+    public void onGameTick() {
+
+    }
 }
