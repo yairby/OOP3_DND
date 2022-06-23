@@ -1,4 +1,4 @@
-package Board;
+package GameController;
 
 import BusinessLayer.Units.Enemies.Boss;
 import BusinessLayer.Units.Enemies.Enemy;
@@ -42,11 +42,11 @@ public class TileFactory {
                 () -> new Trap('Q', "Queen's Trap", 250, 50, 10, 100, 3, 10),
                 () -> new Trap('D', "Death Trap", 500, 100, 20, 250, 1, 10)
         );
-        for(int i=0;i<enemies.size();i++){
-            enemies.get(i).get().setType(enemies.get(i).get().getType());
-            enemies.get(i).get().setX(-1);
-            enemies.get(i).get().setY(-1);
-        }
+        //for(int i=0;i<enemies.size();i++){
+        //    enemies.get(i).get().setType(enemies.get(i).get().getType());
+         //   enemies.get(i).get().setX(-1);
+         //   enemies.get(i).get().setY(-1);
+       // }
 
         return enemies.stream().collect(Collectors.toMap(s -> s.get().getTile().getType(), Function.identity()));
     }

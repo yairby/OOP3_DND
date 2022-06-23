@@ -1,9 +1,7 @@
-package Game;
+package GameController;
 
 import Board.GameTiles;
 import Board.Tile;
-import Board.TileFactory;
-import BusinessLayer.CombatSystem.Combat;
 import BusinessLayer.CombatSystem.CombatController;
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Enemies.Monster;
@@ -12,9 +10,7 @@ import BusinessLayer.Units.Players.Player;
 import BusinessLayer.Units.Unit;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Random;
-import java.util.function.Supplier;
 
 public class Move {
     public Unit move(GameTiles gameTiles, Unit unit,String move){

@@ -1,20 +1,22 @@
-package Game;
+package GameController;
 
 import Board.GameTiles;
 import Board.Tile;
-import Board.TileFactory;
-import BusinessLayer.Units.Enemies.Enemy;
-import BusinessLayer.Units.Enemies.Monster;
 import BusinessLayer.Units.Players.Player;
-import BusinessLayer.Units.Unit;
-import DataAccessLayer.DataAccessLayer;
+import DataAccessLayer.LevelManager;
+import UI.Callback;
+import UI.MessageCallback;
 
 import java.util.*;
-import java.util.function.Supplier;
 
-public class GameController {
+public class Initializer {
     private Scanner scanner=new Scanner(System.in);
-    public void play(){
+    private enum Level {level1,level2,level3,level4}
+    private MessageCallback msgCB;
+    public Initializer(MessageCallback msgCB){
+        this.msgCB=msgCB;
+    }
+    public void StartGame(){
         Scanner scanner=new Scanner(System.in);
         System.out.println("Select player");
         TileFactory tileFactory=new TileFactory();
@@ -44,12 +46,9 @@ public class GameController {
         Player player= players.get(i-1);
         System.out.println("you have selected");
         System.out.println(player.getName());
-        DataAccessLayer data=new DataAccessLayer();
-        List<String> file=data.readAllLines("C:\\Users\\yairb\\Downloads\\FinalAIproject\\OOP3_DND\\OOP3\\src\\DataAccessLayer\\level1.txt");
+        LevelManager data=new LevelManager();
+
         String level1="";
-        for(int u=0;u<file.size();u++){
-            level1=level1+file.get(u)+"\n";
-        }
         GameTiles gameTiles=new GameTiles(level1,player);
         System.out.println(gameTiles.printBoard());
         System.out.println(player.toString());

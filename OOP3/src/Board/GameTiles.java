@@ -1,14 +1,11 @@
 package Board;
 
 import BusinessLayer.Units.Enemies.Enemy;
-import BusinessLayer.Units.Enemies.Monster;
 import BusinessLayer.Units.Players.Player;
-import BusinessLayer.Units.Players.Warrior;
-import BusinessLayer.Units.Unit;
 import BusinessLayer.Units.Wall;
+import GameController.TileFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 

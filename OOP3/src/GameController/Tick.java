@@ -1,4 +1,4 @@
-package Game;
+package GameController;
 
 import BusinessLayer.Units.Players.Player;
 
