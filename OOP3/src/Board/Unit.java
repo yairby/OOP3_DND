@@ -1,22 +1,16 @@
-package BusinessLayer.Units;
+package Board;
 
 import Board.Tile;
+import BusinessLayer.Units.Health;
 
-public class Unit extends Tile {
 
-
+public abstract class Unit extends Tile {
     private String name;
     private Health health;
     private Integer attackPoints;
     private Integer defensePoints;
 
-
-
-
-
-
-    public Unit( int health,String name, Integer attackPoints,Integer defensePoints){
-
+    public Unit(String name,Integer health, Integer attackPoints,Integer defensePoints){
         this.name=name;
         this.health=new Health(health,health);
         this.attackPoints=attackPoints;
@@ -58,5 +52,6 @@ public class Unit extends Tile {
         this.defensePoints = defensePoints;
     }
 
-
+    public abstract void onTurn();
+    public abstract void onGameTick();
 }

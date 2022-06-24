@@ -13,13 +13,20 @@ public class Mage extends Player{
 
 
     public Mage(String name, int health, Integer attackPoints, Integer defensePoints, Integer manaPool, Integer abilityManaCost,int spellPower,int hitsCount,int abilityRange) {
-        super( health,name, attackPoints, defensePoints);
+        super(name, health, attackPoints, defensePoints);
         this.manaPool=manaPool;
         this.manaAmount=manaPool/4;
         this.spellPower=spellPower;
         this.abilityManaCost=abilityManaCost;
         this.hitsCount=hitsCount;
         this.abilityRange=abilityRange;
+    }
+
+    public void levelUp(){
+        super.levelUp();
+        manaPool+=25*getLevel();
+        manaAmount=Math.min(manaAmount+(manaPool/4),manaPool);
+        spellPower+=10*getLevel();
     }
 
     @Override
@@ -32,10 +39,6 @@ public class Mage extends Player{
         }
     }
 
-    @Override
-    public void OnGameTick() {
-        manaAmount=Math.min(manaAmount+(1*getLevel()),manaPool);
-    }
 
     public Integer getSpellPower() {
         return spellPower;
@@ -99,5 +102,15 @@ public class Mage extends Player{
 
     public String toString(){
         return "name:"+getName()+"    health:"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"    ability mana cost:"+getAbilityManaCost()+"    ability range:"+getAbilityRange()+"    mana amount:"+getManaAmount()+"    spell power"+getSpellPower();
+    }
+
+    @Override
+    public void onTurn() {
+
+    }
+
+    @Override
+    public void onGameTick() {
+        manaAmount=Math.min(manaAmount+(1*getLevel()),manaPool);
     }
 }

@@ -1,25 +1,28 @@
 package BusinessLayer.Units.Enemies;
 
-import Board.Tile;
-import BusinessLayer.Units.Unit;
+import Board.Unit;
 
-public class Enemy extends Unit {
+public abstract class Enemy extends Unit {
 
-    private int Experience;
+    private int experience;
+    private char tileChar;
 
-    public Enemy(int experience,String name, int health, Integer attackPoints, Integer defensePoints) {
-        super(health, name, attackPoints, defensePoints);
 
-        Experience=experience;
+    private char enemyType;
+
+    public Enemy(char tileChar, String name, Integer health, Integer attackPoints, Integer defensePoints, int experience) {
+        super(name, health, attackPoints, defensePoints);
+        this.experience=experience;
+        this.tileChar=tileChar;
     }
 
 
     public int getExperience() {
-        return Experience;
+        return experience;
     }
 
     public void setExperience(int experience) {
-        Experience = experience;
+        this.experience = experience;
     }
 
     public String toString(){

@@ -1,9 +1,7 @@
 package GameController;
 
-import BusinessLayer.Units.Enemies.Boss;
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Enemies.Monster;
-import BusinessLayer.Units.Enemies.Trap;
 import BusinessLayer.Units.Players.Mage;
 import BusinessLayer.Units.Players.Player;
 import BusinessLayer.Units.Players.Rogue;
@@ -11,14 +9,13 @@ import BusinessLayer.Units.Players.Warrior;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class TileFactory {
     private List<Supplier<Player>> playersList;
     private Map<Character, Supplier<Enemy>> enemiesMap;
+
     private Player selected;
 
     public TileFactory(){
@@ -68,6 +65,10 @@ public class TileFactory {
     }
     public Map<Character, Supplier<Enemy>> listEnemies(){
         return enemiesMap;
+    }
+
+    public List<Enemy> listEnemies(){
+        return enemiesList.stream().map(Supplier::get).collect(Collectors.toList());
     }
 
 

@@ -2,52 +2,39 @@ package Board;
 
 public class Tile {
     private char type;
-
-    public int getY() {
-        return y;
+    private Position position;
+    public Tile(){
+        type=' ';
+        this.position=new Position(0,0);
     }
-
-    public void setY(int y) {
-        this.y = y;
+    public Tile(char type, int x, int y) {
+        this.type = type;
+        this.position=new Position(x,y);
     }
-
-    public int getX() {
-        return x;
+    public Tile(char type, Position p) {
+        this.type = type;
+        this.position=p;
     }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    private int x;
-    private int y;
 
     public char getType() {
         return type;
     }
-
     public void setType(char type) {
         this.type = type;
     }
-    public Tile(char c){
-        x=-1;
-        y=-1;
-        type=c;
+
+    public Position getPosition() {
+        return position;
     }
- public Tile(){
-        type=' ';
-        x=0;
-        y=0;
- }
-    public Tile(char type, int x, int y) {
-        this.type = type;
-        this.x=x;
-        this.y=y;
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
-    public double range(Tile tile){
-        return Math.sqrt(Math.pow(tile.getX()- getX(),2)+Math.pow(tile.getY()-getY(),2));
+
+    public int range(Tile tile){
+        return position.range(tile.getPosition());
     }
     public boolean checkrange(Tile tile,int r){
-        return range(tile)<r;
+        return range(tile) < r;
     }
 }

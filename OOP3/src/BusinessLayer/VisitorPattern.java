@@ -1,21 +1,20 @@
 package BusinessLayer;
 
 import Board.Tile;
-import BusinessLayer.Units.Unit;
 
 public class VisitorPattern {
 
-    public String toString(GameBoard gameBoard){
+    public String toString(GameBoard1 gameBoard1){
         String s="";
-        for(int i=0;i<gameBoard.getBoard().getBoardController().length;i++){
-            for(int j=0;j<gameBoard.getBoard().getBoardController()[i].length;j++){
-                  s=s+String.valueOf(gameBoard.getBoard().getBoardController()[i][j]);
+        for(int i = 0; i< gameBoard1.getBoard().getBoardController().length; i++){
+            for(int j = 0; j< gameBoard1.getBoard().getBoardController()[i].length; j++){
+                  s=s+String.valueOf(gameBoard1.getBoard().getBoardController()[i][j]);
             }
             s=s+"\n";
         }
         return s;
     }
-    public String GetName(Tile tile,GameBoard gameBoard){
+    public String GetName(Tile tile, GameBoard1 gameBoard1){
         /*
         if( gameBoard.getBoard().getBoardController()[tile.getY()][tile.getX()].equals('@')){
             return "player";
