@@ -30,7 +30,7 @@ public abstract class Enemy extends Unit {
 
     }
 
-    public Tile getTile() {
-       return this;
+    public char getType() {
+       return enemyType;
     }
 }

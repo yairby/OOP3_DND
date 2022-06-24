@@ -3,8 +3,11 @@ package Board;
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Enemies.Monster;
 import BusinessLayer.Units.Players.Player;
+import GameController.TileFactory;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class GameBoard {
@@ -40,6 +43,7 @@ public class GameBoard {
     }
 
     public void initBoard(String[] arr){
+        TileFactory factory=new TileFactory();
         for(int i=0;i<arr.length;i++){
             for(int j=0;j< arr[0].length();j++){
                 Tile t;
@@ -55,8 +59,9 @@ public class GameBoard {
                         t = new Empty(type,i, j);
                         break;
                     default:
-                        Enemy e = factory.produceEnemy(type);
-                     //   t=enemies.stream().filter((enemy)->enemy.getType()==type);
+                        Enemy enemy = factory.produceEnemy(type);
+                        enemies.add(enemy);
+                        t=enemy;
                 }
                 BoardController[i][j]=t;
             }

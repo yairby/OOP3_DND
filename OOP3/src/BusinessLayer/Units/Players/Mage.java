@@ -72,12 +72,7 @@ public class Mage extends Player{
         this.hitsCount = hitsCount;
     }
 
-    public void levelUp(){
-        manaPool+=25*getLevel();
-        manaAmount=Math.min(manaAmount+(manaPool/4),manaPool);
-        spellPower+=10*getLevel();
-        super.levelUp();
-    }
+
 
     @Override
     public String Type() {

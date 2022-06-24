@@ -63,7 +63,7 @@ public class GameManager {
                     throw new Exception();
                 }
             } catch (Exception e) {
-                System.out.println("Invalid input, please choose a hero number from the list.");
+                msgCB.call("Invalid input, please choose a hero number from the list.");
                 scanner.next();
             }
         }

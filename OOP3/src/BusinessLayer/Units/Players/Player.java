@@ -37,7 +37,6 @@ public abstract class Player extends Unit {
     }
 
     public void levelUp(){
-        //for now we increase be old level
         experience-=50*level;
         level++;
         Health h=getHealth();

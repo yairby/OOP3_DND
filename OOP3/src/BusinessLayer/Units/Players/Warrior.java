@@ -16,7 +16,6 @@ public class Warrior extends Player {
     }
 
     public void levelUp(){
-        //for now we increase be old level
         super.levelUp();
         remainingCoolDown=0;
         Health h=getHealth();
