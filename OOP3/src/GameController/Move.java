@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Move {
-    public Unit move(GameTiles gameTiles, Unit unit,String move){
+    public Unit move(GameTiles gameTiles, Unit unit, String move){
 
         if(move.equals("w")){
             if(!(unit.getY()-1<0)&&(gameTiles.getBoardController()[unit.getY() - 1][unit.getX()].getType()=='.')) {
