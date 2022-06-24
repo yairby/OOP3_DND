@@ -2,6 +2,7 @@ package GameController;
 
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Enemies.Monster;
+import BusinessLayer.Units.Enemies.Trap;
 import BusinessLayer.Units.Players.Mage;
 import BusinessLayer.Units.Players.Player;
 import BusinessLayer.Units.Players.Rogue;
@@ -9,6 +10,8 @@ import BusinessLayer.Units.Players.Warrior;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -39,13 +42,7 @@ public class TileFactory {
                 () -> new Trap('Q', "Queen's Trap", 250, 50, 10, 100, 3, 10),
                 () -> new Trap('D', "Death Trap", 500, 100, 20, 250, 1, 10)
         );
-        //for(int i=0;i<enemies.size();i++){
-        //    enemies.get(i).get().setType(enemies.get(i).get().getType());
-         //   enemies.get(i).get().setX(-1);
-         //   enemies.get(i).get().setY(-1);
-       // }
-
-        return enemies.stream().collect(Collectors.toMap(s -> s.get().getTile().getType(), Function.identity()));
+        return enemies.stream().collect(Collectors.toMap(s -> s.get().getTile(), Function.identity()));
     }
 
     private List<Supplier<Player>> initPlayers() {
@@ -65,10 +62,6 @@ public class TileFactory {
     }
     public Map<Character, Supplier<Enemy>> listEnemies(){
         return enemiesMap;
-    }
-
-    public List<Enemy> listEnemies(){
-        return enemiesList.stream().map(Supplier::get).collect(Collectors.toList());
     }
 
 
