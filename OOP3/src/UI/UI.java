@@ -12,6 +12,6 @@ import java.util.stream.Collectors;
 public class UI {
     public static void main(String[] args) {
         GameManager game=new GameManager(new MessageCallback());
-        game.StartGame(1);
+        game.StartGame();
     }
 }

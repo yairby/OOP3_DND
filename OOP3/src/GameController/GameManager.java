@@ -16,14 +16,40 @@ public class GameManager {
     public GameManager(MessageCallback msgCB){
         this.msgCB=msgCB;
     }
-    public void StartGame(int level){
+    public void StartGame(){
         TileFactory tileFactory=new TileFactory();
+
         //loading the players
-        int j=0;
-        for (Player t: tileFactory.listPlayers()) {
-            msgCB.call(j+1+"."+t.toString()+"     ");
-            j++;
+        List<Player> players= tileFactory.listPlayers();
+        for (Player t: players) {
+            msgCB.call((players.indexOf(t)+1)+"."+t.toString()+"     ");
         }
+
+        Player player=ChoosePlayer(players);
+
+        //start game action
+        boolean stop=false;
+        String status="";
+        int currentLevel=1;
+        while(!stop){
+            boolean passed = PlayLevel(currentLevel,player);
+            if(passed){
+                msgCB.call("You passed level: "+currentLevel+"!!!");
+                if(currentLevel==maxLevel){
+                    stop=true;
+                    status="Win";
+                }else {
+                    currentLevel++;
+                }
+            }else {
+                stop=true;
+                status="Dead";
+            }
+        }
+        AskAboutNewGame(status);
+    }
+
+    public Player ChoosePlayer(List<Player> playerList){
         //choosing the player
         msgCB.call("Choose a hero from the list:");
         boolean isChosen=false;
@@ -31,7 +57,7 @@ public class GameManager {
         while (!isChosen){
             try {
                 choose = scanner.nextInt();
-                if(choose > 0 && choose <= j) {
+                if(choose > 0 && choose <= playerList.size()) {
                     isChosen = true;
                 }else {
                     throw new Exception();
@@ -43,66 +69,47 @@ public class GameManager {
         }
 
         //inform the user about the selected player
-        List<Player> players= tileFactory.listPlayers();
-        Player player= players.get(choose-1);
+        Player player= playerList.get(choose-1);
         msgCB.call("You have selected: "+player.getName());
-
-        //load the first level
-        LevelLoader levels=new LevelLoader();
+        return player;
+    }
+    public void AskAboutNewGame(String status)
+    {
+        msgCB.call("You "+status+"! \n Do you want to start a new game? \n Press 'Y' to restart or any other key to exit");
+        String startNew=scanner.nextLine();
+        if(startNew.equals("Y")||startNew.equals("y")){
+            msgCB.call("Starting new game!");
+            StartGame();
+        }else{
+            msgCB.call("Thanks for playing our game! Goodbye!");
+            System.exit(0);
+        }
+    }
+    public boolean PlayLevel(int level, Player player) {
+        msgCB.call("-------Level "+level+" Started-------");
         String levelMap= LevelLoader.LoadLevel(level).stream().collect(Collectors.joining("\n"));
         GameTiles gameTiles=new GameTiles(levelMap,player);
         msgCB.call(gameTiles.printBoard());
         msgCB.call(player.toString());
 
-        //start game action
-        boolean win=false,passLevel=false,death=false;
-        while (!win && !death){
-            while (!passLevel && !death){
-                String s=scanner.next();
-                Move m=new Move();
-                m.move(gameTiles,player,s);
-                m.moveMonsters(gameTiles,player);
+        boolean passLevel=false,death=false;
+        while (!passLevel && !death) {
+            String s = scanner.next();
+            Move m = new Move();
+            m.move(gameTiles, player, s);
+            m.moveMonsters(gameTiles, player);
+            msgCB.call(gameTiles.printBoard());
+            msgCB.call(player.toString());
+            if (player.getHealth().getAmount() == 0 || player.getHealth().getAmount() < 0) {
+                death = true;
+                gameTiles.getBoardController()[player.getY()][player.getX()]=new Tile('X',player.getX(),player.getY());
                 msgCB.call(gameTiles.printBoard());
-                msgCB.call(player.toString());
-                if(player.getHealth().getAmount()==0){
-                    death=true;
-                }
-                else if(gameTiles.getEnemies().isEmpty()){
-                    passLevel=true;
-                    //player.setLevel(player.getLevel()+1);
-                }
-                else if(player.getHealth().getAmount()<=0)
-                    death=true;
+            } else if (gameTiles.getEnemies().isEmpty()) {
+                passLevel = true;
             }
-            if(!death) {
-                player.setLevel(player.getLevel() + 1);
-                if (player.getLevel() == 5) {
-                    win = true;
-                }
-                else{
-                    msgCB.call("You dead! \n Do you want to start a new game? \n Press 'Y' to restart or any other key to exit");
-                    String startNew=scanner.nextLine();
-                    if(startNew.equals("Y")||startNew.equals("y")){
-                        msgCB.call("Starting new game!");
-                        StartGame(1);
-                    }else{
-                        msgCB.call("Thanks for playing our game! Goodbye!");
-                        System.exit(0);
-                    }
-                }
-            }
-
         }
-        if(death){
-            gameTiles.getBoardController()[player.getY()][player.getX()]=new Tile('X',player.getX(),player.getY());
-            System.out.println(gameTiles.printBoard());
-            System.out.println("game over");
-        }
-        else{
-            System.out.println("Win");
-        }
-
+        return passLevel && !death;
     }
-    
+
 
 }
