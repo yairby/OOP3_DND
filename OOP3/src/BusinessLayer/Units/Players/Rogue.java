@@ -1,8 +1,5 @@
 package BusinessLayer.Units.Players;
 
-import Board.Tile;
-import BusinessLayer.Units.Health;
-
 public class Rogue extends Player{
 
     private Integer energy;

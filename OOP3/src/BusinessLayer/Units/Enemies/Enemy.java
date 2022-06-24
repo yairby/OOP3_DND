@@ -1,6 +1,10 @@
 package BusinessLayer.Units.Enemies;
 
-import Board.Unit;
+import BusinessLayer.Board.Empty;
+import BusinessLayer.Board.Unit;
+import BusinessLayer.CombatSystem.Combat;
+import BusinessLayer.Units.Players.Player;
+import BusinessLayer.VisitorPattern.Visitor;
 
 public abstract class Enemy extends Unit {
 
@@ -30,7 +34,16 @@ public abstract class Enemy extends Unit {
 
     }
 
-    public char getType() {
-       return enemyType;
+    public char getTileChar() {
+       return tileChar;
     }
+
+    public void accept(Visitor v) {
+        v.visit(this);
+    }
+    public void visit(Player player) {
+        Combat combat=new Combat(this,player);
+        combat.Attack();
+    }
+
 }

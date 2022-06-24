@@ -1,7 +1,5 @@
 package BusinessLayer.Units.Players;
 
-import Board.Tile;
-
 public class Mage extends Player{
 
     private Integer manaPool;

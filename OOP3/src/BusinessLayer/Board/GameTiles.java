@@ -1,4 +1,4 @@
-package Board;
+package BusinessLayer.Board;
 
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Players.Player;
@@ -9,34 +9,29 @@ import java.util.List;
 
 public class GameTiles {
 
-   private Tile[][] BoardController;
+   private Tile[][] Board;
    private Player player;
    private List<Enemy> enemies;
 
+   private final int UPPERBOUND=0;
+   private final int LOWERBOUND;
+   private final int RIGHTBOUND;
+   private final int LEFTBOUND=0;
+
     public GameTiles(String levelMap, Player p){
         String[] arr=levelMap.split("\\n");
-        this.BoardController=new Tile[arr.length][arr[0].length()];
+        this.Board=new Tile[arr.length][arr[0].length()];
         this.enemies=new ArrayList<>();
         this.player=p;
         initBoard(arr);
-    }
-    public GameTiles(Tile[][] boardController) {
-        this.BoardController=boardController;
-    }
-
-    public Tile[][] getBoardController() {
-        return BoardController;
+        LOWERBOUND=arr.length-1;
+        RIGHTBOUND=arr[0].length()-1;
     }
 
-    public void setBoardController(Tile[][] boardController) {
-        BoardController = boardController;
+    public Tile[][] getBoard() {
+        return Board;
     }
-    public void setTile(Tile t){
 
-    }
-    public GameTiles(int num) {
-        this.BoardController=new Tile[num][num];
-    }
 
     public void initBoard(String[] arr){
         TileFactory factory=new TileFactory();
@@ -59,19 +54,50 @@ public class GameTiles {
                         enemies.add(enemy);
                         t=enemy;
                 }
-                BoardController[i][j]=t;
+                Board[i][j]=t;
                 t.setPosition(new Position(i,j));
             }
         }
     }
+
+    public void SetTileInPosition(Position p, Tile newTile){
+        Board[p.getY()][p.getX()]=newTile;
+
+    }
+    public Tile getTileInPosition(Position p){
+        return Board[p.getY()][p.getX()];
+    }
+    public Tile getTileInPosition(int y,int x){
+        return Board[y][x];
+    }
     public String printBoard(){
         String s="";
-        for(int i=0;i< getBoardController().length;i++){
-            for (int j=0;j< getBoardController()[i].length;j++){
-                s=s+BoardController[i][j].getType();
+        for(int i = 0; i< getBoard().length; i++){
+            for (int j = 0; j< getBoard()[i].length; j++){
+                s=s+Board[i][j].getTileChar();
             }
             s=s+"\n";
         }
         return s;
+    }
+
+    public List<Enemy> getEnemies(){
+        return enemies;
+    }
+
+    public int getUPPERBOUND() {
+        return UPPERBOUND;
+    }
+
+    public int getLOWERBOUND() {
+        return LOWERBOUND;
+    }
+
+    public int getLEFTBOUND() {
+        return LEFTBOUND;
+    }
+
+    public int getRIGHTBOUND() {
+        return RIGHTBOUND;
     }
 }

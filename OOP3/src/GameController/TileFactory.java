@@ -42,7 +42,7 @@ public class TileFactory {
                 () -> new Trap('Q', "Queen's Trap", 250, 50, 10, 100, 3, 10),
                 () -> new Trap('D', "Death Trap", 500, 100, 20, 250, 1, 10)
         );
-        return enemies.stream().collect(Collectors.toMap(s -> s.get().getType(), Function.identity()));
+        return enemies.stream().collect(Collectors.toMap(s -> s.get().getTileChar(), Function.identity()));
     }
 
     private List<Supplier<Player>> initPlayers() {

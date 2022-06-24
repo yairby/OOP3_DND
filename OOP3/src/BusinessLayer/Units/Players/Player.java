@@ -1,7 +1,11 @@
 package BusinessLayer.Units.Players;
 
+import BusinessLayer.Board.Tile;
+import BusinessLayer.CombatSystem.Combat;
+import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Health;
-import Board.Unit;
+import BusinessLayer.Board.Unit;
+import BusinessLayer.VisitorPattern.Visitor;
 
 public abstract class Player extends Unit {
 
@@ -12,7 +16,7 @@ public abstract class Player extends Unit {
         super(name, health, attackPoints, defensePoints);
         this.experience=0;
         this.level=1;
-        this.setType('@');
+        this.setTileChar('@');
     }
 
     public void checkForLevelUp(){
@@ -62,6 +66,20 @@ public abstract class Player extends Unit {
 
     public void setLevel(Integer level) {
         this.level = level;
+    }
+
+    @Override
+    public void accept(Visitor v) {
+        v.visit(this);
+    }
+    @Override
+    public void visit(Enemy enemy) {
+        Combat combat=new Combat(this,enemy);
+        combat.Attack();
+    }
+    @Override
+    public void visit(Tile tile) {
+        tile.visit(this);
     }
 
 }

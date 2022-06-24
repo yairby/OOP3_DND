@@ -1,7 +1,7 @@
 package GameController;
 
-import Board.GameTiles;
-import Board.Tile;
+import BusinessLayer.Board.Dead;
+import BusinessLayer.Board.GameTiles;
 import BusinessLayer.Units.Players.Player;
 import DataAccessLayer.LevelLoader;
 import UI.MessageCallback;
@@ -97,12 +97,12 @@ public class GameManager {
             String s = scanner.next();
             Move m = new Move();
             m.move(gameTiles, player, s);
-            m.moveMonsters(gameTiles, player);
+            //m.moveMonsters(gameTiles, player);
             msgCB.call(gameTiles.printBoard());
             msgCB.call(player.toString());
             if (player.getHealth().getAmount() == 0 || player.getHealth().getAmount() < 0) {
                 death = true;
-                gameTiles.getBoardController()[player.getY()][player.getX()]=new Tile('X',player.getX(),player.getY());
+                gameTiles.SetTileInPosition(player.getPosition(),new Dead('X',player.getPosition()));
                 msgCB.call(gameTiles.printBoard());
             } else if (gameTiles.getEnemies().isEmpty()) {
                 passLevel = true;

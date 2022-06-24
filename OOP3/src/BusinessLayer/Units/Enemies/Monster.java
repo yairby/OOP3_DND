@@ -12,11 +12,9 @@ public class Monster extends Enemy {
 
     private int visionRange;
 
-    private char enemyType;
     public Monster(char tileChar, String name, Integer health, Integer attackPoints, Integer defensePoints,Integer experience, Integer visionRange ) {
         super(tileChar, name, health, attackPoints, defensePoints, experience);
         this.visionRange=visionRange;
-        this.enemyType='M';
     }
 
     public void findNearBy() {

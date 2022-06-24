@@ -1,8 +1,6 @@
 package BusinessLayer.Units.Enemies;
 
 
-import Board.Tile;
-
 public class Trap extends Enemy {
     private int visibilityTime;
     private int invisibilityTime;

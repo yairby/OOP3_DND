@@ -1,6 +1,5 @@
 package BusinessLayer.Units.Players;
 
-import Board.Tile;
 import BusinessLayer.Units.Health;
 
 public class Warrior extends Player {
