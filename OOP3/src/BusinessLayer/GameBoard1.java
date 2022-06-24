@@ -1,19 +1,19 @@
 package BusinessLayer;
 
-import Board.GameBoard;
+import Board.GameTiles;
 
 public class GameBoard1 {
-    private GameBoard Board;
+    private GameTiles Board;
 
-    public GameBoard getBoard() {
+    public GameTiles getBoard() {
         return Board;
     }
 
-    public void setBoard(GameBoard board) {
+    public void setBoard(GameTiles board) {
         Board = board;
     }
 
-    public GameBoard1(GameBoard board) {
+    public GameBoard1(GameTiles board) {
         Board = board;
     }
 }

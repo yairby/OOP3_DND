@@ -2,29 +2,24 @@ package Board;
 
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Players.Player;
-import BusinessLayer.Units.Wall;
 import GameController.TileFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
 
 public class GameTiles {
 
    private Tile[][] BoardController;
+   private Player player;
+   private List<Enemy> enemies;
 
-    public ArrayList<Enemy> getEnemies() {
-        return enemies;
+    public GameTiles(String levelMap, Player p){
+        String[] arr=levelMap.split("\\n");
+        this.BoardController=new Tile[arr.length][arr[0].length()];
+        this.enemies=new ArrayList<>();
+        this.player=p;
+        initBoard(arr);
     }
-
-    public void setEnemies(ArrayList<Enemy> enemies) {
-        this.enemies = enemies;
-    }
-
-    private ArrayList<Enemy> enemies;
-
-
     public GameTiles(Tile[][] boardController) {
         this.BoardController=boardController;
     }
@@ -40,66 +35,40 @@ public class GameTiles {
 
     }
     public GameTiles(int num) {
-
         this.BoardController=new Tile[num][num];
+    }
 
-    }
-    public GameTiles(String s,Player heroType){
-        String[] arr=s.split("\\n");
-        this.BoardController=new Tile[arr.length][arr[0].length()];
-        initBoard(arr,heroType);
-        enemies=initEnemies(BoardController);
-    }
-    public ArrayList<Enemy> initEnemies(Tile[][] boardController){
-        ArrayList<Enemy> enemies=new ArrayList<Enemy>();
-        for(int i=0;i<boardController.length;i++){
-            for(int j=0;j<boardController[i].length;j++){
-                if(boardController[i][j] instanceof Enemy){
-                    Enemy e=(Enemy) boardController[i][j];
-                    enemies.add(e);
-                }
-            }
-
-        }
-        return enemies;
-    }
-    public void initBoard(String[] arr, Player player){
-        TileFactory tileFactory=new TileFactory();
-        Map<Character, Supplier<Enemy>> enemiesMap= tileFactory.listEnemies();
+    public void initBoard(String[] arr){
+        TileFactory factory=new TileFactory();
         for(int i=0;i<arr.length;i++){
-            for(int j=0;j< arr[i].length();j++){
-                if(arr[i].charAt(j)=='s'||arr[i].charAt(j)=='k'||arr[i].charAt(j)=='q'||arr[i].charAt(j)=='z'||arr[i].charAt(j)=='b'||arr[i].charAt(j)=='g'||arr[i].charAt(j)=='w'||arr[i].charAt(j)=='M'||arr[i].charAt(j)=='C'||arr[i].charAt(j)=='K'||arr[i].charAt(j)=='B'||arr[i].charAt(j)=='Q'||arr[i].charAt(j)=='D'){
-                    Supplier<Enemy> e= map.get(arr[i].charAt(j));
-                    BoardController[i][j]=e.get();
-                    BoardController[i][j].setX(j);
-                    BoardController[i][j].setY(i);
+            for(int j=0;j< arr[0].length();j++){
+                Tile t;
+                char type=arr[i].charAt(j);
+                switch (type) {
+                    case '@':
+                        t = player;
+                        break;
+                    case '#':
+                        t = new Wall(type,i, j);
+                        break;
+                    case '.':
+                        t = new Empty(type,i, j);
+                        break;
+                    default:
+                        Enemy enemy = factory.produceEnemy(type);
+                        enemies.add(enemy);
+                        t=enemy;
                 }
-                else if(arr[i].charAt(j)=='@'){
-                    BoardController[i][j]=player;
-                    player.setY(i);
-                    player.setX(j);
-                }
-                else if(arr[i].charAt(j)=='#'){
-
-                    Wall wall=new Wall();
-
-                    wall.setY(i);
-                    wall.setX(j);
-                    BoardController[i][j]=wall;
-                }
-                else {
-                    BoardController[i][j] = new Tile(arr[i].charAt(j), j, i);
-                }
+                BoardController[i][j]=t;
+                t.setPosition(new Position(i,j));
             }
         }
     }
-
     public String printBoard(){
         String s="";
         for(int i=0;i< getBoardController().length;i++){
             for (int j=0;j< getBoardController()[i].length;j++){
-                s=s+String.valueOf(BoardController[i][j].getType());
-
+                s=s+BoardController[i][j].getType();
             }
             s=s+"\n";
         }
