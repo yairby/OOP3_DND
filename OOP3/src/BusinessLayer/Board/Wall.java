@@ -14,9 +14,13 @@ public class Wall extends Tile{
     @Override
     public void visit(Wall wallTile){}
     @Override
-    public void visit(Player playerTile){}
+    public void visit(Player playerTile){
+        System.out.println("Just For Testing: YOU BUMPED INTO A WALL!");
+    }
     @Override
-    public void visit(Enemy enemyTile){}
+    public void visit(Enemy enemyTile){
+        System.out.println("Just For Testing: "+enemyTile.getTileChar()+" BUMPED INTO A WALL!");
+    }
     @Override
     public void visit(Tile tile){}
 }

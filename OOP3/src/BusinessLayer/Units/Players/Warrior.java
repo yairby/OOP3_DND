@@ -58,7 +58,7 @@ public class Warrior extends Player {
     }
 
     public String toString(){
-        return "name:"+getName()+"    health:"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"     level:"+getLevel()+"     Experience"+getExperience()+"    ability cool down:"+getAbilityCoolDown();
+        return "name:"+getName()+"    health:"+getHealth().getAmount()+"/"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"     level:"+getLevel()+"     Experience"+getExperience()+"    ability cool down:"+getAbilityCoolDown();
 
     }
 

@@ -30,7 +30,7 @@ public abstract class Enemy extends Unit {
     }
 
     public String toString(){
-        return "name:"+getName()+"    health:"+getHealth()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"    experience"+getExperience();
+        return "name:"+getName()+"    health:"+getHealth().getAmount()+"/"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"    experience"+getExperience();
 
     }
 

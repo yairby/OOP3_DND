@@ -31,8 +31,13 @@ public class Combat {
         Attacker = attacker;
     }
     public int Attack(){
+        String attackerName= getAttacker().getName();
+        String defenderName= getDefender().getName();
+        msgCB.call("---------"+attackerName+" engaged in combat with "+defenderName+"---------");
+        PrintParticipants(getAttacker().toString(), getDefender().toString());
         Random r=new Random();
         int attackP=r.nextInt(getAttacker().getAttackPoints()+1);
+        msgCB.call(attackerName+"");
         int defenceP=r.nextInt(getDefender().getDefensePoints()+1);
         int damage=attackP-defenceP;
         if(damage>0){
@@ -40,6 +45,28 @@ public class Combat {
             return damage;
         }
         return 0;
+    }
+
+    public void PrintParticipants(String par1, String par2){
+        String s="";
+        int maxLen=Math.max(par1.length(),par2.length());
+        for (int i = 0; i < maxLen+10; i++) {
+            s+="#";
+        }
+        s+="\n";
+        s+="#    "+par1+"    #";
+        s+="\n";
+        for (int i = 0; i < maxLen+10; i++) {
+            s+="#";
+        }
+        s+="\n";
+        String spaces=" ".repeat(Math.abs(par1.length()-par2.length())/2);
+        s+="#"+spaces+""+par2+""+spaces+"#";
+        s+="\n";
+        for (int i = 0; i < maxLen+10; i++) {
+            s+="#";
+        }
+        msgCB.call(s);
     }
 
 }

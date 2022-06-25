@@ -100,4 +100,8 @@ public class GameTiles {
     public int getRIGHTBOUND() {
         return RIGHTBOUND;
     }
+
+    public void UpdateLocationOfTile(Tile t) {
+        Board[t.getY()][t.getX()]=t;
+    }
 }

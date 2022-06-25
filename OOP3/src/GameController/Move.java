@@ -10,7 +10,9 @@ public class Move {
         if(move.equals("w") || move.equals("W")){
             if(unit.getY()!=Board.getUPPERBOUND()){
                 neighbor=Board.getTileInPosition(unit.getY()-1, unit.getX());
-                unit.visit(neighbor);
+                neighbor.accept(unit);
+                Board.UpdateLocationOfTile(unit);
+                Board.UpdateLocationOfTile(neighbor);
             }
         }
     }

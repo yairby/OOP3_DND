@@ -59,6 +59,10 @@ public abstract class Unit extends Tile {
     public abstract void onGameTick();
 
     @Override
+    public void accept(Visitor v) {
+        v.visit(this);
+    }
+    @Override
     public void visit(Player playerTile) {
         visit(playerTile);
     }
