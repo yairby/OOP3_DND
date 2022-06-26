@@ -12,8 +12,8 @@ public class Rogue extends Player{
     }
 
     @Override
-    public String UseSpecialAbility() {
-        return null;
+    public void UseSpecialAbility() {
+
     }
 
     public void onGameTick() {
@@ -22,6 +22,11 @@ public class Rogue extends Player{
 
     @Override
     public void onTurn() {
+
+    }
+
+    @Override
+    public void onTick() {
 
     }
 

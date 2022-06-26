@@ -1,13 +1,13 @@
 package BusinessLayer.Units.Players;
 
-import BusinessLayer.Board.Tile;
+import BusinessLayer.Board.*;
 import BusinessLayer.CombatSystem.Combat;
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Health;
-import BusinessLayer.Board.Unit;
+import BusinessLayer.Units.HeroicUnit;
 import BusinessLayer.VisitorPattern.Visitor;
 
-public abstract class Player extends Unit {
+public abstract class Player extends Unit implements HeroicUnit {
 
     private Integer experience;
     private Integer level;
@@ -49,24 +49,23 @@ public abstract class Player extends Unit {
         setAttackPoints(getAttackPoints()+(4*level));
         setDefensePoints(getDefensePoints()+(1*level));
     }
-    abstract public String Type();
-    abstract public String UseSpecialAbility();
+    public abstract String Type();
+    public abstract void UseSpecialAbility();
 
     public Integer getExperience() {
         return experience;
+    }
+    public void setExperience(Integer experience) {
+        this.experience = experience;
     }
 
     public Integer getLevel() {
         return level;
     }
-
-    public void setExperience(Integer experience) {
-        this.experience = experience;
-    }
-
     public void setLevel(Integer level) {
         this.level = level;
     }
+
 
     @Override
     public void accept(Visitor v) {
@@ -78,8 +77,21 @@ public abstract class Player extends Unit {
         combat.Attack();
     }
     @Override
-    public void visit(Tile tile) {
-        tile.visit(this);
+    public void visit(Player player) {}
+    @Override
+    public void visit(Wall wall) {}
+    @Override
+    public void visit(Empty empty) {
+        Position emptyPos=empty.getPosition();
+        empty.setPosition(getPosition());
+        setPosition(emptyPos);
     }
+    @Override
+    public void visit(Tile tile) {
+        tile.accept(this);
+    }
+
+
+
 
 }

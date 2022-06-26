@@ -47,23 +47,22 @@ public class Combat {
         return 0;
     }
 
-    public void PrintParticipants(String par1, String par2){
+    public void PrintParticipants(String attacker, String defender){
         String s="";
-        int maxLen=Math.max(par1.length(),par2.length());
-        for (int i = 0; i < maxLen+10; i++) {
+        int maxLen=Math.max(attacker.length(),defender.length());
+        for (int i = 0; i < maxLen+12; i++) {
             s+="#";
         }
         s+="\n";
-        s+="#    "+par1+"    #";
+        s+="|Attacker| "+attacker;
         s+="\n";
-        for (int i = 0; i < maxLen+10; i++) {
+        for (int i = 0; i < maxLen+12; i++) {
             s+="#";
         }
         s+="\n";
-        String spaces=" ".repeat(Math.abs(par1.length()-par2.length())/2);
-        s+="#"+spaces+""+par2+""+spaces+"#";
+        s+="|Defender| "+defender;
         s+="\n";
-        for (int i = 0; i < maxLen+10; i++) {
+        for (int i = 0; i < maxLen+12; i++) {
             s+="#";
         }
         msgCB.call(s);

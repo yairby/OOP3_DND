@@ -1,17 +1,22 @@
 package BusinessLayer.Board;
 
+import BusinessLayer.ObserverPattern.Tickable;
+import BusinessLayer.ObserverPattern.Ticker;
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Players.Player;
 import GameController.TileFactory;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class GameTiles {
+public class GameTiles implements Ticker {
 
    private Tile[][] Board;
    private Player player;
    private List<Enemy> enemies;
+
+   private List<Tickable> gameEntities;
 
    private final int UPPERBOUND=0;
    private final int LOWERBOUND;
@@ -23,9 +28,11 @@ public class GameTiles {
         this.Board=new Tile[arr.length][arr[0].length()];
         this.enemies=new ArrayList<>();
         this.player=p;
+        this.gameEntities=new LinkedList<>();
         initBoard(arr);
         LOWERBOUND=arr.length-1;
         RIGHTBOUND=arr[0].length()-1;
+
     }
 
     public Tile[][] getBoard() {
@@ -42,6 +49,7 @@ public class GameTiles {
                 switch (type) {
                     case '@':
                         t = player;
+                        gameEntities.add(player);
                         break;
                     case '#':
                         t = new Wall(type,i, j);
@@ -52,6 +60,7 @@ public class GameTiles {
                     default:
                         Enemy enemy = factory.produceEnemy(type);
                         enemies.add(enemy);
+                        gameEntities.add(enemy);
                         t=enemy;
                 }
                 Board[i][j]=t;
@@ -103,5 +112,12 @@ public class GameTiles {
 
     public void UpdateLocationOfTile(Tile t) {
         Board[t.getY()][t.getX()]=t;
+    }
+
+    @Override
+    public void notifyTickables() {
+        for (Tickable t: gameEntities) {
+            t.onTick();
+        }
     }
 }

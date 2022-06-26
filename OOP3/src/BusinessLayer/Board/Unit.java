@@ -1,17 +1,21 @@
 package BusinessLayer.Board;
 
+import BusinessLayer.ObserverPattern.Tickable;
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Health;
 import BusinessLayer.Units.Players.Player;
 import BusinessLayer.VisitorPattern.Visited;
 import BusinessLayer.VisitorPattern.Visitor;
+import UI.DeathCallback;
+import UI.MessageCallback;
 
 
-public abstract class Unit extends Tile {
+public abstract class Unit extends Tile implements Tickable,Visitor {
     private String name;
     private Health health;
     private Integer attackPoints;
     private Integer defensePoints;
+    private DeathCallback deathCB=new DeathCallback();
 
     public Unit(String name,Integer health, Integer attackPoints,Integer defensePoints){
         this.name=name;
@@ -56,22 +60,10 @@ public abstract class Unit extends Tile {
     }
 
     public abstract void onTurn();
-    public abstract void onGameTick();
+    public abstract void onTick();
 
-    @Override
-    public void accept(Visitor v) {
-        v.visit(this);
+    public DeathCallback getDeathCB() {
+        return deathCB;
     }
-    @Override
-    public void visit(Player playerTile) {
-        visit(playerTile);
-    }
-    @Override
-    public void visit(Enemy enemyTile){
-        visit(enemyTile);
-    }
-    @Override
-    public void visit(Tile tile){
-        tile.visit(this);
-    }
+
 }

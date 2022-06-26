@@ -2,6 +2,7 @@ package BusinessLayer.Board;
 
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Players.Player;
+import BusinessLayer.VisitorPattern.Visitor;
 
 public class Empty extends Tile{
     private char type;
@@ -10,18 +11,8 @@ public class Empty extends Tile{
         super(type,x,y);
     }
 
-    @Override
-    public void visit(Empty emptyTile){}
-    @Override
-    public void visit(Wall wallTile){}
-    @Override
-    public void visit(Player playerTile){
-        Position playerPos=playerTile.getPosition();
-        playerTile.setPosition(getPosition());
-        setPosition(playerPos);
+    public void accept(Visitor v){
+        v.visit(this);
     }
-    @Override
-    public void visit(Enemy enemyTile){}
-    @Override
-    public void visit(Tile tile){}
+
 }

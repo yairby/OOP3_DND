@@ -42,7 +42,8 @@ public class Trap extends Enemy {
     }
 
     @Override
-    public void onGameTick() {
+    public void onTick() {
 
     }
+
 }

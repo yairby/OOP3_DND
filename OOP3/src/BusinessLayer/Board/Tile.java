@@ -6,7 +6,7 @@ import BusinessLayer.VisitorPattern.Visited;
 import BusinessLayer.VisitorPattern.Visitor;
 import UI.MessageCallback;
 
-public class Tile implements Visitor, Visited {
+public class Tile implements Visited {
     private char tileChar;
     private Position position;
     private MessageCallback msgCB=new MessageCallback();
@@ -64,32 +64,6 @@ public class Tile implements Visitor, Visited {
     @Override
     public void accept(Visitor v) {
         v.visit(this);
-    }
-
-    //defult visits
-    @Override
-    public void visit(Empty emptyTile) {
-        emptyTile.visit(this);
-    }
-
-    @Override
-    public void visit(Wall wallTile) {
-        wallTile.visit(this);
-    }
-
-    @Override
-    public void visit(Player playerTile) {
-        playerTile.visit(this);
-    }
-
-    @Override
-    public void visit(Enemy enemyTile) {
-        enemyTile.visit(this);
-    }
-
-    @Override
-    public void visit(Tile tile) {
-
     }
 
     public void call(String message){

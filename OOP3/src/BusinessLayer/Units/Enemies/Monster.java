@@ -54,7 +54,7 @@ public class Monster extends Enemy {
     }
 
     @Override
-    public void onGameTick() {
+    public void onTick() {
 
     }
 }

@@ -2,6 +2,8 @@ package GameController;
 
 import BusinessLayer.Board.Dead;
 import BusinessLayer.Board.GameTiles;
+import BusinessLayer.ObserverPattern.Tickable;
+import BusinessLayer.ObserverPattern.Ticker;
 import BusinessLayer.Units.Players.Player;
 import DataAccessLayer.LevelLoader;
 import UI.MessageCallback;
@@ -98,6 +100,7 @@ public class GameManager {
             Move m = new Move();
             m.move(gameTiles, player, s);
             //m.moveMonsters(gameTiles, player);
+            gameTiles.notifyTickables();
             msgCB.call(gameTiles.printBoard());
             msgCB.call(player.toString());
             if (player.getHealth().getAmount() == 0 || player.getHealth().getAmount() < 0) {
@@ -110,6 +113,4 @@ public class GameManager {
         }
         return passLevel && !death;
     }
-
-
 }

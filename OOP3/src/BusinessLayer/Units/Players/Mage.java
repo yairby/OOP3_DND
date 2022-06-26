@@ -28,12 +28,12 @@ public class Mage extends Player{
     }
 
     @Override
-    public String UseSpecialAbility() {
+    public void UseSpecialAbility() {
         if(manaAmount<abilityManaCost){
-            return getName()+" tried to cast Blizzard, but there was not enough mana: "+manaAmount+"/"+abilityManaCost+".";
+            call(getName()+" tried to cast Blizzard, but there was not enough mana: "+manaAmount+"/"+abilityManaCost+".");
         }else {
             //should add the action
-            return getName()+" cast Blizzard.";
+            call(getName()+" cast Blizzard.");
         }
     }
 
@@ -103,7 +103,7 @@ public class Mage extends Player{
     }
 
     @Override
-    public void onGameTick() {
+    public void onTick() {
         manaAmount=Math.min(manaAmount+(1*getLevel()),manaPool);
     }
 }

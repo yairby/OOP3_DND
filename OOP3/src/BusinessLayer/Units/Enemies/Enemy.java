@@ -1,7 +1,6 @@
 package BusinessLayer.Units.Enemies;
 
-import BusinessLayer.Board.Empty;
-import BusinessLayer.Board.Unit;
+import BusinessLayer.Board.*;
 import BusinessLayer.CombatSystem.Combat;
 import BusinessLayer.Units.Players.Player;
 import BusinessLayer.VisitorPattern.Visitor;
@@ -38,12 +37,28 @@ public abstract class Enemy extends Unit {
        return tileChar;
     }
 
+    @Override
     public void accept(Visitor v) {
         v.visit(this);
     }
+    @Override
+    public void visit(Enemy enemy) {}
+    @Override
     public void visit(Player player) {
         Combat combat=new Combat(this,player);
         combat.Attack();
+    }
+    @Override
+    public void visit(Wall wall) {}
+    @Override
+    public void visit(Empty empty) {
+        Position emptyPos=empty.getPosition();
+        empty.setPosition(getPosition());
+        setPosition(emptyPos);
+    }
+    @Override
+    public void visit(Tile tile) {
+        tile.accept(this);
     }
 
 }

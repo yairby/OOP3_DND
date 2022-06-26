@@ -24,14 +24,14 @@ public class Warrior extends Player {
     }
 
     @Override
-    public String UseSpecialAbility() {
+    public void UseSpecialAbility() {
         if (remainingCoolDown==0){
             remainingCoolDown=abilityCoolDown;
             increaseHealth(10*getDefensePoints());
             //checking for monsters and attack randomly should be added
-            return getName()+" used Avenger's Shield, healing for 40.";
+            call(getName()+" used Avenger's Shield, healing for 40.");
         }else {
-            return getName()+" tried to cast Avenger's Shield, but there is a cooldown: "+remainingCoolDown+".";
+            call(getName()+" tried to cast Avenger's Shield, but there is a cooldown: "+remainingCoolDown+".");
         }
     }
 
@@ -68,7 +68,7 @@ public class Warrior extends Player {
     }
 
     @Override
-    public void onGameTick() {
+    public void onTick() {
         remainingCoolDown--;
     }
 }
