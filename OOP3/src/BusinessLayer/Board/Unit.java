@@ -9,6 +9,8 @@ import BusinessLayer.VisitorPattern.Visitor;
 import UI.DeathCallback;
 import UI.MessageCallback;
 
+import java.util.List;
+
 
 public abstract class Unit extends Tile implements Tickable,Visitor {
     private String name;
@@ -17,7 +19,8 @@ public abstract class Unit extends Tile implements Tickable,Visitor {
     private Integer defensePoints;
     private DeathCallback deathCB=new DeathCallback();
 
-    public Unit(String name,Integer health, Integer attackPoints,Integer defensePoints){
+    public Unit(String name,Integer health, Integer attackPoints,Integer defensePoints,GameTiles gameTiles){
+        super(gameTiles);
         this.name=name;
         this.health=new Health(health,health);
         this.attackPoints=attackPoints;
@@ -59,11 +62,15 @@ public abstract class Unit extends Tile implements Tickable,Visitor {
         this.defensePoints = defensePoints;
     }
 
-    public abstract void onTurn();
     public abstract void onTick();
 
     public DeathCallback getDeathCB() {
         return deathCB;
+    }
+
+    public String toString(){
+        String spaces=" ".repeat(5);
+        return ""+name+spaces+"Health: "+getHealth().getAmount()+"/"+getHealth().getPool()+spaces+"Attack: "+attackPoints+spaces+"Defense: "+defensePoints+spaces;
     }
 
 }

@@ -29,8 +29,8 @@ public abstract class Enemy extends Unit {
     }
 
     public String toString(){
-        return "name:"+getName()+"    health:"+getHealth().getAmount()+"/"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"    experience"+getExperience();
-
+        String spaces=" ".repeat(5);
+        return super.toString()+"Experience Value: "+experience+spaces;
     }
 
     public char getTileChar() {

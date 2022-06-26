@@ -7,26 +7,31 @@ import BusinessLayer.Units.Health;
 import BusinessLayer.Units.HeroicUnit;
 import BusinessLayer.VisitorPattern.Visitor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Player extends Unit implements HeroicUnit {
 
-    private Integer experience;
+    private Integer experienceAmount;
+    private Integer experiencePool;
     private Integer level;
 
     public Player(String name,Integer health, Integer attackPoints, Integer defensePoints) {
         super(name, health, attackPoints, defensePoints);
-        this.experience=0;
+        this.experienceAmount=0;
         this.level=1;
+        this.experiencePool=50*level;
         this.setTileChar('@');
     }
 
     public void checkForLevelUp(){
-        if(getExperience()>=50*level){
+        if(getExperience()>=experiencePool){
             levelUp();
         }
     }
 
     public void increaseExperience(Integer exp){
-        this.experience+=exp;
+        this.experienceAmount+=exp;
         checkForLevelUp();
     }
 
@@ -41,8 +46,9 @@ public abstract class Player extends Unit implements HeroicUnit {
     }
 
     public void levelUp(){
-        experience-=50*level;
+        experienceAmount-=50*level;
         level++;
+        experiencePool=50*level;
         Health h=getHealth();
         h.setPool(h.getPool()+(10*level));
         h.setAmount(h.getPool());
@@ -53,10 +59,10 @@ public abstract class Player extends Unit implements HeroicUnit {
     public abstract void UseSpecialAbility();
 
     public Integer getExperience() {
-        return experience;
+        return experienceAmount;
     }
     public void setExperience(Integer experience) {
-        this.experience = experience;
+        this.experienceAmount = experience;
     }
 
     public Integer getLevel() {
@@ -91,7 +97,11 @@ public abstract class Player extends Unit implements HeroicUnit {
         tile.accept(this);
     }
 
-
+    @Override
+    public String toString() {
+        String spaces = " ".repeat(5);
+        return super.toString() + "Level: " + level + spaces + "Experience: " + experienceAmount + "/" + experiencePool + spaces;
+    }
 
 
 }

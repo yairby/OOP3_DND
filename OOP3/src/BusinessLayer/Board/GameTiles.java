@@ -32,7 +32,6 @@ public class GameTiles implements Ticker {
         initBoard(arr);
         LOWERBOUND=arr.length-1;
         RIGHTBOUND=arr[0].length()-1;
-
     }
 
     public Tile[][] getBoard() {
@@ -94,6 +93,10 @@ public class GameTiles implements Ticker {
         return enemies;
     }
 
+    public Player getPlayer(){
+        return player;
+    }
+
     public int getUPPERBOUND() {
         return UPPERBOUND;
     }
@@ -120,4 +123,8 @@ public class GameTiles implements Ticker {
             t.onTick();
         }
     }
+
+
+
+
 }

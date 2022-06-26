@@ -1,6 +1,10 @@
 package BusinessLayer.Units.Players;
 
+import BusinessLayer.CombatSystem.Combat;
+import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Health;
+
+import java.util.List;
 
 public class Warrior extends Player {
 
@@ -27,9 +31,14 @@ public class Warrior extends Player {
     public void UseSpecialAbility() {
         if (remainingCoolDown==0){
             remainingCoolDown=abilityCoolDown;
+            call(getName()+" used Avenger's Shield, healing for "+10*getDefensePoints()+".");
             increaseHealth(10*getDefensePoints());
-            //checking for monsters and attack randomly should be added
-            call(getName()+" used Avenger's Shield, healing for 40.");
+            List<Enemy> enemiesInRange=getEnemiesInRange(3);
+            for (Enemy e: enemiesInRange) {
+                Combat combat=new Combat(this,e);
+                int damage=combat.Attack(getHealth().getPool()/10); //10% of max health
+                call(getName()+" hit "+e.getName()+" for "+damage+" ability damage.");
+            }
         }else {
             call(getName()+" tried to cast Avenger's Shield, but there is a cooldown: "+remainingCoolDown+".");
         }
@@ -58,13 +67,7 @@ public class Warrior extends Player {
     }
 
     public String toString(){
-        return "name:"+getName()+"    health:"+getHealth().getAmount()+"/"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"     level:"+getLevel()+"     Experience"+getExperience()+"    ability cool down:"+getAbilityCoolDown();
-
-    }
-
-    @Override
-    public void onTurn() {
-
+        return super.toString()+"Cooldown: "+remainingCoolDown+"/"+abilityCoolDown;
     }
 
     @Override

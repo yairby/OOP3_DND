@@ -33,12 +33,7 @@ public class Trap extends Enemy {
     }
 
     public String toString(){
-        return "name:"+getName()+"    health:"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints();
-    }
-
-    @Override
-    public void onTurn() {
-
+        return super.toString();
     }
 
     @Override

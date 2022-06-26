@@ -37,9 +37,22 @@ public class Combat {
         PrintParticipants(getAttacker().toString(), getDefender().toString());
         Random r=new Random();
         int attackP=r.nextInt(getAttacker().getAttackPoints()+1);
-        msgCB.call(attackerName+"");
+        msgCB.call(attackerName+" rolled "+attackP+" attack points.");
         int defenceP=r.nextInt(getDefender().getDefensePoints()+1);
+        msgCB.call(defenderName+" rolled "+defenderName+" defense points.\n");
         int damage=attackP-defenceP;
+        if(damage>0){
+            getDefender().setAmountHealth(getDefender().getHealth().getAmount()-damage);
+            msgCB.call(attackerName+" dealt "+damage+" damage to "+defenderName+".");
+            return damage;
+        }
+        msgCB.call(attackerName+" dealt 0 damage to "+defenderName+".");
+        return 0;
+    }
+    public int Attack(int PreDefinedAttackStrength){
+        Random r=new Random();
+        int defenceP=r.nextInt(getDefender().getDefensePoints()+1);
+        int damage=PreDefinedAttackStrength-defenceP;
         if(damage>0){
             getDefender().setAmountHealth(getDefender().getHealth().getAmount()-damage);
             return damage;

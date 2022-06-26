@@ -43,15 +43,9 @@ public class Monster extends Enemy {
 
 //    }
     public String toString(){
-        return "name:"+getName()+"    health:"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints();
-
+        return super.toString()+"Vision Range: "+visionRange;
     }
 
-
-    @Override
-    public void onTurn() {
-
-    }
 
     @Override
     public void onTick() {

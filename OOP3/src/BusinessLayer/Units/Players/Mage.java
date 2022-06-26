@@ -93,13 +93,9 @@ public class Mage extends Player{
         this.abilityManaCost = abilityManaCost;
     }
 
-    public String toString(){
-        return "name:"+getName()+"    health:"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"    ability mana cost:"+getAbilityManaCost()+"    ability range:"+getAbilityRange()+"    mana amount:"+getManaAmount()+"    spell power"+getSpellPower();
-    }
-
-    @Override
-    public void onTurn() {
-
+    public String toString() {
+        String spaces=" ".repeat(5);
+        return super.toString()+"Mana: "+manaAmount+"/"+manaPool+spaces+"Spell Power: "+spellPower;
     }
 
     @Override

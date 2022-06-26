@@ -10,11 +10,6 @@ public class Boss extends Enemy implements HeroicUnit {
     }
 
     @Override
-    public void onTurn() {
-
-    }
-
-    @Override
     public void onTick() {
 
     }
