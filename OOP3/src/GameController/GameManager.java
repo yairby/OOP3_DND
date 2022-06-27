@@ -93,12 +93,11 @@ public class GameManager {
         GameTiles gameTiles=new GameTiles(levelMap,player);
         msgCB.call(gameTiles.printBoard());
         msgCB.call(player.toString());
-
+        Move m = new Move();
         boolean passLevel=false,death=false;
         while (!passLevel && !death) {
             String s = scanner.next();
-            Move m = new Move();
-            m.move(gameTiles, player, s);
+            m.movePlayer(gameTiles, player, s.toLowerCase());
             //m.moveMonsters(gameTiles, player);
             gameTiles.notifyTickables();
             msgCB.call(gameTiles.printBoard());

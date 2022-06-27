@@ -1,5 +1,12 @@
 package BusinessLayer.Units.Players;
 
+import BusinessLayer.CombatSystem.Combat;
+import BusinessLayer.Units.Enemies.Enemy;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class Mage extends Player{
 
     private Integer manaPool;
@@ -27,15 +34,7 @@ public class Mage extends Player{
         spellPower+=10*getLevel();
     }
 
-    @Override
-    public void UseSpecialAbility() {
-        if(manaAmount<abilityManaCost){
-            call(getName()+" tried to cast Blizzard, but there was not enough mana: "+manaAmount+"/"+abilityManaCost+".");
-        }else {
-            //should add the action
-            call(getName()+" cast Blizzard.");
-        }
-    }
+
 
 
     public Integer getSpellPower() {
@@ -101,5 +100,41 @@ public class Mage extends Player{
     @Override
     public void onTick() {
         manaAmount=Math.min(manaAmount+(1*getLevel()),manaPool);
+    }
+
+    @Override
+    public void UseSpecialAbility(List<Enemy> enemies, Player player) {
+        if(manaAmount<abilityManaCost){
+            call(getName()+" tried to cast Blizzard, but there was not enough mana: "+manaAmount+"/"+abilityManaCost+".");
+        }else {
+            call(getName()+" cast Blizzard.");
+            manaAmount-=abilityManaCost;
+            int hits=0;
+            while (hits<hitsCount){
+                Enemy chosenEnemy=chooseEnemyInRange(enemies);
+                if(chosenEnemy!=null){
+                    Combat combat=new Combat(this,chosenEnemy);
+                    int damage=combat.Attack(spellPower);
+                    call("");
+                }
+                hits+=1;
+            }
+        }
+    }
+
+    private Enemy chooseEnemyInRange(List<Enemy> enemies){
+        List<Enemy> InRange=new ArrayList<>();
+        for (Enemy e:enemies) {
+            if(this.range(e)<abilityRange && e.getHealth().getAmount()>0){ //checks if enemy is alive
+                InRange.add(e);
+            }
+        }
+        if(InRange.size()>0) {
+            Random rnd = new Random();
+            int chosenEnemy = rnd.nextInt(InRange.size() + 1);
+            return InRange.get(chosenEnemy);
+        }else {
+            return null;
+        }
     }
 }

@@ -56,7 +56,6 @@ public abstract class Player extends Unit implements HeroicUnit {
         setDefensePoints(getDefensePoints()+(1*level));
     }
     public abstract String Type();
-    public abstract void UseSpecialAbility();
 
     public Integer getExperience() {
         return experienceAmount;

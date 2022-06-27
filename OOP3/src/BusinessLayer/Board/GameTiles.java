@@ -6,9 +6,8 @@ import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Players.Player;
 import GameController.TileFactory;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Supplier;
 
 public class GameTiles implements Ticker {
 
@@ -18,11 +17,6 @@ public class GameTiles implements Ticker {
 
    private List<Tickable> gameEntities;
 
-   private final int UPPERBOUND=0;
-   private final int LOWERBOUND;
-   private final int RIGHTBOUND;
-   private final int LEFTBOUND=0;
-
     public GameTiles(String levelMap, Player p){
         String[] arr=levelMap.split("\\n");
         this.Board=new Tile[arr.length][arr[0].length()];
@@ -30,8 +24,6 @@ public class GameTiles implements Ticker {
         this.player=p;
         this.gameEntities=new LinkedList<>();
         initBoard(arr);
-        LOWERBOUND=arr.length-1;
-        RIGHTBOUND=arr[0].length()-1;
     }
 
     public Tile[][] getBoard() {
@@ -97,21 +89,6 @@ public class GameTiles implements Ticker {
         return player;
     }
 
-    public int getUPPERBOUND() {
-        return UPPERBOUND;
-    }
-
-    public int getLOWERBOUND() {
-        return LOWERBOUND;
-    }
-
-    public int getLEFTBOUND() {
-        return LEFTBOUND;
-    }
-
-    public int getRIGHTBOUND() {
-        return RIGHTBOUND;
-    }
 
     public void UpdateLocationOfTile(Tile t) {
         Board[t.getY()][t.getX()]=t;
@@ -123,6 +100,19 @@ public class GameTiles implements Ticker {
             t.onTick();
         }
     }
+
+//    public Tile getNeighbor(char c, Position p) {
+//        Map<Character, Supplier<Tile>> tails = new HashMap<>() {
+//            {
+//                put('a', () -> gameBoard.getTileInPosition(p.Left()));
+//                put('d', () -> gameBoard.getTileInPosition(p.Right()));
+//                put('s', () -> gameBoard.getTileInPosition(p.Down()));
+//                put('w', () -> gameBoard.getTileInPosition(p.Up()));
+//                put('q', () -> gameBoard.getTileInPosition(p));
+//            }
+//        };
+//        return tails.get(c).get();
+//    }
 
 
 

@@ -1,12 +1,18 @@
 package BusinessLayer.Units.Enemies;
 
 import BusinessLayer.Units.HeroicUnit;
+import BusinessLayer.Units.Players.Player;
 
-public class Boss extends Enemy implements HeroicUnit {
+import java.util.List;
 
+public class Boss extends Monster implements HeroicUnit {
 
-    public Boss(char tileChar, String name, Integer health, Integer attackPoints, Integer defensePoints, int experience) {
-        super(tileChar, name, health, attackPoints, defensePoints, experience);
+    private Integer abilityFrequency;
+    private Integer combatTicks;
+
+    public Boss(char tileChar, String name, Integer health, Integer attackPoints, Integer defensePoints, Integer experience, Integer visionRange, Integer abilityFrequency) {
+        super(tileChar, name, health, attackPoints, defensePoints, experience, visionRange);
+        this.abilityFrequency=abilityFrequency;
     }
 
     @Override
@@ -15,7 +21,7 @@ public class Boss extends Enemy implements HeroicUnit {
     }
 
     @Override
-    public void UseSpecialAbility() {
+    public void UseSpecialAbility(List<Enemy> enemies, Player player) {
 
     }
 }
