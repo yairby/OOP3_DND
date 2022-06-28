@@ -1,7 +1,12 @@
 package BusinessLayer.Units.Players;
 
-import Board.Tile;
+import BusinessLayer.CombatSystem.Combat;
+import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Health;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Warrior extends Player {
 
@@ -10,38 +15,20 @@ public class Warrior extends Player {
 
 
     public Warrior(String name, int health, int attackPoints, int defensePoints, int abilityCoolDown) {
-        super(health,name,attackPoints,defensePoints);
+        super(name,health,attackPoints,defensePoints);
         this.abilityCoolDown=abilityCoolDown;
         this.remainingCoolDown=abilityCoolDown;
     }
 
-
-    @Override
-    public String UseSpecialAbility() {
-        if (remainingCoolDown==0){
-            remainingCoolDown=abilityCoolDown;
-            increaseHealth(10*getDefensePoints());
-            //checking for monsters and attack randomly should be added
-            return getName()+" used Avenger's Shield, healing for 40.";
-        }else {
-            return getName()+" tried to cast Avenger's Shield, but there is a cooldown: "+remainingCoolDown+".";
-        }
-    }
-
-    @Override
-    public void OnGameTick() {
-        remainingCoolDown--;
-    }
-
     public void levelUp(){
-        //for now we increase be old level
+        super.levelUp();
         remainingCoolDown=0;
         Health h=getHealth();
         h.setPool(h.getPool()+(5*getLevel()));
         setAttackPoints(getAttackPoints()+(2*getLevel()));
         setDefensePoints(getDefensePoints()+(getLevel()));
-        super.levelUp();
     }
+
 
     @Override
     public String Type() {
@@ -65,7 +52,46 @@ public class Warrior extends Player {
     }
 
     public String toString(){
-        return "name:"+getName()+"    health:"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"     level:"+getLevel()+"     Experience"+getExperience()+"    ability cool down:"+getAbilityCoolDown();
+        return super.toString()+"Cooldown: "+remainingCoolDown+"/"+abilityCoolDown;
+    }
 
+    @Override
+    public void onTick() {
+        if(remainingCoolDown!=0){
+            remainingCoolDown--;
+        }
+    }
+
+    @Override
+    public void UseSpecialAbility(List<Enemy> enemies, Player player) {
+        if (remainingCoolDown==0) {
+            remainingCoolDown = abilityCoolDown;
+            call(getName() + " used Avenger's Shield, healing for " + 10 * getDefensePoints() + ".");
+            increaseHealth(10 * getDefensePoints());
+            Enemy chosenEnemy = chooseEnemyInRange( enemies);
+            if(chosenEnemy!=null) {
+                Combat combat = new Combat(this, chosenEnemy);
+                int damage = combat.Attack(getHealth().getPool() / 10); //10% of max health
+                call(getName() + " hit " + chosenEnemy.getName() + " for " + damage + " ability damage.");
+            }
+        }else {
+            call(getName()+" tried to cast Avenger's Shield, but there is a cooldown: "+remainingCoolDown+".");
+        }
+    }
+
+    private Enemy chooseEnemyInRange(List<Enemy> enemies){
+        List<Enemy> InRange=new ArrayList<>();
+        for (Enemy e:enemies) {
+            if(this.range(e)<3){
+                InRange.add(e);
+            }
+        }
+        if(InRange.size()>0) {
+            Random rnd = new Random();
+            int chosenEnemy = rnd.nextInt(InRange.size() + 1);
+            return InRange.get(chosenEnemy);
+        }else {
+            return null;
+        }
     }
 }

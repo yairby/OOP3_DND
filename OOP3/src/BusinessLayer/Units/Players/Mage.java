@@ -1,6 +1,11 @@
 package BusinessLayer.Units.Players;
 
-import Board.Tile;
+import BusinessLayer.CombatSystem.Combat;
+import BusinessLayer.Units.Enemies.Enemy;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Mage extends Player{
 
@@ -13,7 +18,7 @@ public class Mage extends Player{
 
 
     public Mage(String name, int health, Integer attackPoints, Integer defensePoints, Integer manaPool, Integer abilityManaCost,int spellPower,int hitsCount,int abilityRange) {
-        super( health,name, attackPoints, defensePoints);
+        super(name, health, attackPoints, defensePoints);
         this.manaPool=manaPool;
         this.manaAmount=manaPool/4;
         this.spellPower=spellPower;
@@ -22,20 +27,15 @@ public class Mage extends Player{
         this.abilityRange=abilityRange;
     }
 
-    @Override
-    public String UseSpecialAbility() {
-        if(manaAmount<abilityManaCost){
-            return getName()+" tried to cast Blizzard, but there was not enough mana: "+manaAmount+"/"+abilityManaCost+".";
-        }else {
-            //should add the action
-            return getName()+" cast Blizzard.";
-        }
+    public void levelUp(){
+        super.levelUp();
+        manaPool+=25*getLevel();
+        manaAmount=Math.min(manaAmount+(manaPool/4),manaPool);
+        spellPower+=10*getLevel();
     }
 
-    @Override
-    public void OnGameTick() {
-        manaAmount=Math.min(manaAmount+(1*getLevel()),manaPool);
-    }
+
+
 
     public Integer getSpellPower() {
         return spellPower;
@@ -69,12 +69,7 @@ public class Mage extends Player{
         this.hitsCount = hitsCount;
     }
 
-    public void levelUp(){
-        manaPool+=25*getLevel();
-        manaAmount=Math.min(manaAmount+(manaPool/4),manaPool);
-        spellPower+=10*getLevel();
-        super.levelUp();
-    }
+
 
     @Override
     public String Type() {
@@ -97,7 +92,49 @@ public class Mage extends Player{
         this.abilityManaCost = abilityManaCost;
     }
 
-    public String toString(){
-        return "name:"+getName()+"    health:"+getHealth().getPool()+"    attack:"+getAttackPoints()+"    defence:"+getDefensePoints()+"    ability mana cost:"+getAbilityManaCost()+"    ability range:"+getAbilityRange()+"    mana amount:"+getManaAmount()+"    spell power"+getSpellPower();
+    public String toString() {
+        String spaces=" ".repeat(5);
+        return super.toString()+"Mana: "+manaAmount+"/"+manaPool+spaces+"Spell Power: "+spellPower;
+    }
+
+    @Override
+    public void onTick() {
+        manaAmount=Math.min(manaAmount+(1*getLevel()),manaPool);
+    }
+
+    @Override
+    public void UseSpecialAbility(List<Enemy> enemies, Player player) {
+        if(manaAmount<abilityManaCost){
+            call(getName()+" tried to cast Blizzard, but there was not enough mana: "+manaAmount+"/"+abilityManaCost+".");
+        }else {
+            call(getName()+" cast Blizzard.");
+            manaAmount-=abilityManaCost;
+            int hits=0;
+            while (hits<hitsCount){
+                Enemy chosenEnemy=chooseEnemyInRange(enemies);
+                if(chosenEnemy!=null){
+                    Combat combat=new Combat(this,chosenEnemy);
+                    int damage=combat.Attack(spellPower);
+                    call("");
+                }
+                hits+=1;
+            }
+        }
+    }
+
+    private Enemy chooseEnemyInRange(List<Enemy> enemies){
+        List<Enemy> InRange=new ArrayList<>();
+        for (Enemy e:enemies) {
+            if(this.range(e)<abilityRange && e.getHealth().getAmount()>0){ //checks if enemy is alive
+                InRange.add(e);
+            }
+        }
+        if(InRange.size()>0) {
+            Random rnd = new Random();
+            int chosenEnemy = rnd.nextInt(InRange.size() + 1);
+            return InRange.get(chosenEnemy);
+        }else {
+            return null;
+        }
     }
 }

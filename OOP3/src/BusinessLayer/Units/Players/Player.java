@@ -1,29 +1,37 @@
 package BusinessLayer.Units.Players;
 
-import Board.Tile;
+import BusinessLayer.Board.*;
+import BusinessLayer.CombatSystem.Combat;
+import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Health;
-import BusinessLayer.Units.Unit;
+import BusinessLayer.Units.HeroicUnit;
+import BusinessLayer.VisitorPattern.Visitor;
 
-public abstract class Player extends Unit {
+import java.util.ArrayList;
+import java.util.List;
 
-    private Integer experience;
+public abstract class Player extends Unit implements HeroicUnit {
+
+    private Integer experienceAmount;
+    private Integer experiencePool;
     private Integer level;
 
-    public Player( int health,String name, Integer attackPoints, Integer defensePoints) {
-        super( health,name, attackPoints, defensePoints);
-        this.experience=0;
+    public Player(String name,Integer health, Integer attackPoints, Integer defensePoints) {
+        super(name, health, attackPoints, defensePoints);
+        this.experienceAmount=0;
         this.level=1;
-        this.setType('@');
+        this.experiencePool=50*level;
+        this.setTileChar('@');
     }
 
     public void checkForLevelUp(){
-        if(getExperience()>=50*level){
+        if(getExperience()>=experiencePool){
             levelUp();
         }
     }
 
     public void increaseExperience(Integer exp){
-        this.experience+=exp;
+        this.experienceAmount+=exp;
         checkForLevelUp();
     }
 
@@ -38,33 +46,60 @@ public abstract class Player extends Unit {
     }
 
     public void levelUp(){
-        //for now we increase be old level
-        experience-=50*level;
+        experienceAmount-=50*level;
+        level++;
+        experiencePool=50*level;
         Health h=getHealth();
         h.setPool(h.getPool()+(10*level));
         h.setAmount(h.getPool());
         setAttackPoints(getAttackPoints()+(4*level));
         setDefensePoints(getDefensePoints()+(1*level));
-        level++;
     }
-    abstract public String Type();
-    abstract public String UseSpecialAbility();
-    abstract public void OnGameTick();
+    public abstract String Type();
 
     public Integer getExperience() {
-        return experience;
+        return experienceAmount;
+    }
+    public void setExperience(Integer experience) {
+        this.experienceAmount = experience;
     }
 
     public Integer getLevel() {
         return level;
     }
-
-    public void setExperience(Integer experience) {
-        this.experience = experience;
-    }
-
     public void setLevel(Integer level) {
         this.level = level;
+    }
+
+
+    @Override
+    public void accept(Visitor v) {
+        v.visit(this);
+    }
+    @Override
+    public void visit(Enemy enemy) {
+        Combat combat=new Combat(this,enemy);
+        combat.Attack();
+    }
+    @Override
+    public void visit(Player player) {}
+    @Override
+    public void visit(Wall wall) {}
+    @Override
+    public void visit(Empty empty) {
+        Position emptyPos=empty.getPosition();
+        empty.setPosition(getPosition());
+        setPosition(emptyPos);
+    }
+    @Override
+    public void visit(Tile tile) {
+        tile.accept(this);
+    }
+
+    @Override
+    public String toString() {
+        String spaces = " ".repeat(5);
+        return super.toString() + "Level: " + level + spaces + "Experience: " + experienceAmount + "/" + experiencePool + spaces;
     }
 
 

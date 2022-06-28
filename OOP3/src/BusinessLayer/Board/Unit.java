@@ -1,22 +1,19 @@
-package BusinessLayer.Units;
+package BusinessLayer.Board;
 
-import Board.Tile;
+import BusinessLayer.ObserverPattern.Tickable;
+import BusinessLayer.Units.Health;
+import BusinessLayer.VisitorPattern.Visitor;
+import GameController.DeathCallback;
 
-public class Unit extends Tile {
 
-
+public abstract class Unit extends Tile implements Tickable,Visitor {
     private String name;
     private Health health;
     private Integer attackPoints;
     private Integer defensePoints;
+    //private DeathCallback deathCB=new DeathCallback();
 
-
-
-
-
-
-    public Unit( int health,String name, Integer attackPoints,Integer defensePoints){
-
+    public Unit(String name,Integer health, Integer attackPoints,Integer defensePoints){
         this.name=name;
         this.health=new Health(health,health);
         this.attackPoints=attackPoints;
@@ -58,5 +55,15 @@ public class Unit extends Tile {
         this.defensePoints = defensePoints;
     }
 
+    public abstract void onTick();
+
+    //public DeathCallback getDeathCB() {
+       // return deathCB;
+   // }
+
+    public String toString(){
+        String spaces=" ".repeat(5);
+        return ""+name+spaces+"Health: "+getHealth().getAmount()+"/"+getHealth().getPool()+spaces+"Attack: "+attackPoints+spaces+"Defense: "+defensePoints+spaces;
+    }
 
 }

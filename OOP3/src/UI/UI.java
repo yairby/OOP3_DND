@@ -1,13 +1,12 @@
 package UI;
 
-import DataAccessLayer.DataAccessLayer;
-import Game.GameController;
-
-import java.util.List;
+import GameController.GameManager;
+import GameController.TileFactory;
 
 public class UI {
     public static void main(String[] args) {
-        GameController gameController=new GameController();
-        gameController.play();
+        GameManager game=new GameManager(new MessageCallback());
+        game.StartGame();
+
     }
 }

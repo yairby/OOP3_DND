@@ -1,4 +1,4 @@
-package Board;
+package GameController;
 
 import BusinessLayer.Units.Enemies.Boss;
 import BusinessLayer.Units.Enemies.Enemy;
@@ -19,7 +19,9 @@ import java.util.stream.Collectors;
 public class TileFactory {
     private List<Supplier<Player>> playersList;
     private Map<Character, Supplier<Enemy>> enemiesMap;
+
     private Player selected;
+
 
     public TileFactory(){
         playersList = initPlayers();
@@ -35,20 +37,14 @@ public class TileFactory {
                 () -> new Monster('b', "Bear-Wright", 1000, 75, 30, 250,  4),
                 () -> new Monster('g', "Giant-Wright",1500, 100, 40,500,   5),
                 () -> new Monster('w', "White Walker", 2000, 150, 50, 1000, 6),
-                //() -> new Boss('M', "The Mountain", 1000, 60, 25,  500, 6, 5),
+                () -> new Boss('M', "The Mountain", 1000, 60, 25,  500, 6, 5),
                 //() -> new Boss('C', "Queen Cersei", 100, 10, 10,1000, 1, 8),
                 //() -> new Boss('K', "Night's King", 5000, 300, 150, 5000, 8, 3),
                 () -> new Trap('B', "Bonus Trap", 1, 1, 1, 250,  1, 10),
                 () -> new Trap('Q', "Queen's Trap", 250, 50, 10, 100, 3, 10),
                 () -> new Trap('D', "Death Trap", 500, 100, 20, 250, 1, 10)
         );
-        for(int i=0;i<enemies.size();i++){
-            enemies.get(i).get().setType(enemies.get(i).get().getType());
-            enemies.get(i).get().setX(-1);
-            enemies.get(i).get().setY(-1);
-        }
-
-        return enemies.stream().collect(Collectors.toMap(s -> s.get().getTile().getType(), Function.identity()));
+        return enemies.stream().collect(Collectors.toMap(s -> s.get().getTileChar(), Function.identity()));
     }
 
     private List<Supplier<Player>> initPlayers() {
@@ -68,6 +64,10 @@ public class TileFactory {
     }
     public Map<Character, Supplier<Enemy>> listEnemies(){
         return enemiesMap;
+    }
+
+    public Enemy produceEnemy(char enemyType){
+        return enemiesMap.get(enemyType).get();
     }
 
 
