@@ -44,10 +44,10 @@ public class Move {
             neighbor=Board.getTileInPosition(u.getY()+1, u.getX());
         }
         if(move.equals("d")){
-            neighbor=Board.getTileInPosition(u.getY(), u.getX()-1);
+            neighbor=Board.getTileInPosition(u.getY(), u.getX()+1);
         }
         if(move.equals("a")){
-            neighbor=Board.getTileInPosition(u.getY(), u.getX()+1);
+            neighbor=Board.getTileInPosition(u.getY(), u.getX()-1);
         }
         return neighbor;
     }
