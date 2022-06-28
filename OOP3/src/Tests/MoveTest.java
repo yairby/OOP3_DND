@@ -29,7 +29,7 @@ class MoveTest {
         move.movePlayer(gameTiles,gameTiles.getPlayer(),"w");
         int yCurrent=gameTiles.getPlayer().getY();
         int xCurrent=gameTiles.getPlayer().getX();
-        Assert.assertEquals(yOriginal==yCurrent+1&&xOriginal==xCurrent,true);
+        Assert.assertEquals(yOriginal==yCurrent-1&&xOriginal==xCurrent,true);
         yOriginal=gameTiles.getPlayer().getY();
         xOriginal=gameTiles.getPlayer().getX();
         move.movePlayer(gameTiles,gameTiles.getPlayer(),"a");
@@ -38,6 +38,22 @@ class MoveTest {
         System.out.println(xCurrent);
         System.out.println(xOriginal);
         Assert.assertEquals(yOriginal==yCurrent&&xOriginal==xCurrent,true);
+        yOriginal=gameTiles.getPlayer().getY();
+        xOriginal=gameTiles.getPlayer().getX();
+        move.movePlayer(gameTiles,gameTiles.getPlayer(),"d");
+        yCurrent=gameTiles.getPlayer().getY();
+        xCurrent=gameTiles.getPlayer().getX();
+        System.out.println(xCurrent);
+        System.out.println(xOriginal);
+        Assert.assertEquals(yOriginal==yCurrent&&xOriginal==xCurrent-1,true);
+        yOriginal=gameTiles.getPlayer().getY();
+        xOriginal=gameTiles.getPlayer().getX();
+        move.movePlayer(gameTiles,gameTiles.getPlayer(),"s");
+        yCurrent=gameTiles.getPlayer().getY();
+        xCurrent=gameTiles.getPlayer().getX();
+        System.out.println(xCurrent);
+        System.out.println(xOriginal);
+        Assert.assertEquals(yOriginal==yCurrent+1&&xOriginal==xCurrent,true);
     }
 
     @Test

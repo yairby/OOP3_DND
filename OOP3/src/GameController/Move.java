@@ -38,10 +38,10 @@ public class Move {
     private Tile getNeighbor(GameTiles Board, Unit u, String move){
         Tile neighbor=null;
         if(move.equals("w")){
-            neighbor=Board.getTileInPosition(u.getY()-1, u.getX());
+            neighbor=Board.getTileInPosition(u.getY()+1, u.getX());
         }
         if(move.equals("s")){
-            neighbor=Board.getTileInPosition(u.getY()+1, u.getX());
+            neighbor=Board.getTileInPosition(u.getY()-1, u.getX());
         }
         if(move.equals("d")){
             neighbor=Board.getTileInPosition(u.getY(), u.getX()+1);
