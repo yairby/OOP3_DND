@@ -7,16 +7,21 @@ import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Enemies.Monster;
 import BusinessLayer.Units.Players.Player;
 import GameController.TileFactory;
+import org.junit.jupiter.api.BeforeEach;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
 
 public class CombatTest {
-
+    TileFactory tileFactory;
+    @BeforeEach
+    public void init(){
+        tileFactory=new TileFactory();
+    }
     @Test
     public void attack() {
-        TileFactory tileFactory=new TileFactory();
+        init();
         Enemy m=tileFactory.produceEnemy('s');
         Player player=tileFactory.listPlayers().get(0);
         int pool=player.getHealth().getPool();
