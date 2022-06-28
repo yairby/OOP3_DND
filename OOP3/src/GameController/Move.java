@@ -9,13 +9,21 @@ import BusinessLayer.Units.Enemies.Monster;
 import BusinessLayer.Units.HeroicUnit;
 import BusinessLayer.Units.Players.Player;
 
+import javax.management.monitor.MonitorSettingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Move {
-    private enum Moves {w,s,a,d}
+    private String [] SimpleMoves={"w","a","s","d","q"};
+    private List<Enemy> enemies;
+    private Player player;
+    private GameTiles Board;
     public void movePlayer(GameTiles Board, Player player, String move){
+        this.player=player;
+        this.enemies=Board.getEnemies();
+        this.Board=Board;
         Tile neighbor=getNeighbor(Board,player,move);
         if (neighbor!=null) {
             neighbor.accept(player);
@@ -43,8 +51,13 @@ public class Move {
         }
         return neighbor;
     }
-    private void moveMonsters(GameTiles Board, Monster m, String move) {
-        Tile neighbor=getNeighbor(Board,m,move);
+    public void moveMonsters(GameTiles Board, List<Monster> monsters){
+        for (Monster m:monsters) {
+            moveMonster(Board,m);
+        }
+    }
+    private void moveMonster(GameTiles Board, Monster m) {
+        Tile neighbor=getNeighbor(Board,m,PickMove(m,SimpleMoves));
         if (neighbor!=null) {
             neighbor.accept(m);
             Board.UpdateLocationOfTile(m);
@@ -52,24 +65,57 @@ public class Move {
         }
     }
 
-    private void moveMonsters(GameTiles Board, Boss b, String move) {
-        Tile neighbor=getNeighbor(Board,b,move);
+    private void moveMonster(GameTiles Board, Boss b) {
+        Tile neighbor=getNeighbor(Board,b,PickMove(b,SimpleMoves));
         if (neighbor!=null) {
             neighbor.accept(b);
             Board.UpdateLocationOfTile(b);
             Board.UpdateLocationOfTile(neighbor);
         }
-        if(move.equals("e")){
-            b.UseSpecialAbility(Board.getEnemies(),Board.getPlayer());
-        }
     }
-    private boolean contains(String move){
-        for (Moves s:Moves.values()) {
-            if(s.name().equals(move)){
-                return true;
+
+    private String PickMove(Monster m, String [] moves){
+        String selectedMove;
+        if(m.range(player)<m.getVisionRange()){
+            selectedMove=Chase(m);
+        }else {
+            Random rnd = new Random();
+            int pickedMove = rnd.nextInt(moves.length);
+            selectedMove = moves[pickedMove];
+        }
+        return selectedMove;
+    }
+
+    private String PickMove(Boss b, String [] moves){
+        String selectedMove="";
+        if(b.range(player)<b.getVisionRange()){
+            if(b.getCombatTicks()==b.getAbilityFrequency()){
+                b.UseSpecialAbility(enemies,player);
+            }else {
+                selectedMove=Chase(b);
+            }
+        }else {
+            Random rnd = new Random();
+            int pickedMove = rnd.nextInt(moves.length);
+            selectedMove = moves[pickedMove];
+        }
+        return selectedMove;
+    }
+
+    private String Chase(Monster m){
+        String bestMove="";
+        Integer bestRange=Integer.MAX_VALUE;
+        for (String move : SimpleMoves) {
+            Tile t=getNeighbor(Board,m,move);
+            if(t!=null){
+                if(bestRange > t.range(m)){
+                    bestRange=t.range(m);
+                    bestMove=move;
+                }
             }
         }
-        return false;
+        return bestMove;
     }
+
 
 }

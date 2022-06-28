@@ -24,4 +24,12 @@ public class Boss extends Monster implements HeroicUnit {
     public void UseSpecialAbility(List<Enemy> enemies, Player player) {
 
     }
+
+    public Integer getCombatTicks() {
+        return combatTicks;
+    }
+
+    public Integer getAbilityFrequency() {
+        return abilityFrequency;
+    }
 }
