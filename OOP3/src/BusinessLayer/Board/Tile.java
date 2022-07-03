@@ -13,7 +13,7 @@ public class Tile implements Visited {
 
     private char tileChar;
     private Position position;
-    private MessageCallback msgCB=new MessageCallback();
+    private MessageCallback msgCB;
     public Tile(){
         tileChar=' ';
         this.position=new Position(0,0);
@@ -77,8 +77,7 @@ public class Tile implements Visited {
         msgCB.call(message);
     }
 
-
-
-
-
+    public void setMsgCB(MessageCallback msgCB) {
+        this.msgCB = msgCB;
+    }
 }

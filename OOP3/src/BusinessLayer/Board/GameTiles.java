@@ -5,6 +5,7 @@ import BusinessLayer.ObserverPattern.Notifier;
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Players.Player;
 import GameController.TileFactory;
+import UI.MessageCallback;
 
 import java.util.*;
 
@@ -15,13 +16,15 @@ public class GameTiles implements Notifier {
     private List<Enemy> enemies;
 
     private List<Unit> gameEntities;
+    private MessageCallback msgCB;
 
-    public GameTiles(String levelMap, Player p) {
+    public GameTiles(String levelMap, Player p, MessageCallback msgCB) {
         String[] arr = levelMap.split("\\n");
         this.Board = new Tile[arr.length][arr[0].length()];
         this.enemies = new ArrayList<>();
         this.player = p;
         this.gameEntities = new LinkedList<>();
+        this.msgCB=msgCB;
         initBoard(arr);
     }
 
@@ -55,6 +58,7 @@ public class GameTiles implements Notifier {
                 }
                 Board[i][j] = t;
                 t.setPosition(new Position(i, j));
+                t.setMsgCB(msgCB);
             }
         }
     }

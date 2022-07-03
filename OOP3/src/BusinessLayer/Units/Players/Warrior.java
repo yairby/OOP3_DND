@@ -21,12 +21,16 @@ public class Warrior extends Player {
     }
 
     public void levelUp(){
+        int oldHealthPull= getHealth().getPool();
+        int oldAttackPoints=getAttackPoints();
+        int oldDefensePoints=getDefensePoints();
         super.levelUp();
         remainingCoolDown=0;
         Health h=getHealth();
         h.setPool(h.getPool()+(5*getLevel()));
         setAttackPoints(getAttackPoints()+(2*getLevel()));
         setDefensePoints(getDefensePoints()+(getLevel()));
+        call(getName()+" reached level "+getLevel()+": +"+(getHealth().getPool()-oldHealthPull)+", +"+(getAttackPoints()-oldAttackPoints)+", +"+(getDefensePoints()-oldDefensePoints));
     }
 
 

@@ -62,5 +62,9 @@ public abstract class Unit extends Tile implements Listener,Visitor {
         String spaces=" ".repeat(5);
         return ""+name+spaces+"Health: "+getHealth().getAmount()+"/"+getHealth().getPool()+spaces+"Attack: "+attackPoints+spaces+"Defense: "+defensePoints+spaces;
     }
+    
+    public boolean IsAlive(){
+        return getHealth().getAmount()>0;
+    }
 
 }

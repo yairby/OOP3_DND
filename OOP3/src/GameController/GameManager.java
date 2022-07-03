@@ -88,7 +88,7 @@ public class GameManager {
     public boolean PlayLevel(int level, Player player) {
         msgCB.call("-------Level "+level+" Started-------");
         String levelMap= LevelLoader.LoadLevel(level).stream().collect(Collectors.joining("\n"));
-        GameTiles gameTiles=new GameTiles(levelMap,player);
+        GameTiles gameTiles=new GameTiles(levelMap,player,msgCB);
         msgCB.call(gameTiles.printBoard());
         msgCB.call(player.toString());
         boolean passLevel=false,death=false;
