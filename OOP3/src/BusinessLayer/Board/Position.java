@@ -28,4 +28,17 @@ public class Position {
         this.y = y;
     }
 
+//    public Position Left(){
+//
+//    }
+//    public Position Right(){
+//
+//    }
+//    public Position Down(){
+//
+//    }
+//    public Position Up(){
+//
+//    }
+
 }

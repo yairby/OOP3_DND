@@ -1,6 +1,7 @@
 package BusinessLayer.CombatSystem;
 
 import BusinessLayer.Board.Unit;
+import UI.Callback;
 import UI.MessageCallback;
 
 import java.util.Random;
@@ -8,7 +9,7 @@ import java.util.Random;
 public class Combat {
     private Unit Attacker;
     private Unit Defender;
-    private MessageCallback msgCB=new MessageCallback();
+    private Callback msgCB;
 
     public Combat(Unit attacker, Unit defender){
         Attacker=attacker;

@@ -1,5 +1,10 @@
 package BusinessLayer.Units.Enemies;
 
+import BusinessLayer.Board.GameTiles;
+import BusinessLayer.Board.Tile;
+
+import java.util.Random;
+
 public class Monster extends Enemy {
     public int getVisionRange() {
         return visionRange;
@@ -50,5 +55,36 @@ public class Monster extends Enemy {
     @Override
     public void onTick() {
 
+    }
+
+    @Override
+    public void Move() {
+
+    }
+
+    private String PickMove(GameTiles gameTiles, String [] moves){
+        String selectedMove;
+        if(m.range(player)<m.getVisionRange()){
+            selectedMove=Chase(m);
+        }else {
+            Random rnd = new Random();
+            int pickedMove = rnd.nextInt(moves.length);
+            selectedMove = moves[pickedMove];
+        }
+        return selectedMove;
+    }
+    private String Chase(Monster m){
+        String bestMove="";
+        Integer bestRange=Integer.MAX_VALUE;
+        for (String move : SimpleMoves) {
+            Tile t=getNeighbor(Board,m,move);
+            if(t!=null){
+                if(bestRange > t.range(m)){
+                    bestRange=t.range(m);
+                    bestMove=move;
+                }
+            }
+        }
+        return bestMove;
     }
 }

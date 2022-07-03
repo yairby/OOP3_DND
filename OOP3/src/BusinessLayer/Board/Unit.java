@@ -56,6 +56,7 @@ public abstract class Unit extends Tile implements Tickable,Visitor {
     }
 
     public abstract void onTick();
+    public abstract void Move();
 
     //public DeathCallback getDeathCB() {
        // return deathCB;

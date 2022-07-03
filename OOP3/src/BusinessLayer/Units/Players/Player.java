@@ -96,6 +96,18 @@ public abstract class Player extends Unit implements HeroicUnit {
         tile.accept(this);
     }
 
+    public void Move(GameTiles gameTiles, String move) {
+        Tile neighbor=gameTiles.getNeighbor(this,move);
+        if (neighbor!=null) {
+            neighbor.accept(this);
+            gameTiles.UpdateLocationOfTile(this);
+            gameTiles.UpdateLocationOfTile(neighbor);
+        }
+        if(move.equals("e")){
+            UseSpecialAbility(gameTiles.getEnemies(),this);
+        }
+    }
+
     @Override
     public String toString() {
         String spaces = " ".repeat(5);
