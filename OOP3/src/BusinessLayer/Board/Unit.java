@@ -1,12 +1,11 @@
 package BusinessLayer.Board;
 
-import BusinessLayer.ObserverPattern.Tickable;
+import BusinessLayer.ObserverPattern.Listener;
 import BusinessLayer.Units.Health;
 import BusinessLayer.VisitorPattern.Visitor;
-import GameController.DeathCallback;
 
 
-public abstract class Unit extends Tile implements Tickable,Visitor {
+public abstract class Unit extends Tile implements Listener,Visitor {
     private String name;
     private Health health;
     private Integer attackPoints;
@@ -54,9 +53,6 @@ public abstract class Unit extends Tile implements Tickable,Visitor {
     public void setDefensePoints(Integer defensePoints) {
         this.defensePoints = defensePoints;
     }
-
-    public abstract void onTick();
-    public abstract void Move();
 
     //public DeathCallback getDeathCB() {
        // return deathCB;

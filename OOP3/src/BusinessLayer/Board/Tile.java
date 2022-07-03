@@ -61,6 +61,9 @@ public class Tile implements Visited {
     public int range(Tile tile){
         return position.range(tile.getPosition());
     }
+    public int range(Position p){
+        return position.range(p);
+    }
     public boolean checkrange(Tile tile,int r){
         return range(tile) < r;
     }
@@ -73,6 +76,8 @@ public class Tile implements Visited {
     public void call(String message){
         msgCB.call(message);
     }
+
+
 
 
 

@@ -1,5 +1,6 @@
 package BusinessLayer.ObserverPattern;
 
-public interface Ticker {
+public interface Notifier {
     public void notifyTickables();
+    public void moveAll(String move);
 }

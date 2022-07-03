@@ -2,8 +2,6 @@ package GameController;
 
 import BusinessLayer.Board.Dead;
 import BusinessLayer.Board.GameTiles;
-import BusinessLayer.ObserverPattern.Tickable;
-import BusinessLayer.ObserverPattern.Ticker;
 import BusinessLayer.Units.Players.Player;
 import DataAccessLayer.LevelLoader;
 import UI.MessageCallback;
@@ -93,12 +91,10 @@ public class GameManager {
         GameTiles gameTiles=new GameTiles(levelMap,player);
         msgCB.call(gameTiles.printBoard());
         msgCB.call(player.toString());
-        Move m = new Move();
         boolean passLevel=false,death=false;
         while (!passLevel && !death) {
             String s = scanner.next();
-            m.movePlayer(gameTiles, player, s.toLowerCase());
-            //m.moveMonsters(gameTiles, player);
+            gameTiles.moveAll(s);
             gameTiles.notifyTickables();
             msgCB.call(gameTiles.printBoard());
             msgCB.call(player.toString());

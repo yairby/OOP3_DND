@@ -1,11 +1,16 @@
 package BusinessLayer.Units.Enemies;
 
 import BusinessLayer.Board.GameTiles;
+import BusinessLayer.Board.Position;
 import BusinessLayer.Board.Tile;
+import BusinessLayer.Units.Players.Player;
 
+import java.util.List;
 import java.util.Random;
 
 public class Monster extends Enemy {
+
+    private String [] SimpleMoves={"w","a","s","d","q"};
     public int getVisionRange() {
         return visionRange;
     }
@@ -20,10 +25,6 @@ public class Monster extends Enemy {
     public Monster(char tileChar, String name, Integer health, Integer attackPoints, Integer defensePoints,Integer experience, Integer visionRange ) {
         super(tileChar, name, health, attackPoints, defensePoints, experience);
         this.visionRange=visionRange;
-    }
-
-    public void findNearBy() {
-
     }
 
 
@@ -58,33 +59,33 @@ public class Monster extends Enemy {
     }
 
     @Override
-    public void Move() {
-
+    public Position onMove(List<Enemy> enemyList, Player player, String move) {
+        Position p=getPosition().checkMove(PickMove(player));
+        return p;
     }
 
-    private String PickMove(GameTiles gameTiles, String [] moves){
+    protected String PickMove(Player player){
         String selectedMove;
-        if(m.range(player)<m.getVisionRange()){
-            selectedMove=Chase(m);
+        if(range(player)<getVisionRange()){
+            selectedMove=Chase(player);
         }else {
             Random rnd = new Random();
-            int pickedMove = rnd.nextInt(moves.length);
-            selectedMove = moves[pickedMove];
+            int pickedMove = rnd.nextInt(SimpleMoves.length);
+            selectedMove = SimpleMoves[pickedMove];
         }
         return selectedMove;
     }
-    private String Chase(Monster m){
+    protected String Chase(Player p){
         String bestMove="";
         Integer bestRange=Integer.MAX_VALUE;
         for (String move : SimpleMoves) {
-            Tile t=getNeighbor(Board,m,move);
-            if(t!=null){
-                if(bestRange > t.range(m)){
-                    bestRange=t.range(m);
+            int range=range(p.getPosition().checkMove(move));
+                if(bestRange > range){
+                    bestRange=range;
                     bestMove=move;
                 }
-            }
         }
         return bestMove;
     }
+
 }

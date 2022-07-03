@@ -1,9 +1,11 @@
 package BusinessLayer.Units.Enemies;
 
+import BusinessLayer.Board.Position;
 import BusinessLayer.Units.HeroicUnit;
 import BusinessLayer.Units.Players.Player;
 
 import java.util.List;
+import java.util.Random;
 
 public class Boss extends Monster implements HeroicUnit {
 
@@ -18,6 +20,17 @@ public class Boss extends Monster implements HeroicUnit {
     @Override
     public void onTick() {
 
+    }
+
+    @Override
+    public Position onMove(List<Enemy> enemyList, Player player, String move) {
+        if(range(player)<getVisionRange() && getCombatTicks()==getAbilityFrequency()){
+            UseSpecialAbility(enemyList,player);
+            return getPosition();
+        }else {
+            Position p = getPosition().checkMove(PickMove(player));
+            return p;
+        }
     }
 
     @Override

@@ -1,21 +1,20 @@
 package BusinessLayer.Board;
 
-import BusinessLayer.ObserverPattern.Tickable;
-import BusinessLayer.ObserverPattern.Ticker;
+import BusinessLayer.ObserverPattern.Listener;
+import BusinessLayer.ObserverPattern.Notifier;
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Players.Player;
 import GameController.TileFactory;
 
 import java.util.*;
-import java.util.function.Supplier;
 
-public class GameTiles implements Ticker {
+public class GameTiles implements Notifier {
 
     private Tile[][] Board;
     private Player player;
     private List<Enemy> enemies;
 
-    private List<Tickable> gameEntities;
+    private List<Unit> gameEntities;
 
     public GameTiles(String levelMap, Player p) {
         String[] arr = levelMap.split("\\n");
@@ -99,8 +98,18 @@ public class GameTiles implements Ticker {
 
     @Override
     public void notifyTickables() {
-        for (Tickable t : gameEntities) {
-            t.onTick();
+        for (Unit u : gameEntities) {
+            u.onTick();
+        }
+    }
+    @Override
+    public void moveAll(String move) {
+        for (Unit u : gameEntities) {
+            Position p=u.onMove(getEnemies(),getPlayer(),move);
+            Tile neighbor=getTileInPosition(p);
+            neighbor.accept(u);
+            UpdateLocationOfTile(u);
+            UpdateLocationOfTile(neighbor);
         }
     }
 
@@ -132,5 +141,7 @@ public class GameTiles implements Ticker {
         }
         return neighbor;
     }
+
+
 }
 

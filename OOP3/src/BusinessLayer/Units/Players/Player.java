@@ -96,16 +96,13 @@ public abstract class Player extends Unit implements HeroicUnit {
         tile.accept(this);
     }
 
-    public void Move(GameTiles gameTiles, String move) {
-        Tile neighbor=gameTiles.getNeighbor(this,move);
-        if (neighbor!=null) {
-            neighbor.accept(this);
-            gameTiles.UpdateLocationOfTile(this);
-            gameTiles.UpdateLocationOfTile(neighbor);
-        }
+    @Override
+    public Position onMove(List<Enemy> enemyList, Player player, String move) {
         if(move.equals("e")){
-            UseSpecialAbility(gameTiles.getEnemies(),this);
+            UseSpecialAbility(enemyList,this);
+            return getPosition();
         }
+        return getPosition().checkMove(move);
     }
 
     @Override

@@ -1,8 +1,12 @@
 package BusinessLayer.Board;
 
+import java.util.List;
+
 public class Position {
     private int x;
     private int y;
+
+
 
     public Position(int y, int x){
         this.x=x;
@@ -28,17 +32,33 @@ public class Position {
         this.y = y;
     }
 
-//    public Position Left(){
-//
-//    }
-//    public Position Right(){
-//
-//    }
-//    public Position Down(){
-//
-//    }
-//    public Position Up(){
-//
-//    }
+    public Position Left(){
+        return new Position(getY(),getX()-1);
+    }
+    public Position Right(){
+        return new Position(getY(),getX()+1);
+    }
+    public Position Down(){
+        return new Position(getY()+1,getX());
+    }
+    public Position Up(){
+        return new Position(getY()-1,getX());
+    }
+
+    public Position checkMove(String move){
+        if(move.equals("w")){
+            return Up();
+        }
+        if(move.equals("s")){
+            return Down();
+        }
+        if(move.equals("d")){
+            return Right();
+        }
+        if(move.equals("a")){
+            return Left();
+        }
+        return this;
+    }
 
 }
