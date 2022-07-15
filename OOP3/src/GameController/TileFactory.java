@@ -1,5 +1,6 @@
 package GameController;
 
+import BusinessLayer.Units.DeathCallBack;
 import BusinessLayer.Units.Enemies.Boss;
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Enemies.Monster;
@@ -24,10 +25,13 @@ public class TileFactory {
 
     private Player selected;
 
+    private DeathCallBack DCB;
 
-    public TileFactory(){
+
+    public TileFactory(DeathCallBack DCB){
         playersList = initPlayers();
         enemiesMap = initEnemies();
+        this.DCB=DCB;
     }
 
     private Map<Character, Supplier<Enemy>> initNonMonsters() {

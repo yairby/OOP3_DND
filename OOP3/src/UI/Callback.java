@@ -1,5 +1,5 @@
 package UI;
 
 public interface Callback {
-     public void call(String callValue);
+     void call(String callValue);
 }

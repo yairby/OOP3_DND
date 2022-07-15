@@ -13,11 +13,13 @@ public class GameManager {
     private Scanner scanner=new Scanner(System.in);
     private static final int maxLevel=4;
     private MessageCallback msgCB;
+    private TileFactory tileFactory;
     public GameManager(MessageCallback msgCB){
         this.msgCB=msgCB;
     }
     public void StartGame(){
         TileFactory tileFactory=new TileFactory();
+        this.tileFactory=tileFactory;
 
         //loading the players
         List<Player> players= tileFactory.listPlayers();
@@ -88,7 +90,7 @@ public class GameManager {
     public boolean PlayLevel(int level, Player player) {
         msgCB.call("-------Level "+level+" Started-------");
         String levelMap= LevelLoader.LoadLevel(level).stream().collect(Collectors.joining("\n"));
-        GameTiles gameTiles=new GameTiles(levelMap,player,msgCB);
+        GameTiles gameTiles=new GameTiles(levelMap,player,msgCB, tileFactory);
         msgCB.call(gameTiles.printBoard());
         msgCB.call(player.toString());
         boolean passLevel=false,death=false;

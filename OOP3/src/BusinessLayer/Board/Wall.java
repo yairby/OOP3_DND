@@ -7,8 +7,8 @@ import BusinessLayer.VisitorPattern.Visitor;
 public class Wall extends Tile{
     private char type;
 
-    public Wall(char type, int x, int y){
-        super(type,x,y);
+    public Wall(char type, int y, int x){
+        super(type,y,x);
     }
     @Override
     public void accept(Visitor v){

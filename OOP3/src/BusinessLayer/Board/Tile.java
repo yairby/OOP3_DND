@@ -4,6 +4,7 @@ import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Players.Player;
 import BusinessLayer.VisitorPattern.Visited;
 import BusinessLayer.VisitorPattern.Visitor;
+import UI.Callback;
 import UI.MessageCallback;
 
 import java.util.ArrayList;
@@ -13,14 +14,14 @@ public class Tile implements Visited {
 
     private char tileChar;
     private Position position;
-    private MessageCallback msgCB;
+    private Callback CB;
     public Tile(){
         tileChar=' ';
         this.position=new Position(0,0);
     }
-    public Tile(char tileChar, int x, int y) {
+    public Tile(char tileChar, int y, int x) {
         this.tileChar = tileChar;
-        this.position=new Position(x,y);
+        this.position=new Position(y,x);
     }
     public Tile(char tileChar, Position p) {
         this.tileChar = tileChar;
@@ -74,10 +75,10 @@ public class Tile implements Visited {
     }
 
     public void call(String message){
-        msgCB.call(message);
+        CB.call(message);
     }
 
-    public void setMsgCB(MessageCallback msgCB) {
-        this.msgCB = msgCB;
+    public void setCB(Callback CB) {
+        this.CB = CB;
     }
 }

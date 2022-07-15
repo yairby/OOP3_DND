@@ -80,6 +80,10 @@ public abstract class Player extends Unit implements HeroicUnit {
     public void visit(Enemy enemy) {
         Combat combat=new Combat(this,enemy);
         combat.Attack();
+        if(!enemy.IsAlive())
+        {
+            increaseExperience(enemy.getExperience());
+        }
     }
     @Override
     public void visit(Player player) {}
@@ -110,6 +114,7 @@ public abstract class Player extends Unit implements HeroicUnit {
         String spaces = " ".repeat(5);
         return super.toString() + "Level: " + level + spaces + "Experience: " + experienceAmount + "/" + experiencePool + spaces;
     }
+
 
 
 }

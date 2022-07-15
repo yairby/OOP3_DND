@@ -1,11 +1,11 @@
 package BusinessLayer.Board;
 
-import BusinessLayer.ObserverPattern.Listener;
 import BusinessLayer.ObserverPattern.Notifier;
+import BusinessLayer.Units.DeathCallBack;
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Players.Player;
 import GameController.TileFactory;
-import UI.MessageCallback;
+import UI.Callback;
 
 import java.util.*;
 
@@ -16,15 +16,20 @@ public class GameTiles implements Notifier {
     private List<Enemy> enemies;
 
     private List<Unit> gameEntities;
-    private MessageCallback msgCB;
+    private Callback CB;
+    private DeathCallBack DCB;
+    private TileFactory tileFactory;
 
-    public GameTiles(String levelMap, Player p, MessageCallback msgCB) {
+    public GameTiles(String levelMap, Player p, Callback CB, TileFactory tileFactory) {
         String[] arr = levelMap.split("\\n");
+        this.tileFactory=tileFactory;
         this.Board = new Tile[arr.length][arr[0].length()];
         this.enemies = new ArrayList<>();
         this.player = p;
         this.gameEntities = new LinkedList<>();
-        this.msgCB=msgCB;
+        this.CB=CB;
+        DeathCallBack DCB=(Unit u) -> removeFromBoard(u);
+        this.DCB=DCB;
         initBoard(arr);
     }
 
@@ -34,7 +39,6 @@ public class GameTiles implements Notifier {
 
 
     public void initBoard(String[] arr) {
-        TileFactory factory = new TileFactory();
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length(); j++) {
                 Tile t;
@@ -51,14 +55,15 @@ public class GameTiles implements Notifier {
                         t = new Empty(type, i, j);
                         break;
                     default:
-                        Enemy enemy = factory.produceEnemy(type);
+                        Enemy enemy = tileFactory.produceEnemy(type);
                         enemies.add(enemy);
                         gameEntities.add(enemy);
                         t = enemy;
                 }
                 Board[i][j] = t;
                 t.setPosition(new Position(i, j));
-                t.setMsgCB(msgCB);
+                t.setCB(CB);
+                //setDeathCallback
             }
         }
     }
@@ -144,6 +149,12 @@ public class GameTiles implements Notifier {
             neighbor = getTileInPosition(u.getY(), u.getX() - 1);
         }
         return neighbor;
+    }
+
+    public void removeFromBoard(Unit u){
+        Position p=u.getPosition();
+        Board[p.getY()][p.getX()]=new Empty('.',p.getY(),p.getX());
+        gameEntities.remove(u);
     }
 
 

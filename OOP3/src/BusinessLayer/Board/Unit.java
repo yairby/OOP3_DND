@@ -1,6 +1,7 @@
 package BusinessLayer.Board;
 
 import BusinessLayer.ObserverPattern.Listener;
+import BusinessLayer.Units.DeathCallBack;
 import BusinessLayer.Units.Health;
 import BusinessLayer.VisitorPattern.Visitor;
 
@@ -10,9 +11,9 @@ public abstract class Unit extends Tile implements Listener,Visitor {
     private Health health;
     private Integer attackPoints;
     private Integer defensePoints;
-    //private DeathCallback deathCB=new DeathCallback();
+    private DeathCallBack DCB;
 
-    public Unit(String name,Integer health, Integer attackPoints,Integer defensePoints){
+    public Unit(String name, Integer health, Integer attackPoints, Integer defensePoints){
         this.name=name;
         this.health=new Health(health,health);
         this.attackPoints=attackPoints;
@@ -54,10 +55,6 @@ public abstract class Unit extends Tile implements Listener,Visitor {
         this.defensePoints = defensePoints;
     }
 
-    //public DeathCallback getDeathCB() {
-       // return deathCB;
-   // }
-
     public String toString(){
         String spaces=" ".repeat(5);
         return ""+name+spaces+"Health: "+getHealth().getAmount()+"/"+getHealth().getPool()+spaces+"Attack: "+attackPoints+spaces+"Defense: "+defensePoints+spaces;
@@ -67,4 +64,7 @@ public abstract class Unit extends Tile implements Listener,Visitor {
         return getHealth().getAmount()>0;
     }
 
+    public void setDCB(DeathCallBack DCB) {
+        this.DCB = DCB;
+    }
 }

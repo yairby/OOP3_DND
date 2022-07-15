@@ -1,6 +1,7 @@
 package BusinessLayer.CombatSystem;
 
 import BusinessLayer.Board.Unit;
+import BusinessLayer.Units.DeathCallBack;
 import UI.Callback;
 import UI.MessageCallback;
 
@@ -9,11 +10,14 @@ import java.util.Random;
 public class Combat {
     private Unit Attacker;
     private Unit Defender;
-    private Callback msgCB;
+    private Callback CB;
+    private DeathCallBack DCB;
 
-    public Combat(Unit attacker, Unit defender){
+    public Combat(Unit attacker, Unit defender, Callback CB, DeathCallBack DCB){
         Attacker=attacker;
         Defender=defender;
+        this.CB=CB;
+        this.DCB=DCB;
     }
 
     public Unit getDefender() {
@@ -34,20 +38,25 @@ public class Combat {
     public int Attack(){
         String attackerName= getAttacker().getName();
         String defenderName= getDefender().getName();
-        msgCB.call("---------"+attackerName+" engaged in combat with "+defenderName+"---------");
+        CB.call("---------"+attackerName+" engaged in combat with "+defenderName+"---------");
         PrintParticipants(getAttacker().toString(), getDefender().toString());
         Random r=new Random();
         int attackP=r.nextInt(getAttacker().getAttackPoints()+1);
-        msgCB.call(attackerName+" rolled "+attackP+" attack points.");
+        CB.call(attackerName+" rolled "+attackP+" attack points.");
         int defenceP=r.nextInt(getDefender().getDefensePoints()+1);
-        msgCB.call(defenderName+" rolled "+defenderName+" defense points.\n");
+        CB.call(defenderName+" rolled "+defenderName+" defense points.\n");
         int damage=attackP-defenceP;
         if(damage>0){
             getDefender().setAmountHealth(getDefender().getHealth().getAmount()-damage);
-            msgCB.call(attackerName+" dealt "+damage+" damage to "+defenderName+".");
+            CB.call(attackerName+" dealt "+damage+" damage to "+defenderName+".");
+            if(!Defender.IsAlive()){
+                DCB.call(Defender);
+                CB.call(defenderName+" was killed by "+attackerName);
+                Attacker.OnKill(Defender);
+            }
             return damage;
         }
-        msgCB.call(attackerName+" dealt 0 damage to "+defenderName+".");
+        CB.call(attackerName+" dealt 0 damage to "+defenderName+".");
         return 0;
     }
     public int Attack(int PreDefinedAttackStrength){
@@ -55,6 +64,11 @@ public class Combat {
         int defenceP=r.nextInt(getDefender().getDefensePoints()+1);
         int damage=PreDefinedAttackStrength-defenceP;
         if(damage>0){
+            if(!Defender.IsAlive()){
+                DCB.call(Defender);
+                CB.call(Defender.getName()+" was killed by "+Attacker.getName());
+                Attacker.OnKill(Defender);
+            }
             getDefender().setAmountHealth(getDefender().getHealth().getAmount()-damage);
             return damage;
         }
@@ -79,7 +93,7 @@ public class Combat {
         for (int i = 0; i < maxLen+12; i++) {
             s+="#";
         }
-        msgCB.call(s);
+        CB.call(s);
     }
 
 }
