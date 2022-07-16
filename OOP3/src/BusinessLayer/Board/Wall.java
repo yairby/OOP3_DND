@@ -12,6 +12,6 @@ public class Wall extends Tile{
     }
     @Override
     public void accept(Visitor v){
-        call("Just For Testing: BUMPED INTO A WALL!");
+        v.visit(this);
     }
 }

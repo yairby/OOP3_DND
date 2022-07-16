@@ -28,10 +28,10 @@ public class TileFactory {
     private DeathCallBack DCB;
 
 
-    public TileFactory(DeathCallBack DCB){
+    public TileFactory(){//DeathCallBack DCB){
         playersList = initPlayers();
         enemiesMap = initEnemies();
-        this.DCB=DCB;
+        //this.DCB=DCB;
     }
 
     private Map<Character, Supplier<Enemy>> initNonMonsters() {

@@ -1,5 +1,6 @@
 package BusinessLayer.Board;
 
+import BusinessLayer.Units.DeathCallBack;
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Players.Player;
 import BusinessLayer.VisitorPattern.Visited;
@@ -15,6 +16,8 @@ public class Tile implements Visited {
     private char tileChar;
     private Position position;
     private Callback CB;
+    private DeathCallBack DCB;
+    private boolean exist=true; //to mark if exist in board
     public Tile(){
         tileChar=' ';
         this.position=new Position(0,0);
@@ -59,10 +62,10 @@ public class Tile implements Visited {
         this.position = position;
     }
 
-    public int range(Tile tile){
+    public double range(Tile tile){
         return position.range(tile.getPosition());
     }
-    public int range(Position p){
+    public double range(Position p){
         return position.range(p);
     }
     public boolean checkrange(Tile tile,int r){
@@ -80,5 +83,25 @@ public class Tile implements Visited {
 
     public void setCB(Callback CB) {
         this.CB = CB;
+    }
+
+    public Callback getCB() {
+        return CB;
+    }
+
+    public void setDeathCB(DeathCallBack DCB){
+        this.DCB=DCB;
+    }
+
+    public DeathCallBack getDCB() {
+        return DCB;
+    }
+
+    public void setExist(boolean exist) {
+        this.exist = exist;
+    }
+
+    public boolean isExist() {
+        return exist;
     }
 }

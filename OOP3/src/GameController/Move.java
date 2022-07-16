@@ -104,7 +104,7 @@ public class Move {
 
     private String Chase(Monster m){
         String bestMove="";
-        Integer bestRange=Integer.MAX_VALUE;
+        double bestRange=Integer.MAX_VALUE;
         for (String move : SimpleMoves) {
             Tile t=getNeighbor(Board,m,move);
             if(t!=null){

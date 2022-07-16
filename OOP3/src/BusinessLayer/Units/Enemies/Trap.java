@@ -1,6 +1,11 @@
 package BusinessLayer.Units.Enemies;
 
 
+import BusinessLayer.Board.Position;
+import BusinessLayer.Units.Players.Player;
+
+import java.util.List;
+
 public class Trap extends Enemy {
     private int visibilityTime;
     private int invisibilityTime;
@@ -39,6 +44,11 @@ public class Trap extends Enemy {
     @Override
     public void onTick() {
 
+    }
+
+    @Override
+    public Position onMove(List<Enemy> enemyList, Player player, String move) {
+        return this.getPosition();
     }
 
 }

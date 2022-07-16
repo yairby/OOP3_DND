@@ -34,9 +34,6 @@ public class Mage extends Player{
         spellPower+=10*getLevel();
     }
 
-
-
-
     public Integer getSpellPower() {
         return spellPower;
     }
@@ -68,8 +65,6 @@ public class Mage extends Player{
     public void setHitsCount(Integer hitsCount) {
         this.hitsCount = hitsCount;
     }
-
-
 
     @Override
     public String Type() {

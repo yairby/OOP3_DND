@@ -32,6 +32,7 @@ public abstract class Player extends Unit implements HeroicUnit {
 
     public void increaseExperience(Integer exp){
         this.experienceAmount+=exp;
+        getCB().call(getName()+" got "+exp+" experience!");
         checkForLevelUp();
     }
 

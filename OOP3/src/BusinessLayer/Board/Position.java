@@ -13,8 +13,8 @@ public class Position {
         this.y=y;
     }
 
-    public int range(Position p){
-       return (int) Math.sqrt(Math.pow(getX()- p.getX(),2)+Math.pow(getY()-p.getY(),2));
+    public double range(Position p){
+       return Math.sqrt(Math.pow(getX()- p.getX(),2)+Math.pow(getY()-p.getY(),2));
     }
     public int getX() {
         return x;
@@ -60,5 +60,4 @@ public class Position {
         }
         return this;
     }
-
 }

@@ -76,7 +76,7 @@ public class Warrior extends Player {
             if(chosenEnemy!=null) {
                 Combat combat = new Combat(this, chosenEnemy);
                 int damage = combat.Attack(getHealth().getPool() / 10); //10% of max health
-                call(getName() + " hit " + chosenEnemy.getName() + " for " + damage + " ability damage.");
+                call(getName() + " hit " + chosenEnemy.getName() + " for " + damage + " ability damage.\n");
             }
         }else {
             call(getName()+" tried to cast Avenger's Shield, but there is a cooldown: "+remainingCoolDown+".");
@@ -92,7 +92,7 @@ public class Warrior extends Player {
         }
         if(InRange.size()>0) {
             Random rnd = new Random();
-            int chosenEnemy = rnd.nextInt(InRange.size() + 1);
+            int chosenEnemy = rnd.nextInt(InRange.size());
             return InRange.get(chosenEnemy);
         }else {
             return null;

@@ -27,6 +27,7 @@ public class GameTiles implements Notifier {
         this.enemies = new ArrayList<>();
         this.player = p;
         this.gameEntities = new LinkedList<>();
+        gameEntities.add(player);
         this.CB=CB;
         DeathCallBack DCB=(Unit u) -> removeFromBoard(u);
         this.DCB=DCB;
@@ -46,7 +47,6 @@ public class GameTiles implements Notifier {
                 switch (type) {
                     case '@':
                         t = player;
-                        gameEntities.add(player);
                         break;
                     case '#':
                         t = new Wall(type, i, j);
@@ -63,7 +63,7 @@ public class GameTiles implements Notifier {
                 Board[i][j] = t;
                 t.setPosition(new Position(i, j));
                 t.setCB(CB);
-                //setDeathCallback
+                t.setDeathCB((Unit u)->removeFromBoard(u));
             }
         }
     }
@@ -117,44 +117,24 @@ public class GameTiles implements Notifier {
             Position p=u.onMove(getEnemies(),getPlayer(),move);
             Tile neighbor=getTileInPosition(p);
             neighbor.accept(u);
+            if(neighbor.isExist()) { //only if not dead
+                UpdateLocationOfTile(neighbor);
+            }else {
+                if(player.IsAlive()) {
+                    Board[p.getY()][p.getX()] = new Empty('.', p.getY(), p.getX());
+                    neighbor = getTileInPosition(p);
+                    neighbor.accept(u);
+                    UpdateLocationOfTile(neighbor);
+                }
+            }
             UpdateLocationOfTile(u);
-            UpdateLocationOfTile(neighbor);
         }
-    }
-
-    //    public Tile getNeighbor(char c, Position p) {
-//        Map<Character, Supplier<Tile>> neighbors = new HashMap<>() {
-//            {
-//                put('a', () -> getTileInPosition(p.Left()));
-//                put('d', () -> getTileInPosition(p.Right()));
-//                put('s', () -> getTileInPosition(p.Down()));
-//                put('w', () -> getTileInPosition(p.Up()));
-//                put('q', () -> getTileInPosition(p));
-//            }
-//        };
-//        return neighbors.get(c).get();
-//    }
-    public Tile getNeighbor(Unit u, String move) {
-        Tile neighbor = null;
-        if (move.equals("w")) {
-            neighbor = getTileInPosition(u.getY() - 1, u.getX());
-        }
-        if (move.equals("s")) {
-            neighbor = getTileInPosition(u.getY() + 1, u.getX());
-        }
-        if (move.equals("d")) {
-            neighbor = getTileInPosition(u.getY(), u.getX() + 1);
-        }
-        if (move.equals("a")) {
-            neighbor = getTileInPosition(u.getY(), u.getX() - 1);
-        }
-        return neighbor;
     }
 
     public void removeFromBoard(Unit u){
-        Position p=u.getPosition();
-        Board[p.getY()][p.getX()]=new Empty('.',p.getY(),p.getX());
         gameEntities.remove(u);
+        enemies.remove(u);
+        u.setExist(false);
     }
 
 

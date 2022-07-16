@@ -27,27 +27,6 @@ public class Monster extends Enemy {
         this.visionRange=visionRange;
     }
 
-
-
-//    public void Move(){
-//        if(range(Tile ))
-//        if range(monster, player) < vision range then
-//        dx ← enemyX − playerX
-//        dy ← enemyY − playerY
-//        if |dx| > |dy| then
-//        if dx > 0 then
-//        Move left
-//else
-//        Move right
-//else
-//        if dy > 0 then
-//        Move up
-//else
-//        Move down
-//else
-//        Perform a random movement action: left, right, up, down or stay at the same place.
-
-//    }
     public String toString(){
         return super.toString()+"Vision Range: "+visionRange;
     }
@@ -77,9 +56,9 @@ public class Monster extends Enemy {
     }
     protected String Chase(Player p){
         String bestMove="";
-        Integer bestRange=Integer.MAX_VALUE;
+        double bestRange=Integer.MAX_VALUE;
         for (String move : SimpleMoves) {
-            int range=range(p.getPosition().checkMove(move));
+            double range=p.range(getPosition().checkMove(move));
                 if(bestRange > range){
                     bestRange=range;
                     bestMove=move;
