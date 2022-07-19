@@ -113,21 +113,23 @@ public class GameTiles implements Notifier {
     }
     @Override
     public void moveAll(String move) {
-        for (Unit u : gameEntities) {
-            Position p=u.onMove(getEnemies(),getPlayer(),move);
-            Tile neighbor=getTileInPosition(p);
-            neighbor.accept(u);
-            if(neighbor.isExist()) { //only if not dead
-                UpdateLocationOfTile(neighbor);
-            }else {
-                if(player.IsAlive()) {
-                    Board[p.getY()][p.getX()] = new Empty('.', p.getY(), p.getX());
-                    neighbor = getTileInPosition(p);
-                    neighbor.accept(u);
+        List<Unit> gameEntitiesCopy=new ArrayList<>(gameEntities);
+        for (Unit u : gameEntitiesCopy) {
+            if (u.IsAlive()) {
+                Position p = u.onMove(getEnemies(), getPlayer(), move);
+                Tile neighbor = getTileInPosition(p);
+                neighbor.accept(u);
+                if (neighbor.isExist()) { //only if not dead
                     UpdateLocationOfTile(neighbor);
+                } else {
+                    if (player.IsAlive()) {
+                        neighbor = getTileInPosition(p);
+                        neighbor.accept(u);
+                        UpdateLocationOfTile(neighbor);
+                    }
                 }
+                UpdateLocationOfTile(u);
             }
-            UpdateLocationOfTile(u);
         }
     }
 
@@ -135,6 +137,8 @@ public class GameTiles implements Notifier {
         gameEntities.remove(u);
         enemies.remove(u);
         u.setExist(false);
+        Position deadPos=u.getPosition();
+        Board[deadPos.getY()][deadPos.getX()] = new Empty('.', deadPos.getY(), deadPos.getX());
     }
 
 

@@ -2,6 +2,7 @@ package BusinessLayer.Units.Enemies;
 
 
 import BusinessLayer.Board.Position;
+import BusinessLayer.CombatSystem.Combat;
 import BusinessLayer.Units.Players.Player;
 
 import java.util.List;
@@ -11,22 +12,7 @@ public class Trap extends Enemy {
     private int invisibilityTime;
     private int ticksCount;
     private boolean visible;
-
-    public int getVisibilityTime() {
-        return visibilityTime;
-    }
-
-    public void setVisibilityTime(int visible) {
-        visibilityTime = visible;
-    }
-
-    public int getInvisibilityTime() {
-        return invisibilityTime;
-    }
-
-    public void setInvisibilityTime(int invisible) {
-        invisibilityTime = invisible;
-    }
+    private char tileChar;
 
 
     public Trap(char c, String name, int health, Integer attackPoints, Integer defensePoints,int experience, int visibilityTime, int invisibilityTime) {
@@ -35,6 +21,7 @@ public class Trap extends Enemy {
         this.invisibilityTime=invisibilityTime;
         ticksCount=0;
         visible=true;
+        tileChar=c;
     }
 
     public String toString(){
@@ -43,12 +30,28 @@ public class Trap extends Enemy {
 
     @Override
     public void onTick() {
-
+        visible = ticksCount < visibilityTime;
+        if(visible){
+            setTileChar(tileChar);
+        }else {
+            setTileChar('.');
+        }
+        if (ticksCount == (visibilityTime + invisibilityTime)) {
+            ticksCount=0;
+        }
+        else {
+            ticksCount++;
+        }
     }
 
     @Override
     public Position onMove(List<Enemy> enemyList, Player player, String move) {
-        return this.getPosition();
+        if (range(player) < 2) {
+            Combat combat=new Combat(this,player);
+            combat.Attack();
+        }
+        return getPosition();
     }
+
 
 }

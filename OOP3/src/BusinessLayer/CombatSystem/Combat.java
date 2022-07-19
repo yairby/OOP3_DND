@@ -60,14 +60,13 @@ public class Combat {
     public int Attack(int PreDefinedAttackStrength){
         Random r=new Random();
         int defenceP=r.nextInt(getDefender().getDefensePoints()+1);
-        CB.call(getDefender().getName()+" rolled "+defenceP+" defense points.\n");
+        CB.call(getDefender().getName()+" rolled "+defenceP+" defense points.");
         int damage=PreDefinedAttackStrength-defenceP;
         if(damage>0){
+            getDefender().setAmountHealth(getDefender().getHealth().getAmount()-damage);
             if(!Defender.IsAlive()){
-                CB.call(Defender.getName()+" was killed by "+Attacker.getName());
                 Defender.getDCB().call(Defender);
             }
-            getDefender().setAmountHealth(getDefender().getHealth().getAmount()-damage);
             return damage;
         }
         return 0;

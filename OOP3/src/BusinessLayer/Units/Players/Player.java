@@ -25,7 +25,7 @@ public abstract class Player extends Unit implements HeroicUnit {
     }
 
     public void checkForLevelUp(){
-        if(getExperience()>=experiencePool){
+        while(getExperience()>=experiencePool){
             levelUp();
         }
     }

@@ -30,29 +30,14 @@ public class Warrior extends Player {
         h.setPool(h.getPool()+(5*getLevel()));
         setAttackPoints(getAttackPoints()+(2*getLevel()));
         setDefensePoints(getDefensePoints()+(getLevel()));
-        call(getName()+" reached level "+getLevel()+": +"+(getHealth().getPool()-oldHealthPull)+", +"+(getAttackPoints()-oldAttackPoints)+", +"+(getDefensePoints()-oldDefensePoints));
+        call(getName()+" reached level "+getLevel()+": +"+(getHealth().getPool()-oldHealthPull)+" health, +"
+                +(getAttackPoints()-oldAttackPoints)+" attack, +"+(getDefensePoints()-oldDefensePoints)+" defense");
     }
 
 
     @Override
     public String Type() {
         return "Warrior";
-    }
-
-    public Integer getRemainingCoolDown() {
-        return remainingCoolDown;
-    }
-
-    public void setRemainingCoolDown(Integer remainingCoolDown) {
-        this.remainingCoolDown = remainingCoolDown;
-    }
-
-    public Integer getAbilityCoolDown() {
-        return abilityCoolDown;
-    }
-
-    public void setAbilityCoolDown(Integer abilityCoolDown) {
-        this.abilityCoolDown = abilityCoolDown;
     }
 
     public String toString(){
@@ -77,6 +62,10 @@ public class Warrior extends Player {
                 Combat combat = new Combat(this, chosenEnemy);
                 int damage = combat.Attack(getHealth().getPool() / 10); //10% of max health
                 call(getName() + " hit " + chosenEnemy.getName() + " for " + damage + " ability damage.\n");
+                if(!chosenEnemy.IsAlive()){
+                    call(chosenEnemy.getName()+" was killed by "+getName()+"\n");
+                    increaseExperience(chosenEnemy.getExperience());
+                }
             }
         }else {
             call(getName()+" tried to cast Avenger's Shield, but there is a cooldown: "+remainingCoolDown+".");

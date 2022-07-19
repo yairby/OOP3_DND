@@ -28,64 +28,27 @@ public class Mage extends Player{
     }
 
     public void levelUp(){
+        int oldHealthPull= getHealth().getPool();
+        int oldAttackPoints=getAttackPoints();
+        int oldDefensePoints=getDefensePoints();
+        int oldManaAmount=manaAmount;
+        int oldSpellPower=spellPower;
         super.levelUp();
         manaPool+=25*getLevel();
         manaAmount=Math.min(manaAmount+(manaPool/4),manaPool);
         spellPower+=10*getLevel();
+        call(getName()+" reached level "+getLevel()+": +"+(getHealth().getPool()-oldHealthPull)+" health, +"
+                +(getAttackPoints()-oldAttackPoints)+" attack, +"+(getDefensePoints()-oldDefensePoints)+" defense, +"
+                +(manaAmount-oldManaAmount)+" mana, +"+(spellPower-oldSpellPower)+" spell power");
     }
 
-    public Integer getSpellPower() {
-        return spellPower;
-    }
-
-    public void setSpellPower(Integer spellPower) {
-        this.spellPower = spellPower;
-    }
-
-    public Integer getManaPool() {
-        return manaPool;
-    }
-
-    public void setManaPool(Integer manaPool) {
-        this.manaPool = manaPool;
-    }
-
-    public Integer getManaAmount() {
-        return manaAmount;
-    }
-
-    public void setManaAmount(Integer manaAmount) {
-        this.manaAmount = manaAmount;
-    }
-
-    public Integer getHitsCount() {
-        return hitsCount;
-    }
-
-    public void setHitsCount(Integer hitsCount) {
-        this.hitsCount = hitsCount;
-    }
 
     @Override
     public String Type() {
         return "Mage";
     }
 
-    public Integer getAbilityRange() {
-        return abilityRange;
-    }
 
-    public void setAbilityRange(Integer abilityRange) {
-        this.abilityRange = abilityRange;
-    }
-
-    public Integer getAbilityManaCost() {
-        return abilityManaCost;
-    }
-
-    public void setAbilityManaCost(Integer abilityManaCost) {
-        this.abilityManaCost = abilityManaCost;
-    }
 
     public String toString() {
         String spaces=" ".repeat(5);
@@ -105,14 +68,18 @@ public class Mage extends Player{
             call(getName()+" cast Blizzard.");
             manaAmount-=abilityManaCost;
             int hits=0;
-            while (hits<hitsCount){
+            while (hits < hitsCount){
                 Enemy chosenEnemy=chooseEnemyInRange(enemies);
                 if(chosenEnemy!=null){
                     Combat combat=new Combat(this,chosenEnemy);
                     int damage=combat.Attack(spellPower);
-                    call("");
+                    call(getName()+" hit "+chosenEnemy.getName()+" for "+damage+" ability damage.\n");
+                    if(!chosenEnemy.IsAlive()){
+                        call(chosenEnemy.getName()+" was killed by "+getName()+"\n");
+                        increaseExperience(chosenEnemy.getExperience());
+                    }
                 }
-                hits+=1;
+                hits++;
             }
         }
     }
@@ -120,13 +87,13 @@ public class Mage extends Player{
     private Enemy chooseEnemyInRange(List<Enemy> enemies){
         List<Enemy> InRange=new ArrayList<>();
         for (Enemy e:enemies) {
-            if(this.range(e)<abilityRange && e.getHealth().getAmount()>0){ //checks if enemy is alive
+            if(this.range(e) < abilityRange && e.IsAlive()){ //checks if enemy is alive
                 InRange.add(e);
             }
         }
         if(InRange.size()>0) {
             Random rnd = new Random();
-            int chosenEnemy = rnd.nextInt(InRange.size() + 1);
+            int chosenEnemy = rnd.nextInt(InRange.size());
             return InRange.get(chosenEnemy);
         }else {
             return null;

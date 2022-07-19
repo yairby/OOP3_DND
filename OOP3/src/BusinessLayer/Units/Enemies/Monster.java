@@ -33,9 +33,7 @@ public class Monster extends Enemy {
 
 
     @Override
-    public void onTick() {
-
-    }
+    public void onTick() {}
 
     @Override
     public Position onMove(List<Enemy> enemyList, Player player, String move) {

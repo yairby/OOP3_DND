@@ -23,9 +23,15 @@ public class Rogue extends Player{
     }
 
     public void levelUp(){
+        int oldHealthPull= getHealth().getPool();
+        int oldAttackPoints=getAttackPoints();
+        int oldDefensePoints=getDefensePoints();
+        int oldEnergy=energy;
         super.levelUp();
         energy=100;
         setAttackPoints(getAttackPoints()+(3*getLevel()));
+        call(getName()+" reached level "+getLevel()+": +"+(getHealth().getPool()-oldHealthPull)+" health, +"
+                +(getAttackPoints()-oldAttackPoints)+" attack, +"+(getDefensePoints()-oldDefensePoints)+" defense, +"+(energy-oldEnergy)+" energy");
     }
 
     @Override
@@ -33,22 +39,6 @@ public class Rogue extends Player{
         return "Rogue";
     }
 
-
-    public Integer getEnergy() {
-        return energy;
-    }
-
-    public void setEnergy(Integer energy) {
-        this.energy = energy;
-    }
-
-    public Integer getAbilityEnergyCost() {
-        return abilityEnergyCost;
-    }
-
-    public void setAbilityEnergyCost(Integer abilityEnergyCost) {
-        this.abilityEnergyCost = abilityEnergyCost;
-    }
 
     public String toString(){
         return super.toString()+"Energy: "+energy;
@@ -65,6 +55,10 @@ public class Rogue extends Player{
                     Combat combat=new Combat(this,e);
                     int damage=combat.Attack(getAttackPoints());
                     call(""+getName()+" hit "+e.getName()+" for "+damage+" ability damage.");
+                    if(!e.IsAlive()){
+                        call(e.getName()+" was killed by "+getName()+"\n");
+                        increaseExperience(e.getExperience());
+                    }
                 }
             }
         }

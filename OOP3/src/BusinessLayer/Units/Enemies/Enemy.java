@@ -38,6 +38,11 @@ public abstract class Enemy extends Unit {
     }
 
     @Override
+    public void setTileChar(char tileChar) {
+        this.tileChar = tileChar;
+    }
+
+    @Override
     public void accept(Visitor v) {
         v.visit(this);
     }
