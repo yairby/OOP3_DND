@@ -15,7 +15,7 @@ public class Tile implements Visited {
 
     private char tileChar;
     private Position position;
-    private Callback CB;
+    private Callback CB=new MessageCallback();
     private DeathCallBack DCB;
     private boolean exist=true; //to mark if exist in board
     public Tile(){

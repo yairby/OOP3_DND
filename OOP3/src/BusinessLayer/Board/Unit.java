@@ -18,6 +18,7 @@ public abstract class Unit extends Tile implements Listener,Visitor {
         this.health=new Health(health,health);
         this.attackPoints=attackPoints;
         this.defensePoints=defensePoints;
+
     }
 
     public String getName() {
@@ -67,4 +68,5 @@ public abstract class Unit extends Tile implements Listener,Visitor {
     public void setDCB(DeathCallBack DCB) {
         this.DCB = DCB;
     }
+
 }

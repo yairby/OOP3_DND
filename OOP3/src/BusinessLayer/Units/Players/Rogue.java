@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Rogue extends Player{
 
+
     private Integer energy;
     private Integer abilityEnergyCost;
 
@@ -63,4 +64,12 @@ public class Rogue extends Player{
             }
         }
     }
+    public Integer getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(Integer energy) {
+        this.energy = energy;
+    }
+
 }

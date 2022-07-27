@@ -9,9 +9,14 @@ import java.util.Random;
 
 public class Mage extends Player{
 
+
+
     private Integer manaPool;
+
+
     private Integer manaAmount;
     private Integer abilityManaCost;
+
     private Integer spellPower;
     private Integer hitsCount;
     private Integer abilityRange;
@@ -99,4 +104,28 @@ public class Mage extends Player{
             return null;
         }
     }
+    public Integer getManaPool() {
+        return manaPool;
+    }
+
+    public void setManaPool(Integer manaPool) {
+        this.manaPool = manaPool;
+    }
+
+    public Integer getManaAmount() {
+        return manaAmount;
+    }
+
+    public void setManaAmount(Integer manaAmount) {
+        this.manaAmount = manaAmount;
+    }
+
+    public Integer getSpellPower() {
+        return spellPower;
+    }
+
+    public void setSpellPower(Integer spellPower) {
+        this.spellPower = spellPower;
+    }
+
 }

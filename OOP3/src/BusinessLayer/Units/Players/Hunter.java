@@ -11,7 +11,13 @@ import java.util.Random;
 public class Hunter extends Player {
 
     private Integer range;
+
+
+
     private Integer arrowsCount;
+
+
+
     private Integer ticksCount;
 
     public Hunter(String name, int health, int attackPoints, int defensePoints, int range) {
@@ -88,5 +94,19 @@ public class Hunter extends Player {
             }
         }
         return closestEnemy;
+    }
+    public Integer getTicksCount() {
+        return ticksCount;
+    }
+
+    public void setTicksCount(Integer ticksCount) {
+        this.ticksCount = ticksCount;
+    }
+    public Integer getArrowsCount() {
+        return arrowsCount;
+    }
+
+    public void setArrowsCount(Integer arrowsCount) {
+        this.arrowsCount = arrowsCount;
     }
 }
