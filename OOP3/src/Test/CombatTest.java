@@ -1,17 +1,29 @@
 package Test;
 
+import BusinessLayer.Board.Dead;
+import BusinessLayer.Board.GameTiles;
+import BusinessLayer.Board.Unit;
 import BusinessLayer.CombatSystem.Combat;
+import BusinessLayer.Units.DeathCallBack;
 import BusinessLayer.Units.Enemies.Enemy;
 import BusinessLayer.Units.Players.Player;
+import DataAccessLayer.LevelLoader;
 import GameController.TileFactory;
 import org.junit.Assert;
+
+import java.util.stream.Collectors;
 
 
 class CombatTest {
  private TileFactory tileFactory;
+ private String levelMap;
+ private GameTiles gameTiles;
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
         tileFactory=new TileFactory();
+        levelMap= LevelLoader.LoadLevel(2).stream().collect(Collectors.joining("\n"));
+       gameTiles=new GameTiles(levelMap,tileFactory.listPlayers().get(0),tileFactory.listPlayers().get(0).getCB(),tileFactory);
+
     }
 
     @org.junit.jupiter.api.Test
@@ -19,7 +31,7 @@ class CombatTest {
         Enemy m=tileFactory.produceEnemy('s');
         Player player=tileFactory.listPlayers().get(0);
         int pool=player.getHealth().getPool();
-
+        //enemy attack player
         Combat combat=new Combat(m,player);
         int Attack=combat.Attack();
         int amount=player.getHealth().getAmount();
@@ -30,7 +42,7 @@ class CombatTest {
         Enemy m2=tileFactory.produceEnemy('s');
         Player player2=tileFactory.listPlayers().get(0);
         int pool1=m2.getHealth().getPool();
-
+        //player attack enemy
         Combat combat1=new Combat(player2,m2);
         int Attack2=combat1.Attack();
         int amount3=m2.getHealth().getAmount();
@@ -42,6 +54,13 @@ class CombatTest {
 
     @org.junit.jupiter.api.Test
     void testAttack() {
+        Enemy m=tileFactory.produceEnemy('s');
+        Player player=tileFactory.listPlayers().get(0);
+        player.setDefensePoints(0);
+        Combat combat=new Combat(m,player);
+        combat.Attack(50);
+        Assert.assertEquals(player.getHealth().getAmount()<player.getHealth().getPool(),true);
+
     }
 
     

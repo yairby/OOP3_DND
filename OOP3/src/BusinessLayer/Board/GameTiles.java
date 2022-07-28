@@ -95,6 +95,10 @@ public class GameTiles implements Notifier {
     public List<Enemy> getEnemies() {
         return enemies;
     }
+    //for tests
+    public void newEnemies(){
+        enemies=new LinkedList<>();
+    }
     public void newEntities(){
         gameEntities=new ArrayList<Unit>();
     }

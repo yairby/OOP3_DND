@@ -48,21 +48,15 @@ public class GameTilesTest {
     }
     @Test
     public void notifyTickables() {
-        enemy.setPosition(new Position(2,2));
         gameTiles.getPlayer().setPosition(new Position(10,10));
-        gameTiles.UpdateLocationOfTile(enemy);
         Mage mage=(Mage) tileFactory.listPlayers().get(3);
         gameTiles.UpdateLocationOfTile(gameTiles.getPlayer());
         gameTiles.newEntities();
-
-
         gameTiles.addEntity(mage);
-
         int mana=mage.getManaAmount();
         gameTiles.notifyTickables();
         Assert.assertEquals(mana==mage.getManaAmount()-1,true);
         mage.setManaAmount(mage.getManaPool());
-
         gameTiles.notifyTickables();
         System.out.println(mage.getManaAmount()+" "+mage.getManaPool());
         Assert.assertEquals(Objects.equals(mage.getManaPool(), mage.getManaAmount()),true);

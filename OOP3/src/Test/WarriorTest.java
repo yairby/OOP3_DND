@@ -41,10 +41,10 @@ public class WarriorTest {
         int healthpoll=warrior.getHealth().getPool();
         int attack= warrior.getAttackPoints();;
         int defence=warrior.getDefensePoints();
-        warrior.setLevel(0);
+        warrior.setLevel(1);
         warrior.levelUp();
         System.out.println(warrior.getAttackPoints()+ " "+ attack);
-        Assert.assertEquals((healthpoll== warrior.getHealth().getPool()-5)&&(defence== warrior.getDefensePoints()-2)&&(attack== warrior.getAttackPoints()-6),true);
+        Assert.assertEquals(((healthpoll== warrior.getHealth().getPool()-30)&&(defence== warrior.getDefensePoints()-4)&&(attack== warrior.getAttackPoints()-12)),true);
 
     }
 

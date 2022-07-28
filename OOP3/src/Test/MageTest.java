@@ -38,15 +38,16 @@ public class MageTest {
     }
     @Test
     public void levelUp() {
+
         int manaAmount=mage.getManaAmount();
         int manapool=mage.getManaPool();
         int spellpower=mage.getSpellPower();
-        int attack= mage.getAttackPoints();;
+        int attack= mage.getAttackPoints();
         int defence=mage.getDefensePoints();
-        mage.setLevel(0);
+        mage.setLevel(1);
         mage.levelUp();
         System.out.println(mage.getAttackPoints()+ " "+ attack);
-        Assert.assertEquals((spellpower==mage.getSpellPower()-10&&manapool==mage.getManaPool()-25&&manaAmount== mage.getManaAmount()-43)&&(defence== mage.getDefensePoints()-1)&&(attack== mage.getAttackPoints()-4),true);
+        Assert.assertEquals((spellpower==mage.getSpellPower()-20&&manapool==mage.getManaPool()-50&&manaAmount== mage.getManaAmount()-50)&&(defence== mage.getDefensePoints()-2)&&(attack== mage.getAttackPoints()-8),true);
 
     }
 
@@ -55,9 +56,14 @@ public class MageTest {
 
     @Test
     public void onTick() {
+
         int mana=mage.getManaAmount();
         mage.onTick();
         Assert.assertEquals(mana==mage.getManaAmount()-1,true);
+        mage.levelUp();
+         mana=mage.getManaAmount();
+        mage.onTick();
+        Assert.assertEquals(mana==mage.getManaAmount()-2,true);
         mage.setManaAmount(mage.getManaPool());
 
         mage.onTick();
@@ -67,6 +73,7 @@ public class MageTest {
 
     @Test
     public void useSpecialAbility() {
+
         e.setPosition(new Position(1,0));
         e.getHealth().setAmount(500);
         mage.setAttackPoints(1000000000);
@@ -80,7 +87,22 @@ public class MageTest {
         });
         mage.UseSpecialAbility(gameTiles.getEnemies(),mage);
 
-
         Assert.assertEquals(e.getHealth().getAmount()<500,true);
+        mage.setManaAmount(0);
+        e.setPosition(new Position(1,0));
+        e.getHealth().setAmount(500);
+        mage.setAttackPoints(1000000000);
+        gameTiles.getEnemies().clear();
+        gameTiles.getEnemies().add(e);
+        e.setDCB(new DeathCallBack() {
+            @Override
+            public void call(Unit u) {
+                System.out.println("dead");
+            }
+        });
+        mage.UseSpecialAbility(gameTiles.getEnemies(),mage);
+
+        Assert.assertEquals(e.getHealth().getAmount()<500,false);
+
     }
 }

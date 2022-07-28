@@ -52,13 +52,14 @@ public class PlayerTest {
 
     @Test
     public void levelUp() {
+
         Health health=new Health(rogue.getHealth().getPool(),rogue.getHealth().getAmount());
         int attack= rogue.getAttackPoints();;
         int defence=rogue.getDefensePoints();
-        rogue.setLevel(0);
+        rogue.setLevel(1);
         rogue.levelUp();
 
-        Assert.assertEquals((!health.equals(rogue.getHealth()))&&(defence== rogue.getDefensePoints()-1)&&(attack== rogue.getAttackPoints()-7),true);
+        Assert.assertEquals((!health.equals(rogue.getHealth()))&&(defence== rogue.getDefensePoints()-2)&&(attack== rogue.getAttackPoints()-14),true);
 
     }
 

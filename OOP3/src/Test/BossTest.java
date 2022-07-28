@@ -39,12 +39,10 @@ public class BossTest {
     public void onMove() {
         Position p=gameTiles.getPlayer().getPosition();
         Position positon=boss.getPosition();
+        gameTiles.newEnemies();
+        gameTiles.getEnemies().add(boss);
         System.out.println(p.getX()+" "+p.getY());//12 19
         Assert.assertEquals(boss.onMove(gameTiles.getEnemies(),gameTiles.getPlayer(),"w").range(positon)==0,false);
-        boss.setPosition(new Position(11,19));
-        positon=boss.getPosition();
-        gameTiles.UpdateLocationOfTile(boss);
-        Assert.assertEquals(boss.onMove(gameTiles.getEnemies(),gameTiles.getPlayer(),"w").range(positon)==0,true);
 
     }
 
@@ -61,5 +59,6 @@ public class BossTest {
         boss.setAttackPoints(10000000);
         boss.UseSpecialAbility(gameTiles.getEnemies(), gameTiles.getPlayer());
         Assert.assertEquals(gameTiles.getPlayer().getHealth().getAmount()<500,true);
+        Assert.assertEquals(boss.getCombatTicks()==0,true);
     }
 }

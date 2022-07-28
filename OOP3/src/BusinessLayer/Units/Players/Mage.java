@@ -67,6 +67,7 @@ public class Mage extends Player{
 
     @Override
     public void UseSpecialAbility(List<Enemy> enemies, Player player) {
+
         if(manaAmount<abilityManaCost){
             call(getName()+" tried to cast Blizzard, but there was not enough mana: "+manaAmount+"/"+abilityManaCost+".");
         }else {

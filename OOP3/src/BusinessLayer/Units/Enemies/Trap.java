@@ -8,10 +8,17 @@ import BusinessLayer.Units.Players.Player;
 import java.util.List;
 
 public class Trap extends Enemy {
+
     private int visibilityTime;
     private int invisibilityTime;
     private int ticksCount;
+
+
+
     private boolean visible;
+
+
+
     private char tileChar;
 
 
@@ -52,6 +59,33 @@ public class Trap extends Enemy {
         }
         return getPosition();
     }
+    public int getTicksCount() {
+        return ticksCount;
+    }
 
+    public void setTicksCount(int ticksCount) {
+        this.ticksCount = ticksCount;
+    }
 
+    public int getInvisibilityTime() {
+        return invisibilityTime;
+    }
+
+    public void setInvisibilityTime(int invisibilityTime) {
+        this.invisibilityTime = invisibilityTime;
+    }
+    public int getVisibilityTime() {
+        return visibilityTime;
+    }
+
+    public void setVisibilityTime(int visibilityTime) {
+        this.visibilityTime = visibilityTime;
+    }
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 }

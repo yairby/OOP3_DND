@@ -39,10 +39,10 @@ public class RogueTest {
         int energy=rogue.getEnergy();
         int attack= rogue.getAttackPoints();;
         int defence=rogue.getDefensePoints();
-        rogue.setLevel(0);
+        rogue.setLevel(1);
         rogue.levelUp();
 
-        Assert.assertEquals((energy== 100)&&(defence== rogue.getDefensePoints()-1)&&(attack== rogue.getAttackPoints()-7),true);
+        Assert.assertEquals((energy== 100)&&(defence== rogue.getDefensePoints()-2)&&(attack== rogue.getAttackPoints()-14),true);
 
     }
 
@@ -69,6 +69,22 @@ public class RogueTest {
 
 
         Assert.assertEquals(e.getHealth().getAmount()<500,true);
+        rogue.setEnergy(0);
+        e.setPosition(new Position(1,0));
+        e.getHealth().setAmount(500);
+        rogue.setAttackPoints(100);
+        gameTiles.getEnemies().clear();
+        gameTiles.getEnemies().add(e);
+        e.setDCB(new DeathCallBack() {
+            @Override
+            public void call(Unit u) {
+                System.out.println("dead");
+            }
+        });
+        rogue.UseSpecialAbility(gameTiles.getEnemies(),rogue);
+
+
+        Assert.assertEquals(e.getHealth().getAmount()<500,false);
 
     }
 }
