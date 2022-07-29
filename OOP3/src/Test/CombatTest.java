@@ -60,7 +60,20 @@ class CombatTest {
         Combat combat=new Combat(m,player);
         combat.Attack(50);
         Assert.assertEquals(player.getHealth().getAmount()<player.getHealth().getPool(),true);
+        m=gameTiles.getEnemies().get(0);
+        int exp= gameTiles.getPlayer().getExperience();
 
+
+        m.setDefensePoints(0);
+        m.setAmountHealth(2);
+        gameTiles.getEnemies().add(m);
+
+          gameTiles.getPlayer().setAttackPoints(1000000);
+          m.setExperience(100);
+         gameTiles.getPlayer().visit(m);
+        System.out.println(exp+" "+gameTiles.getPlayer().getExperience());
+        Assert.assertEquals(m.getHealth().getAmount()<0,true);
+        Assert.assertEquals(exp<gameTiles.getPlayer().getExperience(),true);
     }
 
     

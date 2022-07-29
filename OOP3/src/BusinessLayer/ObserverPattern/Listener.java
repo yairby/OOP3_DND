@@ -9,4 +9,5 @@ import java.util.List;
 public interface Listener {
     public void onTick();
     public Position onMove(List<Enemy> enemyList, Player player, String move);
+
 }
