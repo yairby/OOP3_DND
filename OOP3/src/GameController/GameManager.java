@@ -3,6 +3,7 @@ package GameController;
 import BusinessLayer.Board.Dead;
 import BusinessLayer.Board.GameTiles;
 import BusinessLayer.Units.Players.Player;
+import DataAccessLayer.JarFileLoader;
 import DataAccessLayer.LevelLoader;
 import UI.Callback;
 import UI.MessageCallback;
@@ -15,12 +16,14 @@ public class GameManager {
     private static final int maxLevel=4;
     private Callback CB;
     private TileFactory tileFactory;
+    public String levelsPath;
     public GameManager(Callback CB){
         this.CB=CB;
     }
-    public void StartGame(){
+    public void StartGame(String levelsPath){
         TileFactory tileFactory=new TileFactory();
         this.tileFactory=tileFactory;
+        this.levelsPath=levelsPath;
 
         //loading the players
         List<Player> players= tileFactory.listPlayers();
@@ -35,7 +38,7 @@ public class GameManager {
         String status="";
         int currentLevel=1;
         while(!stop){
-            boolean passed = PlayLevel(currentLevel,player);
+            boolean passed = PlayLevel(currentLevel,player,levelsPath);
             if(passed){
                 CB.call("You passed level: "+currentLevel+"!!!");
                 if(currentLevel==maxLevel){
@@ -82,15 +85,15 @@ public class GameManager {
         String startNew=scanner.next();
         if(startNew.equals("Y")||startNew.equals("y")){
             CB.call("Starting new game!");
-            StartGame();
+            StartGame(levelsPath);
         }else{
             CB.call("Thanks for playing our game! Goodbye!");
             System.exit(0);
         }
     }
-    public boolean PlayLevel(int level, Player player) {
+    public boolean PlayLevel(int level, Player player, String levelsPath) {
         CB.call("-------Level "+level+" Started-------");
-        String levelMap= LevelLoader.LoadLevel(level).stream().collect(Collectors.joining("\n"));
+        String levelMap= LevelLoader.LoadLevel(level,levelsPath).stream().collect(Collectors.joining("\n"));
         GameTiles gameTiles=new GameTiles(levelMap,player,CB, tileFactory);
         CB.call(gameTiles.printBoard());
         CB.call(player.toString());
